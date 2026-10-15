@@ -189,3 +189,47 @@ int bigint_from_string(BigInteger *a, const char *str)
     bigint_normalize(a);
     return 1;
 }
+
+
+/**
+ * Converts a Base-10^9 BigInteger into a human-readable decimal string representation.
+ * Used in: Output formatting, REPL result printing, and variable assignment display.
+ */
+char *bigint_to_string(const BigInteger *a)
+{
+    if (!a)
+        return NULL;
+
+    // Handle zero
+    if (a->size == 0 || (a->size == 1 && a->digits[0] == 0))
+    {
+        char *str = malloc(2);
+        if (!str)
+            return NULL;
+        strcpy(str, "0");
+        return str;
+    }
+
+    // Allocate buffer: 1 sign + 9 digits per limb + 1 null terminator
+    int max_len = a->size * BASE_DIGITS + 2;
+    char *buf = malloc(max_len);
+    if (!buf)
+        return NULL;
+
+    int pos = 0;
+    if (a->sign < 0)
+    {
+        buf[pos++] = '-';
+    }
+
+    // Print highest limb without leading zeros
+    pos += sprintf(buf + pos, "%u", a->digits[a->size - 1]);
+
+    // Print remaining limbs padded to 9 digits
+    for (int i = a->size - 2; i >= 0; i--)
+    {
+        pos += sprintf(buf + pos, "%09u", a->digits[i]);
+    }
+
+    return buf;
+}
