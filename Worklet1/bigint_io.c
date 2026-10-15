@@ -22,7 +22,7 @@ void trim_whitespace(char *str)
     {
         start++;
     }
-    
+
     // Shift left if there were leading spaces
     if (start > 0)
     {
@@ -33,4 +33,45 @@ void trim_whitespace(char *str)
         }
         str[i] = '\0';
     }
+}
+
+
+char *read_input_line(FILE *stream)
+{
+    if (!stream)
+        return NULL;
+
+    int cap = 128;
+    int len = 0;
+    char *line = malloc(cap);
+    if (!line)
+        return NULL;
+
+    int c;
+    while ((c = fgetc(stream)) != EOF && c != '\n')
+    {
+        // Resize buffer if full (leaving space for '\0')
+        if (len + 1 >= cap)
+        {
+            cap *= 2;
+            char *temp = realloc(line, cap);
+            if (!temp)
+            {
+                free(line);
+                return NULL;
+            }
+            line = temp;
+        }
+        line[len++] = c;
+    }
+
+    // Return NULL if EOF was reached with zero input
+    if (len == 0 && c == EOF)
+    {
+        free(line);
+        return NULL;
+    }
+
+    line[len] = '\0';
+    return line;
 }
