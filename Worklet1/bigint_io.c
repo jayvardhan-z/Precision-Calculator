@@ -2,7 +2,32 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+/**
+ * =============================================================================
+ * File: bigint_io.c
+ * Purpose: I/O Utilities & Lossless String <-> BigInteger Conversions
+ * 
+ * Role in Project:
+ *   Acts as the input/output bridge between the human/text domain and the
+ *   internal arithmetic core (Worklets 2 & 3).
+ *
+ * Responsibilities:
+ *   1. Input Handling: Dynamically reads arbitrary-length input lines from
+ *      streams (stdin/files) and cleans whitespace before lexing/parsing.
+ *   2. Deserialization: Converts decimal number strings into Base-10^9 BigInteger
+ *      structures (packed 9 digits per limb) for the lexer and parser.
+ *   3. Serialization: Formats internal BigInteger results back into decimal
+ *      strings for displaying outputs in the REPL and test runner.
+ * =============================================================================
+ */
 
+
+
+
+/**
+ * Trims leading and trailing whitespace characters in-place from a string.
+ * Used in: The REPL input loop and expression pre-validator to clean raw user commands before lexing.
+ */
 void trim_whitespace(char *str)
 {
     if (!str || !*str)
@@ -36,6 +61,10 @@ void trim_whitespace(char *str)
 }
 
 
+/**
+ * Reads an arbitrary-length line of text from a stream into dynamically allocated memory.
+ * Used in: The interactive REPL (stdin) and automated test runner (file streams) to read expressions.
+ */
 char *read_input_line(FILE *stream)
 {
     if (!stream)
@@ -77,6 +106,10 @@ char *read_input_line(FILE *stream)
 }
 
 
+/**
+ * Parses a decimal string with optional signs into a Base-10^9 BigInteger (9 digits per limb).
+ * Used in: The Lexer/Tokenizer (TOKEN_NUMBER) and parser to convert string numeric literals into BigInteger operands.
+ */
 int bigint_from_string(BigInteger *a, const char *str)
 {
     if (!a || !str)
