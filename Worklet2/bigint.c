@@ -63,3 +63,14 @@ void bigint_clear(BigInteger *a) {
     a->sign = 0;
     a->size = 1;
 }
+
+void bigint_free(BigInteger *a) {
+    if (!a) return;
+    if (a->digits) {
+        free(a->digits);
+        a->digits = NULL;
+    }
+    a->capacity = 0;
+    a->size = 0;
+    a->sign = 0;
+}
