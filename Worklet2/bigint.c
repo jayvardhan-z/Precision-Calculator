@@ -23,3 +23,23 @@ int bigint_init_capacity(BigInteger *a, size_t cap) {
     a->digits = (uint32_t *)calloc(cap, sizeof(uint32_t));
     return (a->digits != NULL);
 }
+
+int bigint_reserve(BigInteger *a, size_t min_cap) {
+    if (!a) return 0;
+    if (a->capacity >= min_cap) return 1;
+
+    size_t new_cap = a->capacity == 0 ? 1 : a->capacity;
+    while (new_cap < min_cap) {
+        new_cap *= 2;
+    }
+
+    uint32_t *new_digits = (uint32_t *)realloc(a->digits, new_cap * sizeof(uint32_t));
+    if (!new_digits) return 0;
+
+    /* Zero out newly allocated limbs */
+    memset(new_digits + a->capacity, 0, (new_cap - a->capacity) * sizeof(uint32_t));
+
+    a->digits = new_digits;
+    a->capacity = new_cap;
+    return 1;
+}
