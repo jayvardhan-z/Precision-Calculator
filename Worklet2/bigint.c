@@ -74,3 +74,14 @@ void bigint_free(BigInteger *a) {
     a->size = 0;
     a->sign = 0;
 }
+
+int bigint_copy(BigInteger *dest, const BigInteger *src) {
+    if (!dest || !src) return 0;
+    if (dest == src) return 1;
+
+    if (!bigint_reserve(dest, src->size)) return 0;
+    memcpy(dest->digits, src->digits, src->size * sizeof(uint32_t));
+    dest->size = src->size;
+    dest->sign = src->sign;
+    return 1;
+}
