@@ -43,3 +43,23 @@ int bigint_reserve(BigInteger *a, size_t min_cap) {
     a->capacity = new_cap;
     return 1;
 }
+
+int bigint_resize(BigInteger *a, size_t new_size) {
+    if (!a) return 0;
+    if (new_size == 0) new_size = 1;
+    if (!bigint_reserve(a, new_size)) return 0;
+    if (new_size > a->size) {
+        memset(a->digits + a->size, 0, (new_size - a->size) * sizeof(uint32_t));
+    }
+    a->size = new_size;
+    return 1;
+}
+
+void bigint_clear(BigInteger *a) {
+    if (!a) return;
+    if (a->digits && a->capacity > 0) {
+        memset(a->digits, 0, a->capacity * sizeof(uint32_t));
+    }
+    a->sign = 0;
+    a->size = 1;
+}
