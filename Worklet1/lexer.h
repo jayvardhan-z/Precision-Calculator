@@ -3,9 +3,6 @@
 
 #include <stddef.h>
 
-/* -------------------------------------------------------------------------
- * Token & Lexer Structures
- * ------------------------------------------------------------------------- */
 
 typedef enum {
     TK_NUMBER,   /* e.g. "123", "45.67", "1e-5" */
@@ -39,12 +36,13 @@ typedef enum {
 
 typedef struct {
     int    code;
-    size_t position; /* 1-indexed column */
+    size_t position;
+    
     char   message[256];
 } ParseError;
 
 /* -------------------------------------------------------------------------
- * Pre-validation & Token List Lifecycle
+ * Pre-validation & Token List Lifecycl
  * ------------------------------------------------------------------------- */
 int  validate_expression(const char *input, size_t *err_pos);
 void token_list_init(TokenList *tl);
