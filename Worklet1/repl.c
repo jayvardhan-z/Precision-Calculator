@@ -126,10 +126,11 @@ static int handle_repl_command(ReplState *repl, const char *line) {
 }
 
 int execute_repl_cycle(ReplState *repl, const char *raw_line) {
+    // make our own copy so we can trim it without touching the original
     char *line = strdup(raw_line);
-    if (!line) return 0;
     trim_whitespace(line);
 
+    // commands like exit/help/mode are handled separately
     if (handle_repl_command(repl, line)) {
         free(line);
         return 1;
@@ -138,34 +139,59 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
     TokenList tokens;
     ParsedExpression pe;
     ParseError perr;
+    Value result;
     size_t err_pos = 0;
     int ok = 0;
 
     token_list_init(&tokens);
     parsed_expression_init(&pe);
+    value_init(&result, VAL_INT);
     memset(&perr, 0, sizeof(perr));
 
+    // step 1: check brackets and basic syntax
     if (!validate_expression(line, &err_pos)) {
         char msg[256];
-        snprintf(msg, sizeof(msg),
-                 "ParseError: invalid syntax or unbalanced parenthesis at column %zu", err_pos);
+        snprintf(msg, sizeof(msg), "ParseError: invalid syntax at column %zu", err_pos);
         print_error_caret(line, err_pos, msg);
-        goto cleanup;
     }
-
-    if (!lex_tokenize(line, &tokens, &perr)) {
+    // step 2: break the input into tokens
+    else if (!lex_tokenize(line, &tokens, &perr)) {
         print_error_caret(line, perr.position, perr.message);
-        goto cleanup;
     }
-
-    if (!parse_expression_tree(&tokens, &pe)) {
+    // step 3: build the expression tree from the tokens
+    else if (!parse_expression_tree(&tokens, &pe)) {
         print_error_caret(line, pe.error.position, pe.error.message);
-        goto cleanup;
+    }
+    // step 4: evaluate the tree
+    else {
+        // clear old error before evaluating
+        repl->ctx.depth = 0;
+        repl->ctx.error.code = ERR_NONE;
+        repl->ctx.error.pos = 0;
+        repl->ctx.error.message[0] = '\0';
+
+        // time only the evaluation, not the parsing
+        Timer timer;
+        timer_start(&timer);
+        int eval_ok = eval_node(pe.root, &repl->ctx, &result);
+        timer_stop(&timer);
+
+        if (!eval_ok) {
+            char msg[512];
+            snprintf(msg, sizeof(msg), "RuntimeError: %s (at col %zu)",
+                     repl->ctx.error.message, repl->ctx.error.pos);
+            print_error_caret(line, repl->ctx.error.pos, msg);
+        } else {
+            // convert result to text and print it with the time taken
+            char *res_str = value_to_string(&result);
+            printf("  = %s  [%.4f ms]\n\n", res_str, timer_elapsed_ms(&timer));
+            free(res_str);
+            ok = 1;
+        }
     }
 
-    ok = 1;   /* evaluation gets added in the next commit */
-
-cleanup:
+    // free everything we allocated
+    value_free(&result);
     parsed_expression_free(&pe);
     token_list_free(&tokens);
     free(line);
