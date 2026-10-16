@@ -65,3 +65,16 @@ ExprNode *node_new_binary(OpCode op, ExprNode *left, ExprNode *right, size_t pos
     node->as.bin.right = right;
     return node;
 }
+
+ExprNode *node_new_unary(OpCode op, ExprNode *operand, size_t pos) {
+    if (!operand) return NULL;
+    ExprNode *node = (ExprNode *)calloc(1, sizeof(ExprNode));
+    if (!node) return NULL;
+
+    node->type = NODE_UNARY;
+    node->pos = pos;
+    node->as.un.op = op;
+    node->as.un.operand = operand;
+    return node;
+}
+
