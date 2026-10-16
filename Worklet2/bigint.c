@@ -85,3 +85,41 @@ int bigint_copy(BigInteger *dest, const BigInteger *src) {
     dest->sign = src->sign;
     return 1;
 }
+
+void bigint_swap(BigInteger *a, BigInteger *b) {
+    if (!a || !b || a == b) return;
+    BigInteger tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void bigint_normalize(BigInteger *a) {
+    if (!a || !a->digits || a->size == 0) return;
+
+    /* Strip leading zero limbs */
+    while (a->size > 1 && a->digits[a->size - 1] == 0) {
+        a->size--;
+    }
+
+    /* Enforce canonical zero invariant: size = 1, digits[0] = 0, sign = 0 */
+    if (a->size == 1 && a->digits[0] == 0) {
+        a->sign = 0;
+    } else if (a->sign == 0) {
+        /* Default non-zero numbers with undefined sign to +1 */
+        a->sign = 1;
+    }
+}
+
+/* -------------------------------------------------------------------------
+ * Value Inspection & Predicates
+ * ------------------------------------------------------------------------- */
+
+int bigint_is_zero(const BigInteger *a) {
+    if (!a || !a->digits || a->size == 0) return 1;
+    return (a->size == 1 && a->digits[0] == 0);
+}
+
+int bigint_is_one(const BigInteger *a) {
+    if (!a || !a->digits) return 0;
+    return (a->sign == 1 && a->size == 1 && a->digits[0] == 1);
+}
