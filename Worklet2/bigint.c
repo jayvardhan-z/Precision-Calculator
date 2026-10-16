@@ -326,3 +326,124 @@ int bigint_add_small(BigInteger *res, const BigInteger *a, int64_t val) {
     bigint_free(&b_val);
     return ret;
 }
+
+/* -------------------------------------------------------------------------
+ * Multiplication
+ * ------------------------------------------------------------------------- */
+
+int bigint_mul_small(BigInteger *res, const BigInteger *a, uint32_t val) {
+    if (!res || !a) return 0;
+
+    if (val == 0 || bigint_is_zero(a)) {
+        bigint_clear(res);
+        return 1;
+    }
+
+    BigInteger tmp;
+    if (!bigint_init_capacity(&tmp, a->size + 1)) return 0;
+
+    uint64_t carry = 0;
+    for (size_t i = 0; i < a->size; i++) {
+        uint64_t prod = (uint64_t)a->digits[i] * val + carry;
+        tmp.digits[i] = (uint32_t)(prod % BASE);
+        carry = prod / BASE;
+    }
+
+    size_t tmp_size = a->size;
+    if (carry > 0) {
+        tmp.digits[tmp_size++] = (uint32_t)carry;
+    }
+
+    tmp.size = tmp_size;
+    tmp.sign = a->sign;
+    bigint_normalize(&tmp);
+
+    bigint_swap(res, &tmp);
+    bigint_free(&tmp);
+    return 1;
+}
+
+int bigint_mul_schoolbook(BigInteger *res, const BigInteger *a, const BigInteger *b) {
+    if (!res || !a || !b) return 0;
+
+    if (bigint_is_zero(a) || bigint_is_zero(b)) {
+        bigint_clear(res);
+        return 1;
+    }
+
+    size_t req_cap = a->size + b->size;
+    BigInteger tmp;
+    if (!bigint_init_capacity(&tmp, req_cap)) return 0;
+    tmp.size = req_cap;
+
+    for (size_t i = 0; i < a->size; i++) {
+        uint64_t carry = 0;
+        uint64_t ai = a->digits[i];
+
+        for (size_t j = 0; j < b->size; j++) {
+            uint64_t cur = (uint64_t)tmp.digits[i + j] + ai * (uint64_t)b->digits[j] + carry;
+            tmp.digits[i + j] = (uint32_t)(cur % BASE);
+            carry = cur / BASE;
+        }
+
+        size_t k = i + b->size;
+        while (carry > 0) {
+            uint64_t cur = (uint64_t)tmp.digits[k] + carry;
+            tmp.digits[k] = (uint32_t)(cur % BASE);
+            carry = cur / BASE;
+            k++;
+        }
+    }
+
+    tmp.sign = a->sign * b->sign;
+    bigint_normalize(&tmp);
+
+    bigint_swap(res, &tmp);
+    bigint_free(&tmp);
+    return 1;
+}
+
+/* -------------------------------------------------------------------------
+ * Helper Conversions for Testing
+ * ------------------------------------------------------------------------- */
+
+int bigint_set_u64(BigInteger *a, uint64_t val) {
+    if (!a) return 0;
+    bigint_clear(a);
+
+    if (val == 0) {
+        return 1;
+    }
+
+    a->sign = 1;
+    a->size = 0;
+
+    while (val > 0) {
+        if (!bigint_reserve(a, a->size + 1)) return 0;
+        a->digits[a->size++] = (uint32_t)(val % BASE);
+        val /= BASE;
+    }
+    bigint_normalize(a);
+    return 1;
+}
+
+int bigint_set_i64(BigInteger *a, int64_t val) {
+    if (!a) return 0;
+    if (val == 0) {
+        bigint_clear(a);
+        return 1;
+    }
+
+    int sign = (val < 0 ? -1 : 1);
+    uint64_t uval;
+    if (val < 0) {
+        /* Avoid undefined behavior with INT64_MIN negation */
+        uval = (uint64_t)(-(val + 1)) + 1;
+    } else {
+        uval = (uint64_t)val;
+    }
+
+    if (!bigint_set_u64(a, uval)) return 0;
+    a->sign = sign;
+    return 1;
+}
