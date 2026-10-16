@@ -34,7 +34,7 @@ static void display_prompt(void) {
     fflush(stdout);
 }
 
-/* prints the input with a ^ under the column where the error is */
+// prints the input with a ^ under the column where the error is
 static void print_error_caret(const char *line, size_t pos, const char *msg) {
     printf("  %s\n  ", line);
     size_t col = (pos > 0) ? pos - 1 : 0;
@@ -42,7 +42,7 @@ static void print_error_caret(const char *line, size_t pos, const char *msg) {
     printf("^\n  %s\n\n", msg);
 }
 
-/* if line starts with the command name, return a pointer to its argument */
+// if line starts with the command name, return a pointer to its argument
 static const char *command_args(const char *line, const char *name) {
     size_t n = strlen(name);
     if (strncmp(line, name, n) != 0) return NULL;
@@ -52,15 +52,16 @@ static const char *command_args(const char *line, const char *name) {
     return p;
 }
 
-/* returns 1 if the line was a command, 0 if it should be evaluated */
+// returns 1 if the line was a command, 0 if it should be evaluated
 static int handle_repl_command(ReplState *repl, const char *line) {
     while (*line && isspace((unsigned char)*line)) line++;
-    if (!*line) return 1;   /* empty line, nothing to do */
+    if (!*line) return 1;   // empty line, nothing to do
 
     if (strcmp(line, "exit") == 0 || strcmp(line, "quit") == 0 || strcmp(line, "q") == 0) {
         repl->running = 0;
         return 1;
     }
+
     if (strcmp(line, "help") == 0 || strcmp(line, "?") == 0) {
         printf("\n=== Commands ===\n");
         printf("  exit, quit         Exit the calculator\n");
@@ -84,7 +85,7 @@ static int handle_repl_command(ReplState *repl, const char *line) {
             int p = atoi(args);
             if (p >= 0 && p <= 2000) {
                 repl->ctx.precision = p;
-                symtab_preload_constants(&repl->vars, p);  /* recompute pi, e */
+                symtab_preload_constants(&repl->vars, p);   // recompute pi, e
                 printf("  [Precision set to %d decimal places]\n\n", p);
             } else {
                 printf("  [Error: precision must be between 0 and 2000]\n\n");
@@ -102,7 +103,7 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         } else if (strcmp(args, "rad") == 0 || strcmp(args, "radian") == 0) {
             repl->ctx.angle_mode = ANGLE_RADIAN;
         } else {
-            /* no argument, so just toggle */
+            // no argument, so just toggle
             repl->ctx.angle_mode = (repl->ctx.angle_mode == ANGLE_RADIAN)
                                        ? ANGLE_DEGREE : ANGLE_RADIAN;
         }
@@ -115,7 +116,7 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         printf("\n=== Variables ===\n");
         for (size_t i = 0; i < repl->vars.count; i++) {
             char *s = value_to_string(&repl->vars.symbols[i].value);
-            printf("  %s = %s\n", repl->vars.symbols[i].name, s ? s : "?");
+            printf("  %s = %s\n", repl->vars.symbols[i].name, s);
             free(s);
         }
         printf("\n");
@@ -123,6 +124,35 @@ static int handle_repl_command(ReplState *repl, const char *line) {
     }
 
     return 0;
+}
+
+// handles "name = expr". Returns the variable name (malloc'd) and
+// points *expr at the text after the '='. Returns NULL if it isn't an assignment.
+static char *parse_assignment(char *line, char **expr) {
+    char *eq = strchr(line, '=');
+    if (!eq) return NULL;
+
+    // the name must start with a letter or underscore
+    char *start = line;
+    while (isspace((unsigned char)*start)) start++;
+    if (!isalpha((unsigned char)*start) && *start != '_') return NULL;
+
+    // read the whole name
+    char *end = start;
+    while (isalnum((unsigned char)*end) || *end == '_') end++;
+
+    // only spaces are allowed between the name and '='
+    char *after = end;
+    while (isspace((unsigned char)*after)) after++;
+    if (after != eq) return NULL;
+
+    size_t len = (size_t)(end - start);
+    char *name = malloc(len + 1);
+    memcpy(name, start, len);
+    name[len] = '\0';
+
+    *expr = eq + 1;
+    return name;
 }
 
 int execute_repl_cycle(ReplState *repl, const char *raw_line) {
@@ -148,19 +178,25 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
     value_init(&result, VAL_INT);
     memset(&perr, 0, sizeof(perr));
 
+    // check if the line is an assignment like "x = 5 + 2"
+    // if it is, expr points to the part after the '='
+    char *expr = line;
+    char *var_name = parse_assignment(line, &expr);
+    if (var_name) trim_whitespace(expr);
+
     // step 1: check brackets and basic syntax
-    if (!validate_expression(line, &err_pos)) {
+    if (!validate_expression(expr, &err_pos)) {
         char msg[256];
         snprintf(msg, sizeof(msg), "ParseError: invalid syntax at column %zu", err_pos);
-        print_error_caret(line, err_pos, msg);
+        print_error_caret(expr, err_pos, msg);
     }
     // step 2: break the input into tokens
-    else if (!lex_tokenize(line, &tokens, &perr)) {
-        print_error_caret(line, perr.position, perr.message);
+    else if (!lex_tokenize(expr, &tokens, &perr)) {
+        print_error_caret(expr, perr.position, perr.message);
     }
     // step 3: build the expression tree from the tokens
     else if (!parse_expression_tree(&tokens, &pe)) {
-        print_error_caret(line, pe.error.position, pe.error.message);
+        print_error_caret(expr, pe.error.position, pe.error.message);
     }
     // step 4: evaluate the tree
     else {
@@ -180,17 +216,26 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
             char msg[512];
             snprintf(msg, sizeof(msg), "RuntimeError: %s (at col %zu)",
                      repl->ctx.error.message, repl->ctx.error.pos);
-            print_error_caret(line, repl->ctx.error.pos, msg);
+            print_error_caret(expr, repl->ctx.error.pos, msg);
         } else {
             // convert result to text and print it with the time taken
             char *res_str = value_to_string(&result);
-            printf("  = %s  [%.4f ms]\n\n", res_str, timer_elapsed_ms(&timer));
+            if (var_name)
+                printf("  %s = %s  [%.4f ms]\n\n", var_name, res_str, timer_elapsed_ms(&timer));
+            else
+                printf("  = %s  [%.4f ms]\n\n", res_str, timer_elapsed_ms(&timer));
             free(res_str);
+
+            // save the result as "ans" so the next line can use it
+            symtab_set(&repl->vars, "ans", &result);
+            // also save it under the variable name if there was one
+            if (var_name) symtab_set(&repl->vars, var_name, &result);
             ok = 1;
         }
     }
 
     // free everything we allocated
+    free(var_name);
     value_free(&result);
     parsed_expression_free(&pe);
     token_list_free(&tokens);
@@ -208,7 +253,7 @@ int run_repl(void) {
     while (repl.running) {
         display_prompt();
         char *line = read_input_line(stdin);
-        if (!line) {   /* Ctrl+D */
+        if (!line) {   // Ctrl+D
             printf("\nExiting.\n");
             break;
         }
