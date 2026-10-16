@@ -35,3 +35,20 @@ ExprNode *node_new_number(const char *str, size_t pos) {
 
     return node;
 }
+
+ExprNode *node_new_var(const char *name, size_t pos) {
+    if (!name) return NULL;
+
+    ExprNode *node = calloc(1, sizeof(*node));
+    if (!node) return NULL;
+
+    node->type = NODE_VAR;
+    node->pos = pos;
+    node->as.var_name = strdup(name);
+    if (!node->as.var_name) {
+        free(node);
+        return NULL;
+    }
+
+    return node;
+}
