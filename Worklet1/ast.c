@@ -52,3 +52,16 @@ ExprNode *node_new_var(const char *name, size_t pos) {
 
     return node;
 }
+
+ExprNode *node_new_binary(OpCode op, ExprNode *left, ExprNode *right, size_t pos) {
+    if (!left || !right) return NULL;
+    ExprNode *node = (ExprNode *)calloc(1, sizeof(ExprNode));
+    if (!node) return NULL;
+
+    node->type = NODE_BINARY;
+    node->pos = pos;
+    node->as.bin.op = op;
+    node->as.bin.left = left;
+    node->as.bin.right = right;
+    return node;
+}
