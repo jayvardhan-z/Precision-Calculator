@@ -192,3 +192,137 @@ int bigint_less_equal(const BigInteger *a, const BigInteger *b) {
 int bigint_greater_equal(const BigInteger *a, const BigInteger *b) {
     return bigint_compare(a, b) >= 0;
 }
+
+/* -------------------------------------------------------------------------
+ * Magnitude Addition & Subtraction
+ * ------------------------------------------------------------------------- */
+
+int bigint_add_abs(BigInteger *res, const BigInteger *a, const BigInteger *b) {
+    if (!res || !a || !b) return 0;
+
+    size_t max_size = (a->size > b->size ? a->size : b->size);
+    BigInteger tmp;
+    if (!bigint_init_capacity(&tmp, max_size + 1)) return 0;
+
+    uint64_t carry = 0;
+    for (size_t i = 0; i < max_size; i++) {
+        uint64_t sum = carry;
+        if (i < a->size) sum += a->digits[i];
+        if (i < b->size) sum += b->digits[i];
+
+        tmp.digits[i] = (uint32_t)(sum % BASE);
+        carry = sum / BASE;
+    }
+
+    size_t res_size = max_size;
+    if (carry > 0) {
+        tmp.digits[res_size++] = (uint32_t)carry;
+    }
+    tmp.size = res_size;
+    tmp.sign = 1;
+    bigint_normalize(&tmp);
+
+    bigint_free(res);
+    *res = tmp;
+    return 1;
+}
+
+int bigint_sub_abs(BigInteger *res, const BigInteger *a, const BigInteger *b) {
+    if (!res || !a || !b) return 0;
+    /* Assumes |a| >= |b| */
+
+    BigInteger tmp;
+    if (!bigint_init_capacity(&tmp, a->size)) return 0;
+
+    int64_t borrow = 0;
+    for (size_t i = 0; i < a->size; i++) {
+        int64_t diff = (int64_t)a->digits[i] - (i < b->size ? (int64_t)b->digits[i] : 0) - borrow;
+        if (diff < 0) {
+            diff += BASE;
+            borrow = 1;
+        } else {
+            borrow = 0;
+        }
+        tmp.digits[i] = (uint32_t)diff;
+    }
+
+    tmp.size = a->size;
+    tmp.sign = 1;
+    bigint_normalize(&tmp);
+
+    bigint_free(res);
+    *res = tmp;
+    return 1;
+}
+
+/* -------------------------------------------------------------------------
+ * Signed Addition & Subtraction
+ * ------------------------------------------------------------------------- */
+
+int bigint_add(BigInteger *res, const BigInteger *a, const BigInteger *b) {
+    if (!res || !a || !b) return 0;
+
+    if (bigint_is_zero(a)) return bigint_copy(res, b);
+    if (bigint_is_zero(b)) return bigint_copy(res, a);
+
+    if (a->sign == b->sign) {
+        int sign = a->sign;
+        if (!bigint_add_abs(res, a, b)) return 0;
+        res->sign = sign;
+        bigint_normalize(res);
+        return 1;
+    }
+
+    /* Signs differ: compare magnitudes */
+    int cmp = bigint_compare_abs(a, b);
+    if (cmp == 0) {
+        bigint_clear(res);
+        return 1;
+    }
+
+    if (cmp > 0) {
+        int sign = a->sign;
+        if (!bigint_sub_abs(res, a, b)) return 0;
+        res->sign = sign;
+        bigint_normalize(res);
+    } else {
+        int sign = b->sign;
+        if (!bigint_sub_abs(res, b, a)) return 0;
+        res->sign = sign;
+        bigint_normalize(res);
+    }
+    return 1;
+}
+
+int bigint_sub(BigInteger *res, const BigInteger *a, const BigInteger *b) {
+    if (!res || !a || !b) return 0;
+
+    if (bigint_is_zero(b)) return bigint_copy(res, a);
+    if (bigint_is_zero(a)) {
+        if (!bigint_copy(res, b)) return 0;
+        res->sign = -res->sign;
+        return 1;
+    }
+
+    /* a - b is equivalent to a + (-b) */
+    BigInteger b_neg;
+    bigint_init(&b_neg);
+    if (!bigint_copy(&b_neg, b)) return 0;
+    b_neg.sign = -b_neg.sign;
+
+    int ret = bigint_add(res, a, &b_neg);
+    bigint_free(&b_neg);
+    return ret;
+}
+
+int bigint_add_small(BigInteger *res, const BigInteger *a, int64_t val) {
+    BigInteger b_val;
+    bigint_init(&b_val);
+    if (!bigint_set_i64(&b_val, val)) {
+        bigint_free(&b_val);
+        return 0;
+    }
+    int ret = bigint_add(res, a, &b_val);
+    bigint_free(&b_val);
+    return ret;
+}
