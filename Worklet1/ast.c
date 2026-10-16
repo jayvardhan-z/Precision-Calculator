@@ -1,0 +1,37 @@
+#define _POSIX_C_SOURCE 200809L
+#include "ast.h"
+#include "bigint_io.h"
+#include <stdlib.h>
+#include <string.h>
+
+ExprNode *node_new_number(const char *str, size_t pos) {
+    if (!str) return NULL;
+
+    ExprNode *node = calloc(1, sizeof(*node));
+    if (!node) return NULL;
+
+    node->type = NODE_NUMBER;
+    node->pos = pos;
+
+    Value *val = &node->as.number;
+
+    if (strpbrk(str, ".eE")) {
+        val->type = VAL_DEC;
+        decimal_init(&val->as.d);
+        if (!decimal_from_string(&val->as.d, str)) {
+            decimal_free(&val->as.d);
+            free(node);
+            return NULL;
+        }
+    } else {
+        val->type = VAL_INT;
+        bigint_init(&val->as.i);
+        if (!bigint_from_string(&val->as.i, str)) {
+            bigint_free(&val->as.i);
+            free(node);
+            return NULL;
+        }
+    }
+
+    return node;
+}
