@@ -55,7 +55,8 @@ ExprNode *node_new_var(const char *name, size_t pos) {
 
 ExprNode *node_new_binary(OpCode op, ExprNode *left, ExprNode *right, size_t pos) {
     if (!left || !right) return NULL;
-    ExprNode *node = (ExprNode *)calloc(1, sizeof(ExprNode));
+
+    ExprNode *node = calloc(1, sizeof(*node));
     if (!node) return NULL;
 
     node->type = NODE_BINARY;
@@ -68,7 +69,8 @@ ExprNode *node_new_binary(OpCode op, ExprNode *left, ExprNode *right, size_t pos
 
 ExprNode *node_new_unary(OpCode op, ExprNode *operand, size_t pos) {
     if (!operand) return NULL;
-    ExprNode *node = (ExprNode *)calloc(1, sizeof(ExprNode));
+
+    ExprNode *node = calloc(1, sizeof(*node));
     if (!node) return NULL;
 
     node->type = NODE_UNARY;
@@ -92,4 +94,43 @@ ExprNode *node_new_call(int fn_id, ExprNode **args, size_t argc, size_t pos) {
     node->as.call.args = args;
 
     return node;
+}
+
+
+void free_expr_node(ExprNode *root) {
+    if (!root) return;
+
+    switch (root->type) {
+        case NODE_NUMBER:
+            switch (root->as.number.type) {
+                case VAL_INT:     bigint_free(&root->as.number.as.i);   break;
+                case VAL_DEC:     decimal_free(&root->as.number.as.d);  break;
+                case VAL_COMPLEX: complex_free(&root->as.number.as.c);  break;
+            }
+            break;
+
+        case NODE_VAR:
+            free(root->as.var_name);
+            break;
+
+        case NODE_BINARY:
+            free_expr_node(root->as.bin.left);
+            free_expr_node(root->as.bin.right);
+            break;
+
+        case NODE_UNARY:
+            free_expr_node(root->as.un.operand);
+            break;
+
+        case NODE_CALL:
+            if (root->as.call.args) {
+                for (size_t i = 0; i < root->as.call.argc; i++) {
+                    free_expr_node(root->as.call.args[i]);
+                }
+                free(root->as.call.args);
+            }
+            break;
+    }
+
+    free(root);
 }
