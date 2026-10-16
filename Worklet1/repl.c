@@ -34,6 +34,14 @@ static void display_prompt(void) {
     fflush(stdout);
 }
 
+/* prints the input with a ^ under the column where the error is */
+static void print_error_caret(const char *line, size_t pos, const char *msg) {
+    printf("  %s\n  ", line);
+    size_t col = (pos > 0) ? pos - 1 : 0;
+    for (size_t i = 0; i < col; i++) putchar(' ');
+    printf("^\n  %s\n\n", msg);
+}
+
 /* if line starts with the command name, return a pointer to its argument */
 static const char *command_args(const char *line, const char *name) {
     size_t n = strlen(name);
@@ -127,9 +135,41 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
         return 1;
     }
 
-    /* expression evaluation comes in later commits */
+    TokenList tokens;
+    ParsedExpression pe;
+    ParseError perr;
+    size_t err_pos = 0;
+    int ok = 0;
+
+    token_list_init(&tokens);
+    parsed_expression_init(&pe);
+    memset(&perr, 0, sizeof(perr));
+
+    if (!validate_expression(line, &err_pos)) {
+        char msg[256];
+        snprintf(msg, sizeof(msg),
+                 "ParseError: invalid syntax or unbalanced parenthesis at column %zu", err_pos);
+        print_error_caret(line, err_pos, msg);
+        goto cleanup;
+    }
+
+    if (!lex_tokenize(line, &tokens, &perr)) {
+        print_error_caret(line, perr.position, perr.message);
+        goto cleanup;
+    }
+
+    if (!parse_expression_tree(&tokens, &pe)) {
+        print_error_caret(line, pe.error.position, pe.error.message);
+        goto cleanup;
+    }
+
+    ok = 1;   /* evaluation gets added in the next commit */
+
+cleanup:
+    parsed_expression_free(&pe);
+    token_list_free(&tokens);
     free(line);
-    return 1;
+    return ok;
 }
 
 int run_repl(void) {
