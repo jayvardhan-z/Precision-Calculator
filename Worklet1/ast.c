@@ -78,3 +78,18 @@ ExprNode *node_new_unary(OpCode op, ExprNode *operand, size_t pos) {
     return node;
 }
 
+
+ExprNode *node_new_call(int fn_id, ExprNode **args, size_t argc, size_t pos) {
+    if (argc > 0 && !args) return NULL;
+
+    ExprNode *node = calloc(1, sizeof(*node));
+    if (!node) return NULL;
+
+    node->type = NODE_CALL;
+    node->pos = pos;
+    node->as.call.fn_id = fn_id;
+    node->as.call.argc = argc;
+    node->as.call.args = args;
+
+    return node;
+}
