@@ -123,3 +123,72 @@ int bigint_is_one(const BigInteger *a) {
     if (!a || !a->digits) return 0;
     return (a->sign == 1 && a->size == 1 && a->digits[0] == 1);
 }
+
+
+/* -------------------------------------------------------------------------
+ * Comparisons
+ * ------------------------------------------------------------------------- */
+
+int bigint_compare_abs(const BigInteger *a, const BigInteger *b) {
+    if (!a && !b) return 0;
+    if (!a) return -1;
+    if (!b) return 1;
+
+    /* Normalize checks on sizes */
+    size_t a_size = a->size;
+    size_t b_size = b->size;
+
+    while (a_size > 1 && a->digits[a_size - 1] == 0) a_size--;
+    while (b_size > 1 && b->digits[b_size - 1] == 0) b_size--;
+
+    if (a_size < b_size) return -1;
+    if (a_size > b_size) return 1;
+
+    /* Limb-by-limb check from MSB down to LSB */
+    for (size_t i = a_size; i > 0; i--) {
+        size_t idx = i - 1;
+        if (a->digits[idx] < b->digits[idx]) return -1;
+        if (a->digits[idx] > b->digits[idx]) return 1;
+    }
+    return 0;
+}
+
+int bigint_compare(const BigInteger *a, const BigInteger *b) {
+    if (!a && !b) return 0;
+    if (!a) return (b->sign >= 0 ? -1 : 1);
+    if (!b) return (a->sign >= 0 ? 1 : -1);
+
+    int a_zero = bigint_is_zero(a);
+    int b_zero = bigint_is_zero(b);
+
+    if (a_zero && b_zero) return 0;
+    if (a_zero) return (b->sign > 0 ? -1 : 1);
+    if (b_zero) return (a->sign > 0 ? 1 : -1);
+
+    if (a->sign != b->sign) {
+        return (a->sign > b->sign ? 1 : -1);
+    }
+
+    int abs_cmp = bigint_compare_abs(a, b);
+    return (a->sign > 0 ? abs_cmp : -abs_cmp);
+}
+
+int bigint_equal(const BigInteger *a, const BigInteger *b) {
+    return bigint_compare(a, b) == 0;
+}
+
+int bigint_less(const BigInteger *a, const BigInteger *b) {
+    return bigint_compare(a, b) < 0;
+}
+
+int bigint_greater(const BigInteger *a, const BigInteger *b) {
+    return bigint_compare(a, b) > 0;
+}
+
+int bigint_less_equal(const BigInteger *a, const BigInteger *b) {
+    return bigint_compare(a, b) <= 0;
+}
+
+int bigint_greater_equal(const BigInteger *a, const BigInteger *b) {
+    return bigint_compare(a, b) >= 0;
+}
