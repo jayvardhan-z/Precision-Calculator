@@ -19,10 +19,9 @@ const FunctionDef FUNCTIONS[] = {
 
 const size_t FUNCTION_COUNT = sizeof(FUNCTIONS) / sizeof(FUNCTIONS[0]);
 
-int func_lookup(char *name) {
+int func_lookup(const char *name) {
     if (!name) return -1;
-    int i = 0;
-    for (i = 0; i < FUNCTION_COUNT; i++) {
+    for (size_t i = 0; i < FUNCTION_COUNT; i++) {
         if (strcmp(name, FUNCTIONS[i].name) == 0) {
             return (int)i;
         }
@@ -38,26 +37,33 @@ typedef struct {
     ParseError      *error;
 } Parser;
 
-Token *current_token(Parser *p) {
+static ExprNode *parse_expression(Parser *p);
+static ExprNode *parse_term(Parser *p);
+static ExprNode *parse_power(Parser *p);
+static ExprNode *parse_unary(Parser *p);
+static ExprNode *parse_postfix(Parser *p);
+static ExprNode *parse_primary(Parser *p);
+
+static const Token *current_token(Parser *p) {
     if (p->cursor < p->tokens->count)
         return &p->tokens->items[p->cursor];
 
     return &p->tokens->items[p->tokens->count - 1];
 }
 
-Token *peek_next_token(Parser *p) {
+static const Token *peek_next_token(Parser *p) {
     if (p->cursor + 1 < p->tokens->count)
         return &p->tokens->items[p->cursor + 1];
 
     return NULL;
 }
 
-void advance(Parser *p) {
+static void advance(Parser *p) {
     if (p->cursor < p->tokens->count)
         p->cursor++;
 }
 
-int match_op(Parser *p, char *op_str) {
+static int match_op(Parser *p, const char *op_str) {
     const Token *t = current_token(p);
 
     if (t->type == TK_OP && strcmp(t->text, op_str) == 0)
@@ -66,18 +72,19 @@ int match_op(Parser *p, char *op_str) {
     return 0;
 }
 
-int match_type(Parser *p, TokenType type) {
+static int match_type(Parser *p, TokenType type) {
     if (current_token(p)->type == type)
         return 1;
 
     return 0;
 }
 
-void set_error(Parser *p, int code, size_t pos, char *msg) {
+static void set_error(Parser *p, int code, size_t pos, const char *msg) {
     if (p->error) {
         p->error->code = code;
         p->error->position = pos;
-        strcpy(p->error->message, msg);
+        strncpy(p->error->message, msg, sizeof(p->error->message) - 1);
+        p->error->message[sizeof(p->error->message) - 1] = '\0';
     }
 }
 
@@ -206,7 +213,7 @@ ExprNode *parse_postfix(Parser *p) {
 // primary -> NUMBER | IDENT | IDENT '(' arglist ')' | '(' expression ')'
 
 ExprNode *parse_primary(Parser *p) {
-    Token *tok = current_token(p);
+    const Token *tok = current_token(p);
 
     //1. Numeric Literal
     if (match_type(p, TK_NUMBER)) {
@@ -223,7 +230,7 @@ ExprNode *parse_primary(Parser *p) {
     if (match_type(p, TK_IDENT)) {
         char *name = tok->text;
         size_t name_pos = tok->pos;
-        Token *next = peek_next_token(p);
+        const Token *next = peek_next_token(p);
 
         //  Check if it is followed by '(' -> Function Call 
         if (next && next->type == TK_LPAREN) {
@@ -352,7 +359,7 @@ void parsed_expression_free(ParsedExpression *pe) {
     }
 }
 
-int parse_expression_tree(TokenList *t, ParsedExpression *out) {
+int parse_expression_tree(const TokenList *t, ParsedExpression *out) {
     if (!t || !out) return 0;
     out->root = NULL;
 

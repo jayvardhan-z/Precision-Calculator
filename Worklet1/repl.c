@@ -239,12 +239,16 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
     return ok;
 }
 
+void display_menu(void) {
+    printf("=== Arbitrary-Precision Calculator ===\n");
+    printf("Type 'help' for commands, 'exit' or Ctrl+D to quit.\n\n");
+}
+
 int run_repl(void) {
     ReplState repl;
     repl_state_init(&repl);
 
-    printf("=== Arbitrary-Precision Calculator ===\n");
-    printf("Type 'help' for commands, 'exit' or Ctrl+D to quit.\n\n");
+    display_menu();
 
     while (repl.running) {
         display_prompt();
@@ -259,4 +263,13 @@ int run_repl(void) {
 
     repl_state_free(&repl);
     return 0;
+}
+
+int run_expression(const char *expr) {
+    if (!expr) return 1;
+    ReplState repl;
+    repl_state_init(&repl);
+    int ok = execute_repl_cycle(&repl, expr);
+    repl_state_free(&repl);
+    return ok ? 0 : 1;
 }
