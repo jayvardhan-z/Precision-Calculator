@@ -8,46 +8,66 @@
 #include "parser.h"
 #include "eval.h"
 
+// ============================================================================
+// File: repl.c
+// Purpose: Interactive Read-Eval-Print Loop (REPL) and execution coordinator.
+// Role:
+//   Coordinates input reading, internal command interpretation, syntax
+//   validation, tokenization, AST parsing, AST post-order evaluation,
+//   high-resolution execution timing, and formatted result presentation.
+// ============================================================================
+
+// Encapsulates the runtime state of the interactive calculator session
 typedef struct {
-    int running;
-    SymbolTable vars;
-    EvalContext ctx;
+    int         running; // Loop control flag (1 = keep running, 0 = exit)
+    SymbolTable vars;    // Persistent symbol table holding variables and constants
+    EvalContext ctx;     // Evaluation context (precision, angle mode, rounding)
 } ReplState;
 
+// Initializes REPL session state with default settings and preloaded constants
 static void repl_state_init(ReplState *repl) {
     repl->running = 1;
+    // Initialize persistent variable table
     symtab_init(&repl->vars);
+    // Bind symbol table to evaluation context
     eval_context_init(&repl->ctx, &repl->vars);
+    // Set default configuration: 20 decimal places, radians, round-half-up
     repl->ctx.precision = 20;
     repl->ctx.angle_mode = ANGLE_RADIAN;
     repl->ctx.rounding = ROUND_HALF_UP;
+    // Precompute mathematical constants (pi, e, i, ans) to target precision
     symtab_preload_constants(&repl->vars, repl->ctx.precision);
 }
 
+// Releases all allocated memory associated with the REPL session
 static void repl_state_free(ReplState *repl) {
     symtab_free(&repl->vars);
 }
 
+// Displays the interactive prompt string to stdout and flushes the output stream
 static void display_prompt(void) {
     printf("> ");
     fflush(stdout);
 }
 
-// prints a simple error message
+// Formats and displays an error message with consistent indentation
 static void print_error(const char *msg) {
     printf("  Error: %s\n\n", msg);
 }
 
-// returns 1 if the line was a command, 0 if it should be evaluated
+// Inspects and handles internal REPL meta-commands (exit, help, mode, precision, vars)
+// Returns 1 if the input line was a meta-command, 0 if it should be evaluated as an expression
 static int handle_repl_command(ReplState *repl, const char *line) {
-    // empty line, nothing to do
+    // Empty line: treat as processed command, no evaluation needed
     if (line[0] == '\0') return 1;
 
+    // Command: "exit", "quit", or "q" -> Terminate REPL loop
     if (strcmp(line, "exit") == 0 || strcmp(line, "quit") == 0 || strcmp(line, "q") == 0) {
         repl->running = 0;
         return 1;
     }
 
+    // Command: "help" or "?" -> Display available commands and mathematical syntax
     if (strcmp(line, "help") == 0 || strcmp(line, "?") == 0) {
         printf("\n=== Commands ===\n");
         printf("  exit, quit         Exit the calculator\n");
@@ -64,18 +84,19 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         return 1;
     }
 
-    // "precision" alone shows the current value
+    // Command: "precision" alone -> Print current decimal precision
     if (strcmp(line, "precision") == 0) {
         printf("  [Current precision: %d]\n\n", repl->ctx.precision);
         return 1;
     }
 
-    // "precision 30" sets a new value
+    // Command: "precision <n>" -> Update decimal precision and recompute constants
     if (strncmp(line, "precision ", 10) == 0) {
         int p = atoi(line + 10);
+        // Constrain precision between 0 and 2000 decimal places
         if (p >= 0 && p <= 2000) {
             repl->ctx.precision = p;
-            symtab_preload_constants(&repl->vars, p);   // recompute pi, e
+            symtab_preload_constants(&repl->vars, p); // Recompute pi and e with new precision
             printf("  [Precision set to %d decimal places]\n\n", p);
         } else {
             printf("  [Error: precision must be between 0 and 2000]\n\n");
@@ -83,7 +104,7 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         return 1;
     }
 
-    // "mode" alone toggles, "mode deg" / "mode rad" sets it
+    // Command: "mode" -> Toggle or set trigonometric angle mode (degrees vs radians)
     if (strcmp(line, "mode") == 0 || strncmp(line, "mode ", 5) == 0) {
         const char *arg = line + 4;
         while (*arg == ' ') arg++;
@@ -93,6 +114,7 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         } else if (strcmp(arg, "rad") == 0 || strcmp(arg, "radian") == 0) {
             repl->ctx.angle_mode = ANGLE_RADIAN;
         } else {
+            // Toggle between Radian and Degree if no argument specified
             if (repl->ctx.angle_mode == ANGLE_RADIAN)
                 repl->ctx.angle_mode = ANGLE_DEGREE;
             else
@@ -106,6 +128,7 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         return 1;
     }
 
+    // Command: "vars" -> Print all registered symbols and their current values
     if (strcmp(line, "vars") == 0) {
         printf("\n=== Variables ===\n");
         for (size_t i = 0; i < repl->vars.count; i++) {
@@ -117,35 +140,35 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         return 1;
     }
 
-    return 0;
+    return 0; // Not a meta-command; line is a mathematical expression
 }
 
-// checks for "name = expr". Returns the variable name (malloc'd),
-// or NULL if the line is not an assignment.
+// Parses assignment syntax: "<variable_name> = <expression>"
+// Returns heap-allocated variable name string if assignment, or NULL if not
 static char *parse_assignment(char *line) {
     char *eq = strchr(line, '=');
-    if (!eq) return NULL;
+    if (!eq) return NULL; // No '=' character present
 
-    // the name must start with a letter or underscore
+    // Ensure the variable name starts with an alphabetic character or underscore
     char *start = line;
     while (*start == ' ') start++;
     if (!((*start >= 'a' && *start <= 'z') ||
           (*start >= 'A' && *start <= 'Z') ||
           *start == '_')) return NULL;
 
-    // read the whole name (letters, digits, underscore)
+    // Scan until end of identifier token
     char *end = start;
     while ((*end >= 'a' && *end <= 'z') ||
            (*end >= 'A' && *end <= 'Z') ||
            (*end >= '0' && *end <= '9') ||
            *end == '_') end++;
 
-    // only spaces are allowed between the name and '='
+    // Only whitespace is allowed between variable name and '='
     char *after = end;
     while (*after == ' ') after++;
     if (after != eq) return NULL;
 
-    // copy the name
+    // Duplicate variable name
     int len = end - start;
     char *name = malloc(len + 1);
     memcpy(name, start, len);
@@ -153,17 +176,19 @@ static char *parse_assignment(char *line) {
     return name;
 }
 
+// Executes a full cycle for a single input line: pre-validates, tokenizes, parses, evaluates, times, and prints
 int execute_repl_cycle(ReplState *repl, const char *raw_line) {
-    // make our own copy so we can trim it without touching the original
+    // Create working copy so trimming does not mutate the caller's buffer
     char *line = strdup(raw_line);
     trim_whitespace(line);
 
-    // commands like exit/help/mode are handled separately
+    // Process meta-commands (exit, help, mode, precision, vars)
     if (handle_repl_command(repl, line)) {
         free(line);
         return 1;
     }
 
+    // Initialize pipeline structures
     TokenList tokens;
     ParsedExpression pe;
     ParseError perr;
@@ -175,46 +200,46 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
     parsed_expression_init(&pe);
     value_init(&result, VAL_INT);
 
-    // check if the line is an assignment like "x = 5 + 2"
-    // if it is, expr is the part after the '='
+    // Check if the input line is an assignment: "name = expr"
     char *expr = line;
     char *var_name = parse_assignment(line);
     if (var_name) {
+        // Strip everything up to '=' so expr holds only the right-hand mathematical expression
         expr = strchr(line, '=') + 1;
         trim_whitespace(expr);
     }
 
-    // step 1: check brackets and basic syntax
+    // Step 1: Pre-validation of characters and parentheses
     if (!validate_expression(expr, &err_pos)) {
         print_error("Incorrect expression");
     }
-    // step 2: break the input into tokens
+    // Step 2: Lexical analysis (tokenization)
     else if (!lex_tokenize(expr, &tokens, &perr)) {
         print_error("Incorrect expression");
     }
-    // step 3: build the expression tree from the tokens
+    // Step 3: Recursive-descent AST construction
     else if (!parse_expression_tree(&tokens, &pe)) {
         print_error("Incorrect expression");
     }
-    // step 4: evaluate the tree
+    // Step 4: Semantic evaluation and timing
     else {
-        // clear old error before evaluating
+        // Reset evaluation context errors and recursion guard
         repl->ctx.depth = 0;
         repl->ctx.error.code = ERR_NONE;
         repl->ctx.error.pos = 0;
         repl->ctx.error.message[0] = '\0';
 
-        // time only the evaluation, not the parsing
+        // High-resolution interval timing around AST evaluation
         Timer timer;
         timer_start(&timer);
         int eval_ok = eval_node(pe.root, &repl->ctx, &result);
         timer_stop(&timer);
 
         if (!eval_ok) {
-            // show the reason from the evaluator, e.g. division by zero
+            // Evaluation failed (e.g. division by zero, domain error) -> Print specific error message
             print_error(repl->ctx.error.message);
         } else {
-            // convert result to text and print it with the time taken
+            // Convert calculated Value to human-readable string and display with elapsed milliseconds
             char *res_str = value_to_string(&result);
             if (var_name)
                 printf("  %s = %s  [%.4f ms]\n\n", var_name, res_str, timer_elapsed_ms(&timer));
@@ -222,15 +247,15 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
                 printf("  = %s  [%.4f ms]\n\n", res_str, timer_elapsed_ms(&timer));
             free(res_str);
 
-            // save the result as "ans" so the next line can use it
+            // Automatically store result in special variable "ans" for result chaining
             symtab_set(&repl->vars, "ans", &result);
-            // also save it under the variable name if there was one
+            // If user assigned to a variable name, store result in that symbol
             if (var_name) symtab_set(&repl->vars, var_name, &result);
             ok = 1;
         }
     }
 
-    // free everything we allocated
+    // Free all resources allocated for this evaluation cycle
     free(var_name);
     value_free(&result);
     parsed_expression_free(&pe);
@@ -239,21 +264,24 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
     return ok;
 }
 
+// Displays welcome banner upon REPL startup
 void display_menu(void) {
     printf("=== Arbitrary-Precision Calculator ===\n");
     printf("Type 'help' for commands, 'exit' or Ctrl+D to quit.\n\n");
 }
 
+// Main interactive loop reading expressions from stdin until exit
 int run_repl(void) {
     ReplState repl;
     repl_state_init(&repl);
 
     display_menu();
 
+    // Loop until user enters exit/quit command or sends EOF (Ctrl+D)
     while (repl.running) {
         display_prompt();
         char *line = read_input_line(stdin);
-        if (!line) {   // Ctrl+D
+        if (!line) { // End-of-file reached (Ctrl+D)
             printf("\nExiting.\n");
             break;
         }
@@ -265,6 +293,7 @@ int run_repl(void) {
     return 0;
 }
 
+// Evaluates a single expression string non-interactively and cleans up
 int run_expression(const char *expr) {
     if (!expr) return 1;
     ReplState repl;
