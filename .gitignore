@@ -9,10 +9,13 @@ calculator.exe
 test_part5
 test_part6
 test_part8
+tests/test_*
+tests/asan_*
 *.out
 
 # Debug symbols & sanitizers
 *.dSYM/
+**/*.dSYM/
 *.gdb_history
 
 # OS metadata
