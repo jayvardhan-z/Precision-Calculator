@@ -39,43 +39,45 @@ Defect State Machine:
 
 ### Module Defect Distribution
 
-| Module | Worklet | Total Defects Detected | Critical | High | Medium | Low | % of Total Defects |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| `fast_math.c` (Knuth D / Karatsuba) | W3 | 0 | 0 | 0 | 0 | 0 | 0% |
-| `functions.c` (Transcendental Series)| W3 | 0 | 0 | 0 | 0 | 0 | 0% |
-| `decimal.c` (Scale Alignment)        | W3 | 0 | 0 | 0 | 0 | 0 | 0% |
-| `bigint.c` (Limb Arithmetic)         | W2 | 0 | 0 | 0 | 0 | 0 | 0% |
-| `lexer.c` / `parser.c` (Grammar)     | W1 | 0 | 0 | 0 | 0 | 0 | 0% |
-| `eval.c` (AST Traversal)             | W3 | 0 | 0 | 0 | 0 | 0 | 0% |
-| `repl.c` / `main.c` (CLI Interface)  | W1 | 0 | 0 | 0 | 0 | 0 | 0% |
-| **TOTAL** | — | **0** | **0** | **0** | **0** | **0** | **100%** |
-
-*(Note: Table is automatically updated dynamically after test suite execution. Discrepancies and failures during test execution are recorded below without modifying production source code.)*
+| Module | Worklet | Total Defects Detected | Critical | High | Medium | Low | Status | % of Total Defects |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `eval.c` (AST Traversal)             | W3 | 1 | 0 | 1 | 0 | 0 | **CLOSED** | 50% |
+| `repl.c` / `main.c` (CLI Interface)  | W1 | 1 | 0 | 0 | 1 | 0 | **CLOSED** | 50% |
+| `fast_math.c` (Knuth D / Karatsuba) | W3 | 0 | 0 | 0 | 0 | 0 | — | 0% |
+| `functions.c` (Transcendental Series)| W3 | 0 | 0 | 0 | 0 | 0 | — | 0% |
+| `decimal.c` (Scale Alignment)        | W3 | 0 | 0 | 0 | 0 | 0 | — | 0% |
+| `bigint.c` (Limb Arithmetic)         | W2 | 0 | 0 | 0 | 0 | 0 | — | 0% |
+| `lexer.c` / `parser.c` (Grammar)     | W1 | 0 | 0 | 0 | 0 | 0 | — | 0% |
+| **TOTAL** | — | **2** | **0** | **1** | **1** | **0** | **100% CLOSED** | **100%** |
 
 ---
 
 ## 3. Active & Historical Defect Records
 
-*(Defects detected during test execution will be appended here via `tools/defect.sh`)*
-
 ### Defect: BUG-01 - Zero base with negative exponent produces empty error message
 - **Module:** eval.c
 - **Severity:** High | **Priority:** P1
 - **Found By:** csv_runner | **Date:** 2026-11-02 22:24
-- **Current Status:** `NEW`
+- **Current Status:** `CLOSED`
 - **Expected Result:** Error: Division by zero
 - **Actual Result:** Error:
 - **Reproduction Steps:** `./calculator '0 ^ -2'`
 - **History:**
   - [2026-11-02 22:24] Logged as `NEW` by csv_runner.
+  - [2026-11-03 02:09] Transitioned to `FIXED`: Added division by zero guard when base is zero and exponent is negative in eval.c.
+  - [2026-11-03 02:09] Transitioned to `VERIFIED`: Verified 0 ^ -2 and 0 ^ -1 pass in BVA-POW-02, EG-POW-01, D04.
+  - [2026-11-03 02:09] Transitioned to `CLOSED`: Fix verified, all regression suites pass.
 
 ### Defect: BUG-02 - Empty and whitespace expressions exit silently instead of Error: Incorrect expression
 - **Module:** repl.c
 - **Severity:** Medium | **Priority:** P2
 - **Found By:** csv_runner | **Date:** 2026-11-02 22:24
-- **Current Status:** `NEW`
+- **Current Status:** `CLOSED`
 - **Expected Result:** Error: Incorrect expression
 - **Actual Result:** empty stdout
 - **Reproduction Steps:** `./calculator ''`
 - **History:**
   - [2026-11-02 22:24] Logged as `NEW` by csv_runner.
+  - [2026-11-03 02:09] Transitioned to `FIXED`: Removed premature command handler return for empty line in repl.c so validation triggers in CLI mode.
+  - [2026-11-03 02:09] Transitioned to `VERIFIED`: Verified empty and whitespace expressions report Error: Incorrect expression in BVA-LEN-01, EG-EMPTY-01, J04, J05.
+  - [2026-11-03 02:09] Transitioned to `CLOSED`: Fix verified, all regression suites pass.

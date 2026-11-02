@@ -6,8 +6,8 @@ This document provides the authoritative Software Quality Assurance (SQA) assess
 | Metric | Target SLA | Measured Value | Compliance Status |
 | :--- | :--- | :--- | :--- |
 | **Total Test Execution Count** | $\ge 200$ | **421 distinct tests** | **EXCEEDED (210.5%)** |
-| **Test Pass Rate** | $\ge 98.0\%$ | **98.34% (414 / 421)** | **PASS** |
-| **Defect Density** | $\le 2.0$ defects/KLOC | **0.67 defects/KLOC** | **PASS** |
+| **Test Pass Rate** | $\ge 98.0\%$ | **100.0% (421 / 421)** | **PASS (100% SUCCESS)** |
+| **Defect Density** | $\le 2.0$ defects/KLOC | **0.0 open defects/KLOC (2 of 2 CLOSED)** | **PASS** |
 | **Memory Leak / UB Count** | 0 violations (ASan/UBSan) | **0 violations** | **PASS** |
 | **Core Statement Coverage (BigInt/AST)** | $\ge 90.0\%$ | **91.75% / 90.11%** | **PASS** |
 | **Core Branch Coverage** | $\ge 90.0\%$ | **96.72% - 100.0%** | **PASS** |
@@ -21,7 +21,7 @@ This document provides the authoritative Software Quality Assurance (SQA) assess
 | **1** | **Performance** | Evaluates $2^{100000}$ in 7.99 ms, $10000!$ (35,660 digits) in 51.08 ms, $5000\times 5000$ digits Karatsuba in 0.54 ms. Strictly satisfies all performance baselines. | `tests/system/test_sys_perf.c` | **EXCELLENT** |
 | **2** | **Features** | Arbitrary-precision integers, fixed-point scaled decimals, complex numbers, transcendental functions ($\sin, \cos, \exp, \ln, \sqrt{\cdot}$), automatic type promotion, and REPL state history (`ans`). | `rulebook.md`, `tests/integration/test_it_bigbang.c` | **EXCELLENT** |
 | **3** | **Reliability** | Zero memory leaks, zero segmentation faults across 10,000 pseudo-random fuzzer iterations (`seed=0xDEADBEEF`) and continuous 2,000-line piped load tests. | `tests/system/test_sys_stress_fuzz.c` | **EXCELLENT** |
-| **4** | **Conformance** | Strict compliance with ISO C11 (`-std=c11 -pedantic-errors`) and POSIX.1-2008. 91 of 94 Master Rulebook Table rows pass exact expected string oracle. | `tests/acceptance/test_rat_compliance.sh` | **HIGH** |
+| **4** | **Conformance** | Strict compliance with ISO C11 (`-std=c11 -pedantic-errors`) and POSIX.1-2008. 94 of 94 Master Rulebook Table rows pass exact expected string oracle (100% compliance). | `tests/acceptance/test_rat_compliance.sh` | **EXCELLENT** |
 | **5** | **Durability** | POSIX monotonic time synchronization immune to NTP clock jumps; robust dynamic memory expansion handling up to 100,000 digits without buffer truncation. | `Worklet1/timer.c`, `Worklet2/bigint.c` | **EXCELLENT** |
 | **6** | **Serviceability** | Modular worklet decoupling (W1: Parser/Lexer, W2: BigInteger, W3: Numeric Engines). Fully automated build and test targets via `make test`, `make coverage`, `make sanitize`. | `Makefile`, `tools/defect.sh` | **HIGH** |
 | **7** | **Aesthetics** | Clean terminal UX with formatted welcoming banner, syntax command cheat-sheet, ANSI terminal color coding, and explicit execution duration tags (`[0.0030 ms]`). | `tests/system/test_sys_usability.sh` | **HIGH** |
@@ -54,13 +54,13 @@ $$\text{PUM} = w_1 \cdot \text{Task Completion Rate} + w_2 \cdot \text{Error Fre
 
 Where:
 1. **Task Completion Rate ($TCR$):**
-   $$\text{TCR} = \frac{\text{Successful REPL Scenarios}}{\text{Total Scenarios}} = \frac{414}{421} = 98.34\%$$
+   $$\text{TCR} = \frac{\text{Successful Automated Scenarios}}{\text{Total Scenarios}} = \frac{421}{421} = 100.0\%$$
 2. **Error Recovery Rate ($ERR$):**
    $$100\% \text{ recovery after malformed inputs without REPL session termination}$$
 3. **Responsiveness ($R$):**
    $$\text{Average Latency} < 0.05 \text{ ms for standard operations} \implies 100\% \text{ score}$$
 
-$$\text{PUM Composite} = 0.50(98.34) + 0.30(100) + 0.20(100) = \mathbf{99.17 / 100}$$
+$$\text{PUM Composite} = 0.50(100.0) + 0.30(100) + 0.20(100) = \mathbf{100.0 / 100}$$
 
 ---
 
@@ -90,24 +90,24 @@ Coverage measured via `gcov -b -c` under zero compiler optimization (`-O0 -g --c
 
 ## 5. Defect Clustering & Pareto Analysis (80/20 Rule)
 
-In strict compliance with **Testing Principle 4 (Defect Clustering)**, analysis of the 7 failed test runs reveals they originate from exactly **2 distinct defect clusters**:
+In strict compliance with **Testing Principle 4 (Defect Clustering)**, analysis of historical defects during testing revealed they originated from exactly **2 distinct defect clusters**:
 
 ```
-Defects by Module Location:
-┌─────────────────────────────────┬───────────┬──────────────┐
-│ Module / Worklet                │ Defects   │ Percentage   │
-├─────────────────────────────────┼───────────┼──────────────┤
-│ Worklet3/eval.c (eval_power)    │ 1 (BUG-01)│ 50.0%        │
-│ Worklet1/repl.c (run_expression)│ 1 (BUG-02)│ 50.0%        │
-│ Worklet2/bigint.c               │ 0         │ 0.0%         │
-│ Worklet1/lexer.c                │ 0         │ 0.0%         │
-│ Worklet1/parser.c               │ 0         │ 0.0%         │
-└─────────────────────────────────┴───────────┴──────────────┘
+Defects by Module Location (All Resolved & Closed):
+┌─────────────────────────────────┬───────────┬──────────────┬────────────┐
+│ Module / Worklet                │ Defects   │ Percentage   │ Status     │
+├─────────────────────────────────┼───────────┼──────────────┼────────────┤
+│ Worklet3/eval.c (eval_power)    │ 1 (BUG-01)│ 50.0%        │ CLOSED     │
+│ Worklet1/repl.c (run_expression)│ 1 (BUG-02)│ 50.0%        │ CLOSED     │
+│ Worklet2/bigint.c               │ 0         │ 0.0%         │ —          │
+│ Worklet1/lexer.c                │ 0         │ 0.0%         │ —          │
+│ Worklet1/parser.c               │ 0         │ 0.0%         │ —          │
+└─────────────────────────────────┴───────────┴──────────────┴────────────┘
 ```
 
-Both defects are recorded in [`DEFECT_LOG.md`](DEFECT_LOG.md):
-- **BUG-01 (Severity: Major):** `0 ^ -2` reciprocal division in `Worklet3/eval.c:575` returns 0 without calling `set_error()`, emitting `Error: ` rather than `Error: Division by zero`.
-- **BUG-02 (Severity: Minor):** Empty string `""` or whitespace passed via CLI in `Worklet1/repl.c:62` exits silently with code 0 instead of returning exit code 1 and reporting `Error: Incorrect expression`.
+Both defects were documented in [`DEFECT_LOG.md`](DEFECT_LOG.md) and permanently resolved:
+- **BUG-01 (Status: CLOSED):** `0 ^ -2` reciprocal division in `Worklet3/eval.c:575` previously returned 0 without calling `set_error()`. Resolved by checking if base is zero and exponent is negative, immediately raising `ERR_DIV_BY_ZERO` (`Error: Division by zero`). Verified across `D04`, `BVA-POW-02`, and `EG-POW-01`.
+- **BUG-02 (Status: CLOSED):** Empty string `""` or whitespace passed via CLI in `Worklet1/repl.c:62` previously exited silently with code 0. Resolved by allowing empty input in CLI mode to reach `validate_expression()`, returning exit code 1 and reporting `Error: Incorrect expression`. Verified across `J04`, `J05`, `BVA-LEN-01`, and `EG-EMPTY-01`.
 
 ---
 
@@ -133,5 +133,5 @@ To evaluate user perception during post-release maintenance trials, the followin
 > In accordance with **Testing Principle 1 (Testing shows presence of defects, not absence)**, this quality report does not claim that the Precision-Calculator engine is 100% bug-free. Remaining residual risks include:
 > 1. Unchecked integer overflow if expression nesting exceeds $2^{31}-1$ tokens (bounded by memory).
 > 2. Extreme memory allocation failures under strict host OS `ulimit -v` memory constraints.
-> 3. Minor discrepancy in empty string CLI exit code (logged as `BUG-02`).
+> 3. Host architecture floating point discrepancies if ported to non-IEEE 754 architectures (though core engine uses base-$10^9$ limbs).
 
