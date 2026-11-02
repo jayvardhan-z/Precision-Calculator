@@ -18,7 +18,7 @@ Unlike conventional calculators bound to IEEE 754 64-bit floating-point limitati
 
 ### 1.2 Target Audience & Personas
 * **Persona A (Scientific Researcher / Cryptographer):** Requires verifiable, unbounded integer and rational operations (e.g., $1000!$, 512-bit modular arithmetic, GCD) without floating-point inaccuracies or third-party license entanglements.
-* **Persona B (Engineering Student / Educator):** Needs an intuitive CLI and REPL tool to evaluate complex infix expressions with variables, trigonometric functions, and execution timing metrics.
+* **Persona B (Engineering Student / Educator):** Needs an intuitive CLI and REPL tool to evaluate complex infix expressions with mathematical constants, trigonometric functions, and execution timing metrics.
 * **Persona C (Systems Engineer / Embedded Developer):** Seeks an embeddable, standalone C library with zero dynamic runtime dependencies and predictable memory bounds.
 
 ---
@@ -27,10 +27,10 @@ Unlike conventional calculators bound to IEEE 754 64-bit floating-point limitati
 
 ```mermaid
 journey
-    title User Journey: Interactive Calculation & Variable Chaining
+    title User Journey: Interactive Calculation & Result Chaining
     section Input
       Launch REPL: 5: User
-      Define variable x = 2^64: 4: User
+      Input expression 2^64: 4: User
     section Evaluation
       Parse AST: 5: Engine
       Execute Karatsuba/Knuth: 5: Engine
@@ -114,7 +114,7 @@ journey
 | **FR-PAR-02** | `Parser` | Positional unary sign resolution without grammar backtracking. | P0 |
 | **FR-EVL-01** | `Eval` | Recursive post-order tree evaluation with depth guard (`MAX_RECURSION_DEPTH = 128`). | P0 |
 | **FR-EVL-02** | `Eval` | Automatic type promotion along $\text{VAL\_INT} \to \text{VAL\_DEC} \to \text{VAL\_COMPLEX}$. | P0 |
-| **FR-SYM-01** | `SymbolTable`| Variable assignment (`x = expr`), retrieval, and constant preload (`pi`, `e`, `i`, `ans`). | P1 |
+| **FR-SYM-01** | `SymbolTable`| Constant preload (`pi`, `e`, `i`) and previous result retrieval (`ans`). Variable storage disabled. | P1 |
 | **FR-RPL-01** | `REPL` | Interactive loop with timing reports and meta-commands (`:help`, `:exit`, `:precision`, `:mode`). | P1 |
 
 ---

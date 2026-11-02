@@ -55,7 +55,7 @@ typedef struct {
 ---
 
 ### 1.3 Unified `Value` Tagged Union (Worklet 1 & 3)
-All operands, variables, and evaluation results are encapsulated inside a tagged union:
+All operands, constants, and evaluation results are encapsulated inside a tagged union:
 
 ```c
 typedef enum {
@@ -145,7 +145,7 @@ typedef struct {
     int          precision;  // Target fractional decimal digits
     AngleMode    angle_mode; // ANGLE_RADIAN or ANGLE_DEGREE
     RoundingMode rounding;   // Active rounding mode (ROUND_HALF_UP)
-    SymbolTable *vars;       // Active symbol table pointer
+    SymbolTable *vars;       // Active symbol table pointer (for constants pi, e, i, ans)
     int          depth;      // Current recursion depth guard
     EvalError    error;      // Latched error diagnostic
 } EvalContext;

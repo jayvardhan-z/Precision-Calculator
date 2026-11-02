@@ -33,7 +33,7 @@ int eval_node(const ExprNode *n, EvalContext *ctx, Value *out);
 int symtab_set(SymbolTable *st, const char *name, const Value *v);
 int symtab_get(const SymbolTable *st, const char *name, Value *out);
 ```
-* **Description:** Mutates or queries variable bindings in a symbol table.
+* **Description:** Mutates or queries constant and result bindings (e.g. `pi`, `e`, `i`, `ans`) in a symbol table. User variable storage is disabled.
 * **Parameters:**
   * `st` `[SymbolTable*]`: Target symbol table.
   * `name` `[const char*]`: Null-terminated ASCII identifier name.
@@ -80,7 +80,6 @@ echo "sin(pi / 4)" | ./calculator
 ### 2.3 REPL Meta-Commands
 * `:mode <rad|deg>`: Toggles angular interpretation for trigonometric functions.
 * `:precision <N>`: Sets fractional decimal evaluation precision (default: 20).
-* `:vars`: Displays all currently bound variables and preloaded constants.
 * `:help`: Prints interactive command usage instructions.
 * `:exit` or `:quit`: Gracefully terminates the REPL.
 
@@ -214,14 +213,6 @@ components:
           type: string
           enum: [radian, degree]
           default: radian
-        variables:
-          type: object
-          additionalProperties:
-            type: string
-          description: Key-value map of variable names to pre-bound values.
-          example:
-            x: "1000000000000"
-            y: "3.14159"
 
     EvaluationResponse:
       type: object

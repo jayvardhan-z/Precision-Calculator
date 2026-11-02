@@ -6,7 +6,7 @@
 // Purpose: Interactive Read-Eval-Print Loop (REPL) and CLI runner interface.
 // Role:
 //   Provides the user-facing terminal interface, command processor,
-//   expression executor, and variable environment manager.
+//   expression executor, and execution environment manager.
 // ============================================================================
 
 // Prints the welcoming banner, command cheat-sheet, and exit instructions
