@@ -1,0 +1,72 @@
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/system/test_sys_perf.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/system/test_sys_perf
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/system/test_sys_concurrency.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/system/test_sys_concurrency
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/system/test_sys_compat.c -lm -pthread -o tests/system/test_sys_compat
+
+=== Running System Test Suite ===
+=== Test Suite: System: Performance Benchmarking vs SLAs ===
+  [[1;32mPASS[0m] PERF-01 (PERF): 2 ^ 100000 repeated squaring latency (< 1500 ms) [13.444 ms]
+  [[1;32mPASS[0m] PERF-02 (PERF): 10000! factorial calculation latency (< 3000 ms) [64.449 ms]
+  [[1;32mPASS[0m] PERF-03 (PERF): 5000-digit x 5000-digit Karatsuba multiplication (< 500 ms) [0.565 ms]
+  [[1;32mPASS[0m] PERF-04 (PERF): 5000-digit / 2500-digit Knuth D division (< 1000 ms) [0.450 ms]
+  [[1;32mPASS[0m] PERF-05 (PERF): sqrt(2) to 2000 decimal places (< 800 ms) [1.104 ms]
+  [[1;32mPASS[0m] PERF-06 (PERF): pi calculation to 200 decimal places (< 500 ms) [0.003 ms]
+  [[1;32mPASS[0m] PERF-07 (PERF): exp(1) calculation to 200 decimal places (< 500 ms) [0.006 ms]
+  [[1;32mPASS[0m] PERF-08 (PERF): ln(2) calculation to 200 decimal places (< 600 ms) [0.656 ms]
+
+--- Suite Summary: System: Performance Benchmarking vs SLAs ---
+  Total Tests: 8
+  Passed:      [1;32m8[0m
+  Failed:      [1;32m0[0m
+  Duration:    80.983 ms
+=== Test Suite: System: Multithreaded Concurrency (POSIX pthreads) ===
+  [[1;32mPASS[0m] SYS-CONC-01 (SYSTEM): 8 concurrent threads evaluate distinct numeric workloads safely [1.025 ms]
+
+--- Suite Summary: System: Multithreaded Concurrency (POSIX pthreads) ---
+  Total Tests: 1
+  Passed:      [1;32m1[0m
+  Failed:      [1;32m0[0m
+  Duration:    1.175 ms
+=== Test Suite: System: Stress & Pseudo-Random Fuzzing ===
+  [[1;32mPASS[0m] SYS-STR-01 (STRESS): 127 nested parentheses evaluated successfully [0.194 ms]
+  [[1;32mPASS[0m] SYS-STR-02 (STRESS): 129 nested binary operations exceed MAX_RECURSION_DEPTH and reject cleanly [0.006 ms]
+  [[1;32mPASS[0m] SYS-STR-03 (STRESS): 10,000-digit integer addition executed without buffer overflow [0.177 ms]
+       [Fuzzer Seed: 0xDEADBEEF (Testing Principle 5: Pesticide Paradox)]
+  [[1;32mPASS[0m] SYS-FUZZ-01 (FUZZ): LCG seeded fuzzer (10,000 random mutations, seed=0xDEADBEEF) [7.700 ms]
+
+--- Suite Summary: System: Stress & Pseudo-Random Fuzzing ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    8.194 ms
+=== Test Suite: System: Architectural Compatibility ===
+  [[1;32mPASS[0m] SYS-CMP-01 (COMPAT): Word size invariants: uint64_t == 8 bytes, size_t >= 4 bytes [0.000 ms]
+  [[1;32mPASS[0m] SYS-CMP-02 (COMPAT): Endianness detection and memory alignment [0.000 ms]
+  [[1;32mPASS[0m] SYS-CMP-03 (COMPAT): Zero-dependency constraint: Pure ISO C11 + POSIX libc/libm [30.897 ms]
+
+--- Suite Summary: System: Architectural Compatibility ---
+  Total Tests: 3
+  Passed:      [1;32m3[0m
+  Failed:      [1;32m0[0m
+  Duration:    31.073 ms
+=== System Testing: Load Testing (2,000 operations) ===
+  [PASS] SYS-LOAD-01: 2000 expressions processed cleanly in ~0 ms
+=== System Testing: Usability & REPL UX ===
+  [PASS] SYS-USA-01: Welcome banner displayed correctly
+  [PASS] SYS-USA-02: 'help' command displays command list and syntax
+  [PASS] SYS-USA-03: 'mode deg' feedback confirmed
+  [PASS] SYS-USA-04: 'precision 50' feedback confirmed
+  [PASS] SYS-USA-05: 'quit' and 'q' terminate REPL cleanly
+=== System Testing: Migration & Compiler Optimization Portability ===
+  [PASS] SYS-MIG-01: -O0 binary computes correct Karatsuba product
+  [PASS] SYS-MIG-02: -O3 vectorized binary computes identical result
+  [PASS] SYS-MIG-03: Locale independence verified (decimal dot respected regardless of host locale)
+=== System Testing: Functional Binary Verification ===
+  [PASS] SYS-FUNC-01: Unsupported function 'tan(1)' rejected cleanly
+  [PASS] SYS-FUNC-02: Unsupported function 'asin(0.5)' rejected cleanly
+  [PASS] SYS-FUNC-03: Unsupported function 'log10(100)' rejected cleanly
+  [PASS] SYS-FUNC-04: abs(-42) == 42
+  [PASS] SYS-FUNC-05: gcd(1071, 462) == 21
+=== System Testing: Recovery & Resilience ===
+  [PASS] SYS-REC-01: Immediate EOF / Ctrl+D terminates REPL cleanly
+  [PASS] SYS-REC-02: REPL recovered from syntax error to evaluate subsequent '2 + 3'
+  [PASS] SYS-REC-03: 50,000-character input stream handled without crash

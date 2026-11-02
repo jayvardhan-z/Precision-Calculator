@@ -140,7 +140,7 @@ An **Extreme Stress-Testing Suite** was engineered and executed against the Arbi
 | `STRESS-063` | Syntax & Buffers | Disallowed characters | `@#$%&~` | MEDIUM | Rejects: `Incorrect expression` | **PASS** |
 | `STRESS-064` | Syntax & Buffers | Undefined variable reference | `my_unknown_var + 1` | MEDIUM | Rejects: `Undefined variable 'my_unknown_var'` | **PASS** |
 | `STRESS-065` | Syntax & Buffers | Undefined function call | `foo(42)` | MEDIUM | Rejects: `Incorrect expression` | **PASS** |
-| `STRESS-066` | Adversarial & Seq | 500 sequential variable definitions | `v0=0\n...\nv499=998\nv499+1` | HIGH | Output `= 999` in 3.4ms | **PASS** |
+| `STRESS-066` | Adversarial & Seq | Variable assignment rejection | `v0=0` | HIGH | Rejects: `Incorrect expression` (variable storage disabled) | **PASS** |
 | `STRESS-067` | Adversarial & Seq | Sequential `ans` chaining (100 ops) | `1\nans+1\n...\nans+1` | MEDIUM | Output `= 101` in 2.5ms | **PASS** |
 | `STRESS-068` | Adversarial & Seq | 50-digit transcendental cancellation | `10^50 + sin(pi/6) - 10^50` | HIGH | Taylor series cancels to `0.49999999999999999999` | **PASS** |
 | `STRESS-069` | Adversarial & Seq | Multi-function inverse composition | `sqrt(exp(ln(100)))` | HIGH | Output `= 10.00000000000000000002` | **PASS** |

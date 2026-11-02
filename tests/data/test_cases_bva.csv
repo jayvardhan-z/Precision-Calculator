@@ -1,0 +1,27 @@
+ID,BOUNDARY_PARAMETER,TEST_VALUE,INPUT_EXPR,EXPECTED_RESULT,STATUS
+BVA-FACT-01,"Factorial min - 1",-1,"(-1)!","Error: Factorial input negative or too large",INVALID
+BVA-FACT-02,"Factorial min",0,"0!","= 1",VALID
+BVA-FACT-03,"Factorial min + 1",1,"1!","= 1",VALID
+BVA-FACT-04,"Factorial typical",10,"10!","= 3628800",VALID
+BVA-FACT-05,"Factorial max",10000,"fact(10000)","EXACT_35660_DIGITS",VALID
+BVA-FACT-06,"Factorial max + 1",10001,"10001!","Error: Factorial input negative or too large",INVALID
+BVA-LIMB-01,"Base-10^9 single limb max",999999999,"999999999 + 0","= 999999999",VALID
+BVA-LIMB-02,"Base-10^9 carry overflow",1000000000,"999999999 + 1","= 1000000000",VALID
+BVA-LIMB-03,"Multi-limb borrow boundary",999999999,"1000000000 - 1","= 999999999",VALID
+BVA-LIMB-04,"Exact square of limb max",999999998000000001,"999999999 * 999999999","= 999999998000000001",VALID
+BVA-LEN-01,"Empty string input",0,"","Error: Incorrect expression",INVALID
+BVA-LEN-02,"Single character input valid",1,"5","= 5",VALID
+BVA-LEN-03,"Single character input invalid",1,"+","Error: Incorrect expression",INVALID
+BVA-LEN-04,"Single character input illegal",1,"@","Error: Incorrect expression",INVALID
+BVA-NEST-01,"Parentheses depth 1",1,"(1)","= 1",VALID
+BVA-NEST-02,"Nesting depth 127",127,"1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))","= 128",VALID
+BVA-NEST-03,"Nesting depth 128 (max)",128,"1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))","= 129",VALID
+BVA-NEST-04,"Nesting depth 129 (max + 1)",129,"1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))","Error: Recursion depth limit exceeded",INVALID
+BVA-POW-01,"Zero base zero exponent",0,"0 ^ 0","= 1",VALID
+BVA-POW-02,"Zero base negative exponent",-1,"0 ^ -1","Error: Division by zero",INVALID
+BVA-POW-03,"Positive base zero exponent",0,"12345 ^ 0","= 1",VALID
+BVA-LN-01,"Logarithm argument zero",0,"ln(0)","Error: Domain error: ln argument <= 0",INVALID
+BVA-LN-02,"Logarithm argument negative",-1,"ln(-1)","Error: Domain error: ln argument <= 0",INVALID
+BVA-LN-03,"Logarithm argument identity",1,"ln(1)","= 0",VALID
+BVA-SQRT-01,"Square root zero",0,"sqrt(0)","= 0",VALID
+BVA-SQRT-02,"Square root negative",-1,"sqrt(-1)","Error: Domain error: negative sqrt argument",INVALID

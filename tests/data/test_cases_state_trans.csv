@@ -1,0 +1,14 @@
+ID,SEQUENCE_STEP,INPUT_LINE,EXPECTED_PATTERN,STATE_CHECK
+ST-SEQ-01,1,"ans","= 0","Initial ans is 0"
+ST-SEQ-02,2,"2 + 3","= 5","ans updated to 5"
+ST-SEQ-03,3,"ans * 4","= 20","ans used and updated to 20"
+ST-SEQ-04,4,"10 / 0","Error: Division by zero","Error occurs"
+ST-SEQ-05,5,"ans","= 20","ans remains 20 after error"
+ST-SEQ-06,6,"mode deg","[Angle mode is now DEGREE]","Switched to degree mode"
+ST-SEQ-07,7,"sin(90)","= 1.00000000000000000000","sin(90 deg) is 1"
+ST-SEQ-08,8,"mode rad","[Angle mode is now RADIAN]","Switched to radian mode"
+ST-SEQ-09,9,"sin(pi / 2)","= 1.00000000000000000000","sin(pi/2 rad) is 1"
+ST-SEQ-10,10,"precision 5","[Precision set to 5 decimal places]","Precision changed to 5"
+ST-SEQ-11,11,"1 / 3","= 0.33333","Output respects 5 decimal places"
+ST-SEQ-12,12,"precision 20","[Precision set to 20 decimal places]","Precision restored to 20"
+

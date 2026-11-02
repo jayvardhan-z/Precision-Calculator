@@ -1,0 +1,10 @@
+BENCHMARK_ID,OPERATION,INPUT_DESCRIPTION,MAX_ALLOWED_MS
+PERF-01,POW_100K,"2 ^ 100000 binary repeated squaring",1500.0
+PERF-02,FACT_10K,"10000! (35660 digits)",3000.0
+PERF-03,MUL_5000,"5000-digit x 5000-digit Karatsuba multiplication",500.0
+PERF-04,DIV_5000,"5000-digit / 2500-digit Knuth D division",1000.0
+PERF-05,SQRT_2,"sqrt(2) to 2000 decimal places",800.0
+PERF-06,PI_CALC,"pi constant computed to 200 decimal places",500.0
+PERF-07,EXP_1,"exp(1) computed to 200 decimal places",500.0
+PERF-08,LN_2,"ln(2) computed to 200 decimal places",600.0
+
