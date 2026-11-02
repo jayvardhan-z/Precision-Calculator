@@ -1,0 +1,203 @@
+category,size,status,returncode,elapsed_seconds,output_chars,detail
+max_operand_digits,8,PASS_CHECKED,0,0.0207,28,
+max_operand_digits,16,PASS_CHECKED,0,0.0044,36,
+max_operand_digits,32,PASS_CHECKED,0,0.0047,52,
+max_operand_digits,64,PASS_CHECKED,0,0.0046,84,
+max_operand_digits,128,PASS_CHECKED,0,0.0048,148,
+max_operand_digits,256,PASS_CHECKED,0,0.0046,276,
+max_operand_digits,512,PASS_CHECKED,0,0.011,532,
+max_operand_digits,1024,PASS_CHECKED,0,0.0138,1044,
+max_operand_digits,2048,PASS_CHECKED,0,0.0201,2068,
+max_operand_digits,4096,PASS_CHECKED,0,0.0265,4116,
+max_operand_digits,8192,PASS_CHECKED,0,0.0371,8212,
+max_operand_digits,16384,PASS_CHECKED,0,0.0518,16404,
+max_operand_digits,32768,PASS_CHECKED,0,0.0907,32788,
+max_operand_digits,65536,PASS_CHECKED,0,0.1785,65556,
+max_operand_digits,100000,PASS_CHECKED,0,0.261,100020,
+max_addition_chain_terms,4,PASS_CHECKED,0,0.003,20,
+max_addition_chain_terms,8,PASS_CHECKED,0,0.0025,20,
+max_addition_chain_terms,16,PASS_CHECKED,0,0.003,20,
+max_addition_chain_terms,32,PASS_CHECKED,0,0.0034,21,
+max_addition_chain_terms,64,PASS_CHECKED,0,0.0033,21,
+max_addition_chain_terms,128,PASS_CHECKED,0,0.0034,21,
+max_addition_chain_terms,256,PASS_CHECKED,0,0.0031,22,
+max_addition_chain_terms,512,NONZERO_EXIT,1,0.0036,41,Error: Recursion depth limit exceeded
+max_addition_chain_terms,384,NONZERO_EXIT,1,0.0032,41,Error: Recursion depth limit exceeded
+max_addition_chain_terms,320,NONZERO_EXIT,1,0.0032,41,Error: Recursion depth limit exceeded
+max_addition_chain_terms,288,NONZERO_EXIT,1,0.0033,41,Error: Recursion depth limit exceeded
+max_addition_chain_terms,272,NONZERO_EXIT,1,0.0032,41,Error: Recursion depth limit exceeded
+max_addition_chain_terms,264,NONZERO_EXIT,1,0.003,41,Error: Recursion depth limit exceeded
+max_addition_chain_terms,260,NONZERO_EXIT,1,0.0029,41,Error: Recursion depth limit exceeded
+max_addition_chain_terms,258,PASS_CHECKED,0,0.0029,22,
+max_addition_chain_terms,259,NONZERO_EXIT,1,0.003,41,Error: Recursion depth limit exceeded
+max_expression_chars_chain,7,PASS_CHECKED,0,0.0025,20,
+max_expression_chars_chain,14,PASS_CHECKED,0,0.0025,20,
+max_expression_chars_chain,28,PASS_CHECKED,0,0.0023,21,
+max_expression_chars_chain,56,PASS_CHECKED,0,0.0024,21,
+max_expression_chars_chain,112,PASS_CHECKED,0,0.0024,21,
+max_expression_chars_chain,224,PASS_CHECKED,0,0.0034,22,
+max_expression_chars_chain,448,NONZERO_EXIT,1,0.0038,41,Error: Recursion depth limit exceeded
+max_expression_chars_chain,336,NONZERO_EXIT,1,0.0029,41,Error: Recursion depth limit exceeded
+max_expression_chars_chain,280,NONZERO_EXIT,1,0.0029,41,Error: Recursion depth limit exceeded
+max_expression_chars_chain,252,PASS_CHECKED,0,0.0027,22,
+max_expression_chars_chain,266,NONZERO_EXIT,1,0.003,41,Error: Recursion depth limit exceeded
+max_expression_chars_chain,259,NONZERO_EXIT,1,0.0031,41,Error: Recursion depth limit exceeded
+max_expression_chars_chain,255,PASS_CHECKED,0,0.0029,22,
+max_expression_chars_chain,257,PASS_CHECKED,0,0.0029,22,
+max_expression_chars_chain,258,PASS_CHECKED,0,0.0028,22,
+max_two_operand_digits_each,8,PASS_CHECKED,0,0.0049,28,
+max_two_operand_digits_each,16,PASS_CHECKED,0,0.0043,36,
+max_two_operand_digits_each,32,PASS_CHECKED,0,0.0025,52,
+max_two_operand_digits_each,64,PASS_CHECKED,0,0.0026,84,
+max_two_operand_digits_each,128,PASS_CHECKED,0,0.0024,148,
+max_two_operand_digits_each,256,PASS_CHECKED,0,0.0035,276,
+max_two_operand_digits_each,512,PASS_CHECKED,0,0.0057,532,
+max_two_operand_digits_each,1024,PASS_CHECKED,0,0.0102,1044,
+max_two_operand_digits_each,2048,PASS_CHECKED,0,0.0165,2068,
+max_two_operand_digits_each,4096,PASS_CHECKED,0,0.0279,4116,
+max_two_operand_digits_each,8192,PASS_UNCHECKED,0,0.0448,8212,result='1099999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+max_two_operand_digits_each,16384,PASS_UNCHECKED,0,0.0884,16404,result='1099999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+max_two_operand_digits_each,32768,PASS_UNCHECKED,0,0.1765,32788,result='1099999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+max_two_operand_digits_each,50000,PASS_UNCHECKED,0,0.2658,50020,result='1099999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+max_parenthesis_depth,2,PASS_CHECKED,0,0.0052,20,
+max_parenthesis_depth,4,PASS_CHECKED,0,0.0053,20,
+max_parenthesis_depth,8,PASS_CHECKED,0,0.0032,20,
+max_parenthesis_depth,16,PASS_CHECKED,0,0.0033,20,
+max_parenthesis_depth,32,PASS_CHECKED,0,0.0032,20,
+max_parenthesis_depth,64,PASS_CHECKED,0,0.0034,20,
+max_parenthesis_depth,128,PASS_CHECKED,0,0.0036,20,
+max_parenthesis_depth,256,PASS_CHECKED,0,0.0035,20,
+max_parenthesis_depth,512,PASS_CHECKED,0,0.0047,20,
+max_parenthesis_depth,1024,PASS_CHECKED,0,0.006,20,
+max_parenthesis_depth,2048,PASS_CHECKED,0,0.0088,20,
+max_parenthesis_depth,4096,PASS_CHECKED,0,0.0148,20,
+max_parenthesis_depth,8192,PASS_CHECKED,0,0.0237,20,
+max_parenthesis_depth,16384,PASS_CHECKED,0,0.0398,20,
+max_parenthesis_depth,20000,NONZERO_EXIT,-11,0.0774,0,
+max_parenthesis_depth,18192,PASS_CHECKED,0,0.0461,20,
+max_parenthesis_depth,19096,NONZERO_EXIT,-11,0.0662,0,
+max_parenthesis_depth,18644,NONZERO_EXIT,-11,0.0623,0,
+max_parenthesis_depth,18418,PASS_CHECKED,0,0.0455,20,
+max_parenthesis_depth,18531,PASS_CHECKED,0,0.0462,20,
+max_parenthesis_depth,18587,PASS_CHECKED,0,0.0466,20,
+max_parenthesis_depth,18615,NONZERO_EXIT,-11,0.0604,0,
+max_parenthesis_depth,18601,NONZERO_EXIT,-11,0.0621,0,
+max_parenthesis_depth,18594,NONZERO_EXIT,-11,0.0619,0,
+max_parenthesis_depth,18590,NONZERO_EXIT,-11,0.0615,0,
+max_parenthesis_depth,18588,PASS_CHECKED,0,0.0473,20,
+max_parenthesis_depth,18589,PASS_CHECKED,0,0.0471,20,
+max_sqrt_nesting_depth,1,PASS_UNCHECKED,0,0.003,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,2,PASS_UNCHECKED,0,0.0028,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,4,PASS_UNCHECKED,0,0.0036,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,8,PASS_UNCHECKED,0,0.003,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,16,PASS_UNCHECKED,0,0.0028,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,32,PASS_UNCHECKED,0,0.0028,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,64,PASS_UNCHECKED,0,0.0029,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,128,PASS_UNCHECKED,0,0.0039,41,result='1.00000000000000000000'
+max_sqrt_nesting_depth,256,NONZERO_EXIT,1,0.0039,41,Error: Recursion depth limit exceeded
+max_sqrt_nesting_depth,192,NONZERO_EXIT,1,0.0034,41,Error: Recursion depth limit exceeded
+max_sqrt_nesting_depth,160,NONZERO_EXIT,1,0.003,41,Error: Recursion depth limit exceeded
+max_sqrt_nesting_depth,144,NONZERO_EXIT,1,0.0039,41,Error: Recursion depth limit exceeded
+max_sqrt_nesting_depth,136,NONZERO_EXIT,1,0.0034,41,Error: Recursion depth limit exceeded
+max_sqrt_nesting_depth,132,NONZERO_EXIT,1,0.0031,41,Error: Recursion depth limit exceeded
+max_sqrt_nesting_depth,130,NONZERO_EXIT,1,0.0031,41,Error: Recursion depth limit exceeded
+max_sqrt_nesting_depth,129,NONZERO_EXIT,1,0.0031,41,Error: Recursion depth limit exceeded
+function_support:sqrt,1,PASS_UNCHECKED,0,0.0029,41,result='1.00000000000000000000'
+function_support:abs,1,PASS_UNCHECKED,0,0.0039,20,result='1'
+function_support:sin,1,PASS_UNCHECKED,0,0.0029,41,result='0.84147098480789650665'
+function_support:cos,1,PASS_UNCHECKED,0,0.0025,41,result='0.54030230586813971740'
+function_support:tan,1,NONZERO_EXIT,1,0.0025,31,Error: Incorrect expression
+function_support:asin,1,NONZERO_EXIT,1,0.0026,31,Error: Incorrect expression
+function_support:acos,1,NONZERO_EXIT,1,0.0037,31,Error: Incorrect expression
+function_support:atan,1,NONZERO_EXIT,1,0.0025,31,Error: Incorrect expression
+function_support:sinh,1,NONZERO_EXIT,1,0.0024,31,Error: Incorrect expression
+function_support:cosh,1,NONZERO_EXIT,1,0.0024,31,Error: Incorrect expression
+function_support:tanh,1,NONZERO_EXIT,1,0.0022,31,Error: Incorrect expression
+function_support:log,1,NONZERO_EXIT,1,0.0022,31,Error: Incorrect expression
+function_support:log10,1,NONZERO_EXIT,1,0.0023,31,Error: Incorrect expression
+function_support:ln,1,PASS_UNCHECKED,0,0.0028,20,result='0'
+function_support:exp,1,PASS_UNCHECKED,0,0.0024,41,result='2.71828182845904523536'
+function_support:floor,1,NONZERO_EXIT,1,0.0022,31,Error: Incorrect expression
+function_support:ceil,1,NONZERO_EXIT,1,0.0022,31,Error: Incorrect expression
+function_support:round,1,NONZERO_EXIT,1,0.0021,31,Error: Incorrect expression
+function_support:conj,1,NONZERO_EXIT,1,0.0022,31,Error: Incorrect expression
+function_support:real,1,NONZERO_EXIT,1,0.0025,31,Error: Incorrect expression
+function_support:imag,1,NONZERO_EXIT,1,0.0026,31,Error: Incorrect expression
+function_support:arg,1,NONZERO_EXIT,1,0.0025,31,Error: Incorrect expression
+max_unary_minus_count,1,PASS_CHECKED,0,0.0022,21,
+max_unary_minus_count,2,PASS_CHECKED,0,0.0022,20,
+max_unary_minus_count,4,PASS_CHECKED,0,0.0025,20,
+max_unary_minus_count,8,PASS_CHECKED,0,0.0022,20,
+max_unary_minus_count,16,PASS_CHECKED,0,0.0025,20,
+max_unary_minus_count,32,PASS_CHECKED,0,0.003,20,
+max_unary_minus_count,64,PASS_CHECKED,0,0.0038,20,
+max_unary_minus_count,128,PASS_CHECKED,0,0.0029,20,
+max_unary_minus_count,256,NONZERO_EXIT,1,0.0027,41,Error: Recursion depth limit exceeded
+max_unary_minus_count,192,NONZERO_EXIT,1,0.0029,41,Error: Recursion depth limit exceeded
+max_unary_minus_count,160,NONZERO_EXIT,1,0.0029,41,Error: Recursion depth limit exceeded
+max_unary_minus_count,144,NONZERO_EXIT,1,0.0025,41,Error: Recursion depth limit exceeded
+max_unary_minus_count,136,NONZERO_EXIT,1,0.0024,41,Error: Recursion depth limit exceeded
+max_unary_minus_count,132,NONZERO_EXIT,1,0.0026,41,Error: Recursion depth limit exceeded
+max_unary_minus_count,130,NONZERO_EXIT,1,0.0023,41,Error: Recursion depth limit exceeded
+max_unary_minus_count,129,NONZERO_EXIT,1,0.0023,41,Error: Recursion depth limit exceeded
+max_decimal_fraction_digits,8,PASS_UNCHECKED,0,0.0025,29,result='0.11111111'
+max_decimal_fraction_digits,16,PASS_UNCHECKED,0,0.0032,37,result='0.1111111111111111'
+max_decimal_fraction_digits,32,PASS_UNCHECKED,0,0.0044,53,result='0.11111111111111111111111111111111'
+max_decimal_fraction_digits,64,PASS_UNCHECKED,0,0.003,85,result='0.1111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,128,PASS_UNCHECKED,0,0.0033,149,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,256,PASS_UNCHECKED,0,0.0037,277,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,512,PASS_UNCHECKED,0,0.0042,533,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,1024,PASS_UNCHECKED,0,0.0057,1045,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,2048,PASS_UNCHECKED,0,0.0083,2069,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,4096,PASS_UNCHECKED,0,0.0171,4117,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,8192,PASS_UNCHECKED,0,0.0298,8213,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,16384,PASS_UNCHECKED,0,0.0471,16405,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,32768,PASS_UNCHECKED,0,0.0814,32789,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+max_decimal_fraction_digits,50000,PASS_UNCHECKED,0,0.1295,50021,result='0.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+scientific_exponent,1,PASS_UNCHECKED,0,0.0052,21,result='10'
+scientific_negative_exponent,1,PASS_UNCHECKED,0,0.0051,22,result='0.1'
+scientific_exponent,2,PASS_UNCHECKED,0,0.0039,22,result='100'
+scientific_negative_exponent,2,PASS_UNCHECKED,0,0.0034,23,result='0.01'
+scientific_exponent,10,PASS_UNCHECKED,0,0.0031,30,result='10000000000'
+scientific_negative_exponent,10,PASS_UNCHECKED,0,0.0026,31,result='0.0000000001'
+scientific_exponent,100,PASS_UNCHECKED,0,0.0028,120,result='1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_negative_exponent,100,PASS_UNCHECKED,0,0.0029,121,result='0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_exponent,1000,PASS_UNCHECKED,0,0.0033,1020,result='1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_negative_exponent,1000,PASS_UNCHECKED,0,0.0028,1021,result='0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_exponent,10000,PASS_UNCHECKED,0,0.0029,10020,result='1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_negative_exponent,10000,PASS_UNCHECKED,0,0.0028,10021,result='0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_exponent,100000,PASS_UNCHECKED,0,0.0039,100020,result='1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_negative_exponent,100000,PASS_UNCHECKED,0,0.0035,100021,result='0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_exponent,1000000,PASS_UNCHECKED,0,0.0082,1000020,result='1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+scientific_negative_exponent,1000000,PASS_UNCHECKED,0,0.0037,1000021,result='0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+domain_and_boundary,7,PASS_UNCHECKED,0,0.0032,20,result='0'
+domain_and_boundary,8,NONZERO_EXIT,1,0.0029,47,Error: Domain error: negative sqrt argument
+domain_and_boundary,6,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+domain_and_boundary,6,NONZERO_EXIT,1,0.0024,31,Error: Incorrect expression
+domain_and_boundary,7,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+domain_and_boundary,3,NONZERO_EXIT,1,0.0027,27,Error: Division by zero
+domain_and_boundary,3,NONZERO_EXIT,1,0.0029,27,Error: Division by zero
+domain_and_boundary,8,NONZERO_EXIT,1,0.0041,42,Error: Negative base for decimal power
+domain_and_boundary,6,PASS_UNCHECKED,0,0.0032,20,result='0'
+domain_and_boundary,6,PASS_UNCHECKED,0,0.003,20,result='1'
+domain_and_boundary,6,NONZERO_EXIT,1,0.003,31,Error: Incorrect expression
+combined_big_operands,10003,PASS_UNCHECKED,0,0.0638,5020,result='1888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888'
+combined_many_terms_and_parens,401,PASS_UNCHECKED,0,0.0037,22,result='101'
+combined_nested_functions_and_chain,403,PASS_UNCHECKED,0,0.0035,41,result='1.00000000000000349216'
+combined_long_unary_and_parens,301,PASS_UNCHECKED,0,0.0032,20,result='1'
+combined_1000_operator_chain,2001,NONZERO_EXIT,1,0.0089,41,Error: Recursion depth limit exceeded
+combined_5000_operator_chain,10001,NONZERO_EXIT,1,0.0314,41,Error: Recursion depth limit exceeded
+invalid_input,0,NO_RESULT,0,0.0031,0,
+invalid_input,1,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+invalid_input,2,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+invalid_input,2,NONZERO_EXIT,1,0.0026,31,Error: Incorrect expression
+invalid_input,2,NONZERO_EXIT,1,0.0031,31,Error: Incorrect expression
+invalid_input,1,NONZERO_EXIT,1,0.0027,31,Error: Incorrect expression
+invalid_input,1,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+invalid_input,4,NONZERO_EXIT,1,0.0026,31,Error: Incorrect expression
+invalid_input,4,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+invalid_input,5,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+invalid_input,18,NONZERO_EXIT,1,0.0029,31,Error: Incorrect expression
+invalid_input,4,NONZERO_EXIT,1,0.0026,31,Error: Incorrect expression
+invalid_input,5,NONZERO_EXIT,1,0.0027,31,Error: Incorrect expression
+invalid_input,11,NONZERO_EXIT,1,0.0022,31,Error: Incorrect expression
