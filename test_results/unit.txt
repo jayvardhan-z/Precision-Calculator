@@ -1,0 +1,161 @@
+
+=== Running White-Box Unit Test Suite ===
+=== Test Suite: White-Box Unit: BigInteger (Worklet 2) ===
+  [[1;32mPASS[0m] UT-BIGINT-01 (UNIT): Initialization, default canonical zero state, and free [0.000 ms]
+  [[1;32mPASS[0m] UT-BIGINT-02 (UNIT): Canonical zero invariant after normalization [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-03 (UNIT): Stripping multiple leading zero limbs [0.002 ms]
+  [[1;32mPASS[0m] UT-BIGINT-04 (UNIT): Deep-copy semantics: value_copy and independence [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-05 (UNIT): Magnitude comparison: less, equal, greater [0.000 ms]
+  [[1;32mPASS[0m] UT-BIGINT-06 (UNIT): Signed comparison: negative vs positive vs zero [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-07 (UNIT): Addition: Carry ripple across multiple limbs [0.055 ms]
+  [[1;32mPASS[0m] UT-BIGINT-08 (UNIT): Subtraction: Borrow ripple across multiple limbs [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-09 (UNIT): Branch coverage: All 4 signed add/sub combinations [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-10 (UNIT): Schoolbook multiplication O(n^2) [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-11 (UNIT): Limb invariant verification: all digits < 10^9 [0.000 ms]
+
+--- Suite Summary: White-Box Unit: BigInteger (Worklet 2) ---
+  Total Tests: 11
+  Passed:      [1;32m11[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.304 ms
+=== Test Suite: White-Box Unit: BigInt I/O Serialization ===
+  [[1;32mPASS[0m] UT-IO-01 (UNIT): Zero string variations normalize to canonical zero '0' [0.001 ms]
+  [[1;32mPASS[0m] UT-IO-02 (UNIT): 9-digit chunk boundaries: 8, 9, 10, 18, 27 digits [0.004 ms]
+  [[1;32mPASS[0m] UT-IO-03 (UNIT): Signed string roundtrip: positive and negative [0.001 ms]
+  [[1;32mPASS[0m] UT-IO-04 (UNIT): Stripping leading zeros on non-zero numbers [0.000 ms]
+
+--- Suite Summary: White-Box Unit: BigInt I/O Serialization ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.052 ms
+=== Test Suite: White-Box Unit: Fast Math (Karatsuba & Knuth D) ===
+  [[1;32mPASS[0m] UT-FM-01 (UNIT): Karatsuba == Schoolbook: Size 1, 2, 31, 32, 33, 64, 100, 257 limbs [0.520 ms]
+  [[1;32mPASS[0m] UT-FM-02 (UNIT): Karatsuba == Schoolbook: Unequal operand sizes [0.012 ms]
+  [[1;32mPASS[0m] UT-FM-03 (UNIT): Knuth D division invariant: q * d + r == n and 0 <= r < d [0.003 ms]
+  [[1;32mPASS[0m] UT-FM-04 (UNIT): Knuth D: Divisors needing add-back branch execution [0.001 ms]
+  [[1;32mPASS[0m] UT-FM-05 (UNIT): Knuth D: Powers of 10^9 and all-(10^9-1) limb values [0.001 ms]
+  [[1;32mPASS[0m] UT-FM-06 (UNIT): Euclidean GCD and identity gcd(a, b) * lcm == a * b [0.001 ms]
+  [[1;32mPASS[0m] UT-FM-07 (UNIT): Repeated squaring binary power: bigint_pow [0.001 ms]
+
+--- Suite Summary: White-Box Unit: Fast Math (Karatsuba & Knuth D) ---
+  Total Tests: 7
+  Passed:      [1;32m7[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.589 ms
+=== Test Suite: White-Box Unit: BigDecimal Scaled Arithmetic ===
+  [[1;32mPASS[0m] UT-DEC-01 (UNIT): Canonical zero normalization: scale reset to 0 [0.001 ms]
+  [[1;32mPASS[0m] UT-DEC-02 (UNIT): Scale alignment addition: delta_s = 7 - 4 = 3 [0.002 ms]
+  [[1;32mPASS[0m] UT-DEC-03 (UNIT): Scale addition in multiplication: s = 1 + 1 = 2 [0.001 ms]
+  [[1;32mPASS[0m] UT-DEC-04 (UNIT): Division with target precision: 1 / 3 to 20 digits [0.002 ms]
+  [[1;32mPASS[0m] UT-DEC-05 (UNIT): Rounding: ROUND_HALF_UP tie breaking [0.002 ms]
+  [[1;32mPASS[0m] UT-DEC-06 (UNIT): Decimal comparison with different scales [0.001 ms]
+
+--- Suite Summary: White-Box Unit: BigDecimal Scaled Arithmetic ---
+  Total Tests: 6
+  Passed:      [1;32m6[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.057 ms
+=== Test Suite: White-Box Unit: Complex Numbers (Worklet 3) ===
+  [[1;32mPASS[0m] UT-CPX-01 (UNIT): Fundamental identity: i * i == -1 [0.002 ms]
+  [[1;32mPASS[0m] UT-CPX-02 (UNIT): Component-wise addition and subtraction [0.004 ms]
+  [[1;32mPASS[0m] UT-CPX-03 (UNIT): Conjugate multiplication: (2 + 3i) * (2 - 3i) == 13 [0.002 ms]
+  [[1;32mPASS[0m] UT-CPX-04 (UNIT): Conjugate division: (1 + i) / (1 - i) == 1i [0.004 ms]
+  [[1;32mPASS[0m] UT-CPX-05 (UNIT): Division by complex zero guard returns 0 [0.003 ms]
+
+--- Suite Summary: White-Box Unit: Complex Numbers (Worklet 3) ---
+  Total Tests: 5
+  Passed:      [1;32m5[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.053 ms
+=== Test Suite: White-Box Unit: Transcendental Functions (Worklet 3) ===
+  [[1;32mPASS[0m] UT-FNC-01 (UNIT): Newton-Raphson sqrt: exact 144, sqrt(2), and domain error [0.046 ms]
+  [[1;32mPASS[0m] UT-FNC-02 (UNIT): Identity sqrt(x)^2 == x within epsilon [0.013 ms]
+  [[1;32mPASS[0m] UT-FNC-03 (UNIT): Exponential exp(0) == 1 and exp(1) == Euler's constant e [0.012 ms]
+  [[1;32mPASS[0m] UT-FNC-04 (UNIT): Natural logarithm ln(1) == 0 and domain error (x <= 0) [0.012 ms]
+  [[1;32mPASS[0m] UT-FNC-05 (UNIT): Identity exp(ln(x)) == x within epsilon [0.252 ms]
+  [[1;32mPASS[0m] UT-FNC-06 (UNIT): Trigonometric sin and cos: sin(0) == 0, cos(0) == 1, sin(pi/2) == 1 [0.001 ms]
+  [[1;32mPASS[0m] UT-FNC-07 (UNIT): Identity sin^2(x) + cos^2(x) == 1 within epsilon [0.036 ms]
+  [[1;32mPASS[0m] UT-FNC-08 (UNIT): Constants generator: pi and e to 20 decimal places [0.003 ms]
+
+--- Suite Summary: White-Box Unit: Transcendental Functions (Worklet 3) ---
+  Total Tests: 8
+  Passed:      [1;32m8[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.433 ms
+=== Test Suite: White-Box Unit: Lexer & Tokenizer (Worklet 1) ===
+  [[1;32mPASS[0m] UT-LEX-01 (UNIT): Parentheses balancing pre-validator [0.001 ms]
+  [[1;32mPASS[0m] UT-LEX-02 (UNIT): Disallowed character detection in pre-validator [0.001 ms]
+  [[1;32mPASS[0m] UT-LEX-03 (UNIT): Tokenization sequence: numbers, operators, identifiers, parens [0.002 ms]
+  [[1;32mPASS[0m] UT-LEX-04 (UNIT): Mirror syllabus Account Number table: Number-Token component testing [0.001 ms]
+
+--- Suite Summary: White-Box Unit: Lexer & Tokenizer (Worklet 1) ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.042 ms
+=== Test Suite: White-Box Unit: Parser & AST Construction (Worklet 1) ===
+  [[1;32mPASS[0m] UT-PAR-01 (UNIT): Precedence: Multiplication binds tighter than Addition [0.002 ms]
+  [[1;32mPASS[0m] UT-PAR-02 (UNIT): Right-associativity of power: 2 ^ 3 ^ 2 -> 2 ^ (3 ^ 2) [0.002 ms]
+  [[1;32mPASS[0m] UT-PAR-03 (UNIT): Left-associativity of subtraction: 10 - 4 - 2 -> (10 - 4) - 2 [0.002 ms]
+  [[1;32mPASS[0m] UT-PAR-04 (UNIT): Postfix factorial: 5! and chained 3!! [0.002 ms]
+  [[1;32mPASS[0m] UT-PAR-05 (UNIT): Function arity validation: valid vs arity errors [0.006 ms]
+
+--- Suite Summary: White-Box Unit: Parser & AST Construction (Worklet 1) ---
+  Total Tests: 5
+  Passed:      [1;32m5[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.049 ms
+=== Test Suite: White-Box Unit: AST Construction & Traversal (Worklet 1) ===
+  [[1;32mPASS[0m] UT-AST-01 (UNIT): node_new_number creates valid VAL_INT node [0.002 ms]
+  [[1;32mPASS[0m] UT-AST-02 (UNIT): node_new_number creates valid VAL_DEC node for decimal and scientific notation [0.035 ms]
+  [[1;32mPASS[0m] UT-AST-03 (UNIT): node_new_number error handling on NULL or malformed input [0.000 ms]
+  [[1;32mPASS[0m] UT-AST-04 (UNIT): node_new_var allocates and deep-copies identifier [0.001 ms]
+  [[1;32mPASS[0m] UT-AST-05 (UNIT): node_new_binary links left and right subtrees [0.000 ms]
+  [[1;32mPASS[0m] UT-AST-06 (UNIT): node_new_unary links operand subtree [0.001 ms]
+  [[1;32mPASS[0m] UT-AST-07 (UNIT): node_new_call links argument array and function id [0.000 ms]
+  [[1;32mPASS[0m] UT-AST-08 (UNIT): free_expr_node safe recursive traversal and NULL safety [0.001 ms]
+
+--- Suite Summary: White-Box Unit: AST Construction & Traversal (Worklet 1) ---
+  Total Tests: 8
+  Passed:      [1;32m8[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.085 ms
+=== Test Suite: White-Box Unit: High-Resolution Timer (Worklet 1) ===
+  [[1;32mPASS[0m] UT-TIM-01 (UNIT): timer_start and timer_stop measure positive elapsed duration [18.765 ms]
+  [[1;32mPASS[0m] UT-TIM-02 (UNIT): Timer guarantees strictly non-decreasing monotonic timestamps [18.796 ms]
+  [[1;32mPASS[0m] UT-TIM-03 (UNIT): timer safe NULL pointer handling [0.000 ms]
+
+--- Suite Summary: White-Box Unit: High-Resolution Timer (Worklet 1) ---
+  Total Tests: 3
+  Passed:      [1;32m3[0m
+  Failed:      [1;32m0[0m
+  Duration:    37.642 ms
+=== Test Suite: White-Box Unit: Symbol Table & Constants (Worklet 3) ===
+  [[1;32mPASS[0m] UT-SYM-01 (UNIT): symtab_init and symtab_free on empty table [0.032 ms]
+  [[1;32mPASS[0m] UT-SYM-02 (UNIT): symtab_set and symtab_get basic insertion and retrieval [0.002 ms]
+  [[1;32mPASS[0m] UT-SYM-03 (UNIT): symtab_set overwrites existing identifier cleanly [0.001 ms]
+  [[1;32mPASS[0m] UT-SYM-04 (UNIT): Deep-copy invariant: caller mutation does not corrupt symbol table [0.001 ms]
+  [[1;32mPASS[0m] UT-SYM-05 (UNIT): symtab_get on non-existent identifier returns 0 [0.000 ms]
+  [[1;32mPASS[0m] UT-SYM-06 (UNIT): symtab_preload_constants registers pi, e, i, ans correctly [0.010 ms]
+  [[1;32mPASS[0m] UT-SYM-07 (UNIT): Dynamic reallocation: inserting 25 symbols triggers capacity expansion [0.018 ms]
+
+--- Suite Summary: White-Box Unit: Symbol Table & Constants (Worklet 3) ---
+  Total Tests: 7
+  Passed:      [1;32m7[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.113 ms
+=== Test Suite: White-Box Unit: AST Evaluator & Type Promotion (Worklet 3) ===
+  [[1;32mPASS[0m] UT-EV-01 (UNIT): Integer arithmetic: 15 + 27 = 42 (VAL_INT) [0.034 ms]
+  [[1;32mPASS[0m] UT-EV-02 (UNIT): Type promotion: INT + DEC -> DEC (10 + 2.5 = 12.5) [0.003 ms]
+  [[1;32mPASS[0m] UT-EV-03 (UNIT): Division promotion: 1 / 4 produces 0.25 (VAL_DEC) [0.004 ms]
+  [[1;32mPASS[0m] UT-EV-04 (UNIT): Division by zero latches ERR_DIV_BY_ZERO [0.001 ms]
+  [[1;32mPASS[0m] UT-EV-05 (UNIT): Angular mode: sin(90) in ANGLE_DEGREE produces 1 [0.036 ms]
+  [[1;32mPASS[0m] UT-EV-06 (UNIT): Recursion depth limit guard prevents stack overflow [0.001 ms]
+  [[1;32mPASS[0m] UT-EV-07 (UNIT): Complex multiplication: i * i evaluates to -1 [0.008 ms]
+
+--- Suite Summary: White-Box Unit: AST Evaluator & Type Promotion (Worklet 3) ---
+  Total Tests: 7
+  Passed:      [1;32m7[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.138 ms

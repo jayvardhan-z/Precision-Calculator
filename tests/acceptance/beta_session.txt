@@ -1,0 +1,11 @@
+help
+precision
+precision 10
+1 / 7
+2 + * 3
+2 + 3
+ans * 10
+mode deg
+sin(30)
+sqrt(144)
+quit

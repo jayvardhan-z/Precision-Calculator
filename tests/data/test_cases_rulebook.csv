@@ -1,0 +1,96 @@
+ID,EXPRESSION,EXPECTED_OUTPUT,TYPE
+A01,"2 + 3 * 4","= 14",VALID
+A02,"(2 + 3) * 4","= 20",VALID
+A03,"2 ^ 3 ^ 2","= 512",VALID
+A04,"(2 ^ 3) ^ 2","= 64",VALID
+A05,"10 - 4 - 2","= 4",VALID
+A06,"10 / 4","= 2.50000000000000000000",VALID
+A07,"10 / 2","= 5",VALID
+A08,"10 % 3","= 1",VALID
+A09,"10 % -3","= 1",VALID
+A10,"-10 % 3","= -1",VALID
+A11,"0 / 5","= 0",VALID
+A12,"0 % 5","= 0",VALID
+A13,"10 / 0","Error: Division by zero",INVALID
+A14,"10 % 0","Error: Modulo by zero",INVALID
+A15,"0 / 0","Error: Division by zero",INVALID
+B01,"+5","= 5",VALID
+B02,"-5","= -5",VALID
+B03,"- - 5","= 5",VALID
+B04,"- - - 5","= -5",VALID
+B05,"2 + - 3","= -1",VALID
+B06,"2 * - 3","= -6",VALID
+B07,"2 / - 4","= -0.50000000000000000000",VALID
+B08,"2 ^ - 3","= 0.12500000000000000000",VALID
+B09,"-3 ^ 2","= 9",VALID
+B10,"-(3 ^ 2)","= -9",VALID
+B11,"(-3) ^ 3","= -27",VALID
+B12,"(-3) ^ 2","= 9",VALID
+B13,"2 * * 3","Error: Incorrect expression",INVALID
+B14,"2 / / 3","Error: Incorrect expression",INVALID
+B15,"2 ^ ^ 3","Error: Incorrect expression",INVALID
+B16,"* 5","Error: Incorrect expression",INVALID
+B17,"5 *","Error: Incorrect expression",INVALID
+C01,"0!","= 1",VALID
+C02,"5!","= 120",VALID
+C03,"3!!","= 720",VALID
+C04,"-3!","= -6",VALID
+C05,"(-3)!","Error: Factorial input negative or too large",INVALID
+C06,"5.5!","Error: Factorial requires non-negative integer",INVALID
+C07,"!5","Error: Incorrect expression",INVALID
+C08,"fact(5)","= 120",VALID
+C09,"10001!","Error: Factorial input negative or too large",INVALID
+D01,"0 ^ 0","= 1",VALID
+D02,"0 ^ 5","= 0",VALID
+D03,"5 ^ 0","= 1",VALID
+D04,"0 ^ -2","Error: Division by zero",INVALID
+D05,"2 ^ -3.5","= 0.08838834764831844055",VALID
+D06,"(-2) ^ 0.5","Error: Negative base for decimal power",INVALID
+E01,"2(3)","Error: Incorrect expression",INVALID
+E02,"(2)(3)","Error: Incorrect expression",INVALID
+E03,"2x","Error: Incorrect expression",INVALID
+E04,"2pi","Error: Incorrect expression",INVALID
+E05,"3i","Error: Incorrect expression",INVALID
+E06,"sin 5","Error: Incorrect expression",INVALID
+E07,"5 sin(pi)","Error: Incorrect expression",INVALID
+F01,"(1 + 2","Error: Incorrect expression",INVALID
+F02,"1 + 2)","Error: Incorrect expression",INVALID
+F03,"()","Error: Incorrect expression",INVALID
+F04,"1 + (2 * )","Error: Incorrect expression",INVALID
+G01,"sin(0)","= 0",VALID
+G02,"cos(0)","= 1",VALID
+G03,"sin(pi / 2)","= 1.00000000000000000000",VALID
+G04,"exp(0)","= 1",VALID
+G05,"exp(1)","= 2.71828182845904523536",VALID
+G06,"ln(1)","= 0",VALID
+G07,"ln(0)","Error: Domain error: ln argument <= 0",INVALID
+G08,"ln(-5)","Error: Domain error: ln argument <= 0",INVALID
+G09,"sqrt(0)","= 0",VALID
+G10,"sqrt(144)","= 12.00000000000000000000",VALID
+G11,"sqrt(-4)","Error: Domain error: negative sqrt argument",INVALID
+G12,"gcd(48, 18)","= 6",VALID
+G13,"gcd(-48, 18)","= 6",VALID
+G14,"gcd(48.5, 18)","Error: gcd requires integer arguments",INVALID
+G15,"sin()","Error: Incorrect expression",INVALID
+G16,"sin(1, 2)","Error: Incorrect expression",INVALID
+G17,"gcd(10)","Error: Incorrect expression",INVALID
+G18,"tan(0)","Error: Incorrect expression",INVALID
+H01,"i * i","= -1",VALID
+H02,"2 + 3 * i","= 2 + 3i",VALID
+H03,"(2 + 3*i) + (4 - 5*i)","= 6 - 2i",VALID
+H04,"(2 + 3*i) * (2 - 3*i)","= 13",VALID
+H05,"(1 + i) / (1 - i)","= 1.00000000000000000000i",VALID
+H06,"abs(3 + 4*i)","= 5.00000000000000000000",VALID
+H07,"(2 + 3*i) % 2","Error: Unsupported operator on complex",INVALID
+H08,"i ^ 2","Error: Unsupported operator on complex",INVALID
+H09,"sin(i)","Error: sin requires numeric argument",INVALID
+H10,"sqrt(i)","Error: sqrt requires numeric argument",INVALID
+I01,"0.1 + 0.2","= 0.3",VALID
+I02,"5.5 % 2","Error: Unsupported operator on decimal",INVALID
+I03,"mod(5.5, 2)","Error: Unsupported operator on decimal",INVALID
+J01,"1,234","Error: Incorrect expression",INVALID
+J02,"1; 2","Error: Incorrect expression",INVALID
+J03,"2 @ 3","Error: Incorrect expression",INVALID
+J04,"","Error: Incorrect expression",INVALID
+J05,"   ","Error: Incorrect expression",INVALID
+
