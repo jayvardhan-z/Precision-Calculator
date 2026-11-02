@@ -16,7 +16,7 @@ The engine accepts arbitrary-length mathematical expressions typed as text (e.g.
 * **Core Arithmetic:** Exact addition ($+$), subtraction ($-$), multiplication ($\times$), division ($\div$), modulo ($\%$), power ($^\wedge$), unary signs, and factorial ($!$).
 * **Mathematical Functions:** Truncated Taylor series with range reduction: `sin`, `cos`, `exp`, `ln`, `sqrt`, `abs`, `gcd`, `pow`, `mod`.
 * **First-Class Types:** `BigInteger`, `BigDecimal` (significand + scale), and `Complex` ($a + bi$) supported in a single expression via automatic type promotion.
-* **REPL & Variable Chaining:** Named variables (`a`, `b`, constants `pi`, `e`) and automatic result chaining through `ans`.
+* **REPL & Result Chaining:** Built-in mathematical constants (`pi`, `e`, `i`) and automatic result chaining through `ans`. Pure expression evaluation without variable storage.
 * **Performance Bound:** $100\text{-digit} \div 200\text{-digit}$ division completes in $< 1.0\text{ s}$.
 * **Input & Grammar Rulebook:** For an exhaustive guide to valid vs. invalid inputs, operators, and all syntax combinations, see [rulebook.md](file:///Users/makarandkulkarni/Myspace/Mini-project/Precision-Calculator/rulebook.md).
 
@@ -252,7 +252,7 @@ arglist    -> expression ( ',' expression )*
 
 ### Phase 5: Worklet 3 — Mathematical Functions & Symbol Engine
 * **Symbol Table & Context:**
-  * Symbol resolution for variables (`a`, `b`, ...), mathematical constants (`pi`, `e`), and previous result chaining (`ans`).
+  * Symbol resolution for mathematical constants (`pi`, `e`, `i`), and previous result chaining (`ans`). Variable storage is intentionally disabled for pure expression evaluation.
 * **Taylor Series with Range Reduction:**
   * $\sin(x), \cos(x)$: Range reduction modulo $2\pi$, Maclaurin series expansion.
   * $\exp(x)$: Integer/fraction split and Taylor expansion.

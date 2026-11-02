@@ -37,7 +37,7 @@ The calculator can be invoked in four distinct execution modes:
 
 | Mode | Syntax Example | Valid Inputs | Behavior / Output |
 | :--- | :--- | :--- | :--- |
-| **Interactive REPL** | `./calculator` | Expressions, assignments (`x = 5`), meta-commands (`mode`, `precision`, `vars`, `help`, `exit`) | Displays persistent `> ` prompt, result, and elapsed time in milliseconds. Variables persist across lines. |
+| **Interactive REPL** | `./calculator` | Pure expressions, meta-commands (`mode`, `precision`, `help`, `exit`) | Displays persistent `> ` prompt, evaluated result, and elapsed time in milliseconds. Result chaining (`ans`) persists across lines; variable storage is disabled. |
 | **Direct CLI String** | `./calculator "2^10 + 5"` | Any valid single expression | Evaluates expression, prints result with timing, returns exit code `0`. |
 | **Flag Execution** | `./calculator -e "sqrt(144)"` | `-e` followed by expression | Equivalent to direct CLI string. Useful in scripts. |
 | **Multi-Argument CLI** | `./calculator 2 + 3 '*' 4` | Unquoted CLI tokens | Concatenates arguments with spaces before evaluation. **Warning:** Shell metacharacters (`*`, `(`, `)`, `^`, `!`) must be escaped or quoted from the shell. |
@@ -56,11 +56,10 @@ Every character in an expression must belong to one of the following recognized 
 | **Digits** | `0 1 2 3 4 5 6 7 8 9` | Numeric literals: `0`, `42`, `1000000000000000000000000000000` |
 | **Decimal Point** | `.` | Fractional numbers: `3.14159`, `.5`, `0.001` (Must be adjacent to at least one digit) |
 | **Exponent Marker** | `e`, `E` | Scientific notation: `1e5`, `2.5e-3`, `1E+9` |
-| **Identifier Letters** | `a-z`, `A-Z`, `_` | Function names (`sin`, `gcd`), variable names (`x`, `total_sum`), constants (`pi`, `e`, `i`, `ans`) |
+| **Identifier Letters** | `a-z`, `A-Z`, `_` | Function names (`sin`, `gcd`), built-in constants (`pi`, `e`, `i`, `ans`) |
 | **Arithmetic Operators** | `+`, `-`, `*`, `/`, `%`, `^`, `!` | Addition, subtraction/negation, multiplication, division, modulo, exponentiation, factorial |
 | **Grouping Parentheses**| `(`, `)` | Sub-expression evaluation order and function call parameter wrapping |
 | **Argument Separator** | `,` (comma) | Separates parameters in multi-argument functions: `gcd(48, 18)`, `mod(23, 5)` |
-| **Assignment Operator** | `=` | REPL variable definition only: `radius = 15` (Forbidden inside pure expressions) |
 | **Whitespace** | Space (` `), Tab (`\t`), Newline (`\n`) | Completely ignored between tokens; used for readability |
 
 ### 3.2 Forbidden Characters (Instant Syntax Error)
@@ -115,14 +114,14 @@ The following characters are **illegal** anywhere in an expression:
 
 ---
 
-## 5. Variables, Identifiers & Built-in Constants
+## 5. Identifiers & Built-in Constants
 
 ### 5.1 Naming Rules
-* Variable names must start with an ASCII letter (`a-z`, `A-Z`) or an underscore (`_`).
+* Identifier names must start with an ASCII letter (`a-z`, `A-Z`) or an underscore (`_`).
 * Subsequent characters can be letters, digits (`0-9`), or underscores (`_`).
 * **Regex:** `^[a-zA-Z_][a-zA-Z0-9_]*$`
 
-### 5.2 Preloaded Mathematical Constants
+### 5.2 Preloaded Mathematical Constants & Result Chaining
 
 | Constant | Data Type | Default Value / Formula | Notes |
 | :--- | :--- | :--- | :--- |
@@ -131,21 +130,13 @@ The following characters are **illegal** anywhere in an expression:
 | `i` | `Complex` | $0 + 1i$ | Fundamental imaginary unit ($i^2 = -1$). |
 | `ans` | Dynamic | Starts at `0` | Automatically updated after every successful calculation with the last computed value. |
 
-### 5.3 Assignment Syntax (REPL Only)
-* Format: `<variable_name> = <expression>`
-* **Valid:**
-  * `x = 10`
-  * `y = x * 2 + 5`
-  * `circle_area = pi * 5^2`
-  * `ans_backup = ans`
-* **Invalid:**
-  * `x = y = 2` $\longrightarrow$ Chained assignment is rejected (`=` is illegal in expressions).
-  * `2 = x` $\longrightarrow$ Target must be a valid identifier.
-  * `x + 1 = 5` $\longrightarrow$ Target must be a single variable, not an expression.
-  * `x =` $\longrightarrow$ Right-hand side expression cannot be empty.
+### 5.3 Absence of Variable Storage
+* User-defined variable assignment and storage are **not supported**. The calculator operates strictly on pure mathematical expressions.
+* Any attempt to assign to an identifier (e.g. `x = 10`) is rejected as an invalid expression (`=` is illegal).
+* Only built-in constants (`pi`, `e`, `i`) and the chained previous result (`ans`) are valid non-function identifiers.
 
-### 5.4 Undefined Variable Reference
-* Referencing a variable that has not been assigned triggers an immediate evaluation error:
+### 5.4 Undefined Identifier / Variable Reference
+* Referencing an identifier that is not a recognized built-in constant triggers an immediate evaluation error:
   * Input: `foo + 1`
   * Output: `Error: Undefined variable 'foo'`
 
@@ -258,12 +249,11 @@ $$\text{MAX\_RECURSION\_DEPTH} = 128$$
 | :--- | :--- | :--- | :--- |
 | **Number and Parenthesis** | `2(3)` | `2 * (3)` | `= 6` |
 | **Adjacent Parentheses** | `(2)(3)` | `(2) * (3)` | `= 6` |
-| **Number and Variable** | `2x` | `2 * x` | Depends on `x` |
 | **Number and Constant** | `2pi` | `2 * pi` | `= 6.28318530717958647692` |
 | **Number and Imaginary Unit** | `3i` | `3 * i` | `= 3i` |
-| **Variable and Parenthesis** | `x(y + 1)` | `x * (y + 1)` | Parsed as function call if `*` omitted! |
+| **Identifier and Parenthesis** | `ans(2 + 1)` | `ans * (2 + 1)` | Parsed as function call if `*` omitted! |
 | **Parenthesis and Function** | `(2)sin(pi)` | `(2) * sin(pi)` | `= 0.0` |
-| **Coefficient and Function** | `5 sin(x)` | `5 * sin(x)` | Depends on `x` |
+| **Coefficient and Function** | `5 sin(pi/6)` | `5 * sin(pi/6)` | `= 2.5` |
 | **Parenthesized Expressions** | `(a + b)(c + d)` | `(a + b) * (c + d)` | Exact product |
 
 ---
@@ -390,7 +380,6 @@ When running in interactive REPL mode (`./calculator`), lines that match interna
 | **`mode`** | None | Toggles angular mode between `RADIAN` and `DEGREE`. | `mode` $\longrightarrow$ `[Angle mode is now DEGREE]` |
 | **`mode rad`** | `rad` or `radian` | Explicitly sets angular mode to radians. | `mode rad` |
 | **`mode deg`** | `deg` or `degree` | Explicitly sets angular mode to degrees. | `mode deg` |
-| **`vars`** | None | Lists all currently defined symbols and constants (`pi`, `e`, `i`, `ans`, user variables). | `vars` |
 | *(Empty line)* | None | Ignored silently; prompts user for next line. | *(Press Enter)* |
 
 ---
@@ -515,7 +504,7 @@ When an expression is rejected, the calculator outputs an informative diagnostic
 | `Error: Factorial requires non-negative integer` | Type Mismatch | Attempted `x!` or `fact(x)` where $x$ is decimal or complex. | Supply a non-negative integer operand. |
 | `Error: Factorial input negative or too large` | Domain / Upper Bound | Attempted $n!$ with $n < 0$ or $n > 10,000$. | Restrict factorial operand to the range $0 \le n \le 10,000$. |
 | `Error: Negative base for decimal power` | Mathematical Domain | Attempted $b^e$ with $b \le 0$ and decimal $e$. | Decimal exponentiation requires a strictly positive base ($b > 0$). |
-| `Error: Undefined variable '<name>'` | Symbol Table | Variable `<name>` was referenced before being assigned. | Assign variable in REPL (`x = <expr>`) prior to referencing it. |
+| `Error: Undefined variable '<name>'` | Symbol Table | Identifier `<name>` was referenced but is not a recognized built-in constant (`pi`, `e`, `i`, `ans`). | Variable storage is not supported; use numeric literals, built-in constants, or `ans`. |
 | `Error: gcd requires integer arguments` | Type Mismatch | Passed decimal or complex arguments to `gcd()`. | Ensure both arguments to `gcd(a, b)` are integers. |
 | `Error: Unsupported operator on decimal` | Type Hierarchy | Attempted `%` or `mod()` on `BigDecimal` values. | Modulo is strictly defined on integers (`BigInteger`). |
 | `Error: Unsupported operator on complex` | Type Hierarchy | Attempted `%` or `^` on `Complex` values. | Only `+`, `-`, `*`, `/`, and `abs()` are supported on complex numbers. |

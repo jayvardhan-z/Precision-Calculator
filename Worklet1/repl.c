@@ -20,14 +20,14 @@
 // Encapsulates the runtime state of the interactive calculator session
 typedef struct {
     int         running; // Loop control flag (1 = keep running, 0 = exit)
-    SymbolTable vars;    // Persistent symbol table holding variables and constants
+    SymbolTable vars;    // Persistent symbol table holding constants and ans
     EvalContext ctx;     // Evaluation context (precision, angle mode, rounding)
 } ReplState;
 
 // Initializes REPL session state with default settings and preloaded constants
 static void repl_state_init(ReplState *repl) {
     repl->running = 1;
-    // Initialize persistent variable table
+    // Initialize persistent symbol table for constants
     symtab_init(&repl->vars);
     // Bind symbol table to evaluation context
     eval_context_init(&repl->ctx, &repl->vars);
@@ -74,12 +74,10 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         printf("  help               Show this message\n");
         printf("  mode [rad|deg]     Set or toggle angle mode\n");
         printf("  precision <n>      Set decimal precision\n");
-        printf("  vars               Show stored variables\n");
         printf("=== Syntax ===\n");
         printf("  + - * / %% ^ !     arithmetic, power, modulo, factorial\n");
         printf("  sin cos exp ln     scientific functions (Taylor series)\n");
         printf("  sqrt abs gcd       square root, absolute value, GCD\n");
-        printf("  x = <expr>         assign a variable\n");
         printf("  pi, e, ans         constants and the previous result\n\n");
         return 1;
     }
@@ -128,52 +126,7 @@ static int handle_repl_command(ReplState *repl, const char *line) {
         return 1;
     }
 
-    // Command: "vars" -> Print all registered symbols and their current values
-    if (strcmp(line, "vars") == 0) {
-        printf("\n=== Variables ===\n");
-        for (size_t i = 0; i < repl->vars.count; i++) {
-            char *s = value_to_string(&repl->vars.symbols[i].value);
-            printf("  %s = %s\n", repl->vars.symbols[i].name, s);
-            free(s);
-        }
-        printf("\n");
-        return 1;
-    }
-
     return 0; // Not a meta-command; line is a mathematical expression
-}
-
-// Parses assignment syntax: "<variable_name> = <expression>"
-// Returns heap-allocated variable name string if assignment, or NULL if not
-static char *parse_assignment(char *line) {
-    char *eq = strchr(line, '=');
-    if (!eq) return NULL; // No '=' character present
-
-    // Ensure the variable name starts with an alphabetic character or underscore
-    char *start = line;
-    while (*start == ' ') start++;
-    if (!((*start >= 'a' && *start <= 'z') ||
-          (*start >= 'A' && *start <= 'Z') ||
-          *start == '_')) return NULL;
-
-    // Scan until end of identifier token
-    char *end = start;
-    while ((*end >= 'a' && *end <= 'z') ||
-           (*end >= 'A' && *end <= 'Z') ||
-           (*end >= '0' && *end <= '9') ||
-           *end == '_') end++;
-
-    // Only whitespace is allowed between variable name and '='
-    char *after = end;
-    while (*after == ' ') after++;
-    if (after != eq) return NULL;
-
-    // Duplicate variable name
-    int len = end - start;
-    char *name = malloc(len + 1);
-    memcpy(name, start, len);
-    name[len] = '\0';
-    return name;
 }
 
 // Executes a full cycle for a single input line: pre-validates, tokenizes, parses, evaluates, times, and prints
@@ -182,7 +135,7 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
     char *line = strdup(raw_line);
     trim_whitespace(line);
 
-    // Process meta-commands (exit, help, mode, precision, vars)
+    // Process meta-commands (exit, help, mode, precision)
     if (handle_repl_command(repl, line)) {
         free(line);
         return 1;
@@ -200,14 +153,7 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
     parsed_expression_init(&pe);
     value_init(&result, VAL_INT);
 
-    // Check if the input line is an assignment: "name = expr"
     char *expr = line;
-    char *var_name = parse_assignment(line);
-    if (var_name) {
-        // Strip everything up to '=' so expr holds only the right-hand mathematical expression
-        expr = strchr(line, '=') + 1;
-        trim_whitespace(expr);
-    }
 
     // Step 1: Pre-validation of characters and parentheses
     if (!validate_expression(expr, &err_pos)) {
@@ -241,22 +187,16 @@ int execute_repl_cycle(ReplState *repl, const char *raw_line) {
         } else {
             // Convert calculated Value to human-readable string and display with elapsed milliseconds
             char *res_str = value_to_string(&result);
-            if (var_name)
-                printf("  %s = %s  [%.4f ms]\n\n", var_name, res_str, timer_elapsed_ms(&timer));
-            else
-                printf("  = %s  [%.4f ms]\n\n", res_str, timer_elapsed_ms(&timer));
+            printf("  = %s  [%.4f ms]\n\n", res_str, timer_elapsed_ms(&timer));
             free(res_str);
 
             // Automatically store result in special variable "ans" for result chaining
             symtab_set(&repl->vars, "ans", &result);
-            // If user assigned to a variable name, store result in that symbol
-            if (var_name) symtab_set(&repl->vars, var_name, &result);
             ok = 1;
         }
     }
 
     // Free all resources allocated for this evaluation cycle
-    free(var_name);
     value_free(&result);
     parsed_expression_free(&pe);
     token_list_free(&tokens);
