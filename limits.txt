@@ -1,0 +1,244 @@
+
+=== 1. Maximum operand digits (verified: all-9s + 1) ===
+max_operand_digits             size=       8 -> PASS_CHECKED     0.003s
+max_operand_digits             size=      16 -> PASS_CHECKED     0.003s
+max_operand_digits             size=      32 -> PASS_CHECKED     0.004s
+max_operand_digits             size=      64 -> PASS_CHECKED     0.003s
+max_operand_digits             size=     128 -> PASS_CHECKED     0.004s
+max_operand_digits             size=     256 -> PASS_CHECKED     0.003s
+max_operand_digits             size=     512 -> PASS_CHECKED     0.004s
+max_operand_digits             size=    1024 -> PASS_CHECKED     0.002s
+max_operand_digits             size=    2048 -> PASS_CHECKED     0.002s
+max_operand_digits             size=    4096 -> PASS_CHECKED     0.002s
+max_operand_digits             size=    8192 -> PASS_CHECKED     0.002s
+max_operand_digits             size=   16384 -> PASS_CHECKED     0.002s
+max_operand_digits             size=   32768 -> PASS_CHECKED     0.003s
+max_operand_digits             size=   65536 -> PASS_CHECKED     0.003s
+max_operand_digits             size=  100000 -> PASS_CHECKED     0.003s
+
+=== 2. Maximum expression length: long addition chain ===
+max_addition_chain_terms       size=       4 -> PASS_CHECKED     0.003s
+max_addition_chain_terms       size=       8 -> PASS_CHECKED     0.003s
+max_addition_chain_terms       size=      16 -> PASS_CHECKED     0.003s
+max_addition_chain_terms       size=      32 -> PASS_CHECKED     0.004s
+max_addition_chain_terms       size=      64 -> PASS_CHECKED     0.006s
+max_addition_chain_terms       size=     128 -> PASS_CHECKED     0.033s
+max_addition_chain_terms       size=     256 -> PASS_CHECKED     0.004s
+max_addition_chain_terms       size=     512 -> NONZERO_EXIT     0.012s
+max_addition_chain_terms       size=     384 -> NONZERO_EXIT     0.005s
+max_addition_chain_terms       size=     320 -> NONZERO_EXIT     0.006s
+max_addition_chain_terms       size=     288 -> NONZERO_EXIT     0.004s
+max_addition_chain_terms       size=     272 -> NONZERO_EXIT     0.003s
+max_addition_chain_terms       size=     264 -> NONZERO_EXIT     0.002s
+max_addition_chain_terms       size=     260 -> NONZERO_EXIT     0.002s
+max_addition_chain_terms       size=     258 -> PASS_CHECKED     0.002s
+max_addition_chain_terms       size=     259 -> NONZERO_EXIT     0.002s
+
+=== 3. Maximum expression character length: long unary-free chain ===
+max_expression_chars_chain     size=       7 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=      14 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=      28 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=      56 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=     112 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=     224 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=     448 -> NONZERO_EXIT     0.002s
+max_expression_chars_chain     size=     336 -> NONZERO_EXIT     0.002s
+max_expression_chars_chain     size=     280 -> NONZERO_EXIT     0.002s
+max_expression_chars_chain     size=     252 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=     266 -> NONZERO_EXIT     0.002s
+max_expression_chars_chain     size=     259 -> NONZERO_EXIT     0.002s
+max_expression_chars_chain     size=     255 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=     257 -> PASS_CHECKED     0.002s
+max_expression_chars_chain     size=     258 -> PASS_CHECKED     0.002s
+
+=== 4. Expression with multiple maximum-length operands ===
+max_two_operand_digits_each    size=       8 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=      16 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=      32 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=      64 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=     128 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=     256 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=     512 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=    1024 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=    2048 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=    4096 -> PASS_CHECKED     0.002s
+max_two_operand_digits_each    size=    8192 -> PASS_UNCHECKED   0.002s
+max_two_operand_digits_each    size=   16384 -> PASS_UNCHECKED   0.002s
+max_two_operand_digits_each    size=   32768 -> PASS_UNCHECKED   0.002s
+max_two_operand_digits_each    size=   50000 -> PASS_UNCHECKED   0.003s
+
+=== 5. Maximum parenthesis nesting ===
+max_parenthesis_depth          size=       2 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=       4 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=       8 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=      16 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=      32 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=      64 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=     128 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=     256 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=     512 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=    1024 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=    2048 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=    4096 -> PASS_CHECKED     0.002s
+max_parenthesis_depth          size=    8192 -> PASS_CHECKED     0.003s
+max_parenthesis_depth          size=   16384 -> PASS_CHECKED     0.004s
+max_parenthesis_depth          size=   20000 -> NONZERO_EXIT     0.018s
+max_parenthesis_depth          size=   18192 -> PASS_CHECKED     0.006s
+max_parenthesis_depth          size=   19096 -> NONZERO_EXIT     0.019s
+max_parenthesis_depth          size=   18644 -> NONZERO_EXIT     0.019s
+max_parenthesis_depth          size=   18418 -> PASS_CHECKED     0.005s
+max_parenthesis_depth          size=   18531 -> PASS_CHECKED     0.004s
+max_parenthesis_depth          size=   18587 -> NONZERO_EXIT     0.020s
+max_parenthesis_depth          size=   18559 -> PASS_CHECKED     0.005s
+max_parenthesis_depth          size=   18573 -> PASS_CHECKED     0.005s
+max_parenthesis_depth          size=   18580 -> PASS_CHECKED     0.005s
+max_parenthesis_depth          size=   18583 -> PASS_CHECKED     0.004s
+max_parenthesis_depth          size=   18585 -> PASS_CHECKED     0.004s
+max_parenthesis_depth          size=   18586 -> PASS_CHECKED     0.004s
+
+=== 6. Maximum nested function depth (support-dependent) ===
+max_sqrt_nesting_depth         size=       1 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=       2 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=       4 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=       8 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=      16 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=      32 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=      64 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=     128 -> PASS_UNCHECKED   0.002s
+max_sqrt_nesting_depth         size=     256 -> NONZERO_EXIT     0.002s
+max_sqrt_nesting_depth         size=     192 -> NONZERO_EXIT     0.002s
+max_sqrt_nesting_depth         size=     160 -> NONZERO_EXIT     0.002s
+max_sqrt_nesting_depth         size=     144 -> NONZERO_EXIT     0.002s
+max_sqrt_nesting_depth         size=     136 -> NONZERO_EXIT     0.002s
+max_sqrt_nesting_depth         size=     132 -> NONZERO_EXIT     0.002s
+max_sqrt_nesting_depth         size=     130 -> NONZERO_EXIT     0.002s
+max_sqrt_nesting_depth         size=     129 -> NONZERO_EXIT     0.002s
+
+=== 7. Function support smoke tests ===
+function_support:sqrt          size=       1 -> PASS_UNCHECKED   0.003s
+function_support:abs           size=       1 -> PASS_UNCHECKED   0.004s
+function_support:sin           size=       1 -> PASS_UNCHECKED   0.005s
+function_support:cos           size=       1 -> PASS_UNCHECKED   0.004s
+function_support:tan           size=       1 -> NONZERO_EXIT     0.003s
+function_support:asin          size=       1 -> NONZERO_EXIT     0.002s
+function_support:acos          size=       1 -> NONZERO_EXIT     0.002s
+function_support:atan          size=       1 -> NONZERO_EXIT     0.002s
+function_support:sinh          size=       1 -> NONZERO_EXIT     0.002s
+function_support:cosh          size=       1 -> NONZERO_EXIT     0.002s
+function_support:tanh          size=       1 -> NONZERO_EXIT     0.002s
+function_support:log           size=       1 -> NONZERO_EXIT     0.002s
+function_support:log10         size=       1 -> NONZERO_EXIT     0.002s
+function_support:ln            size=       1 -> PASS_UNCHECKED   0.003s
+function_support:exp           size=       1 -> PASS_UNCHECKED   0.002s
+function_support:floor         size=       1 -> NONZERO_EXIT     0.002s
+function_support:ceil          size=       1 -> NONZERO_EXIT     0.002s
+function_support:round         size=       1 -> NONZERO_EXIT     0.002s
+function_support:conj          size=       1 -> NONZERO_EXIT     0.003s
+function_support:real          size=       1 -> NONZERO_EXIT     0.002s
+function_support:imag          size=       1 -> NONZERO_EXIT     0.002s
+function_support:arg           size=       1 -> NONZERO_EXIT     0.002s
+
+=== 8. Unary operator chain ===
+max_unary_minus_count          size=       1 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=       2 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=       4 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=       8 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=      16 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=      32 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=      64 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=     128 -> PASS_CHECKED     0.002s
+max_unary_minus_count          size=     256 -> NONZERO_EXIT     0.002s
+max_unary_minus_count          size=     192 -> NONZERO_EXIT     0.003s
+max_unary_minus_count          size=     160 -> NONZERO_EXIT     0.004s
+max_unary_minus_count          size=     144 -> NONZERO_EXIT     0.003s
+max_unary_minus_count          size=     136 -> NONZERO_EXIT     0.003s
+max_unary_minus_count          size=     132 -> NONZERO_EXIT     0.002s
+max_unary_minus_count          size=     130 -> NONZERO_EXIT     0.002s
+max_unary_minus_count          size=     129 -> NONZERO_EXIT     0.002s
+
+=== 9. Decimal literal length ===
+max_decimal_fraction_digits    size=       8 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=      16 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=      32 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=      64 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=     128 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=     256 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=     512 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=    1024 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=    2048 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=    4096 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=    8192 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=   16384 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=   32768 -> PASS_UNCHECKED   0.002s
+max_decimal_fraction_digits    size=   50000 -> PASS_UNCHECKED   0.002s
+
+=== 10. Scientific notation exponent range ===
+scientific_exponent            size=       1 -> PASS_UNCHECKED   0.002s
+scientific_negative_exponent   size=       1 -> PASS_UNCHECKED   0.002s
+scientific_exponent            size=       2 -> PASS_UNCHECKED   0.002s
+scientific_negative_exponent   size=       2 -> PASS_UNCHECKED   0.002s
+scientific_exponent            size=      10 -> PASS_UNCHECKED   0.002s
+scientific_negative_exponent   size=      10 -> PASS_UNCHECKED   0.002s
+scientific_exponent            size=     100 -> PASS_UNCHECKED   0.002s
+scientific_negative_exponent   size=     100 -> PASS_UNCHECKED   0.002s
+scientific_exponent            size=    1000 -> PASS_UNCHECKED   0.002s
+scientific_negative_exponent   size=    1000 -> PASS_UNCHECKED   0.002s
+scientific_exponent            size=   10000 -> PASS_UNCHECKED   0.002s
+scientific_negative_exponent   size=   10000 -> PASS_UNCHECKED   0.002s
+scientific_exponent            size=  100000 -> PASS_UNCHECKED   0.002s
+scientific_negative_exponent   size=  100000 -> PASS_UNCHECKED   0.002s
+scientific_exponent            size= 1000000 -> PASS_UNCHECKED   0.007s
+scientific_negative_exponent   size= 1000000 -> PASS_UNCHECKED   0.004s
+
+=== 11. Function argument / domain checks ===
+domain_and_boundary            size=       7 -> PASS_UNCHECKED   0.002s
+domain_and_boundary            size=       8 -> NONZERO_EXIT     0.002s
+domain_and_boundary            size=       6 -> NONZERO_EXIT     0.002s
+domain_and_boundary            size=       6 -> NONZERO_EXIT     0.002s
+domain_and_boundary            size=       7 -> NONZERO_EXIT     0.002s
+domain_and_boundary            size=       3 -> NONZERO_EXIT     0.002s
+domain_and_boundary            size=       3 -> NONZERO_EXIT     0.002s
+domain_and_boundary            size=       8 -> NONZERO_EXIT     0.002s
+domain_and_boundary            size=       6 -> PASS_UNCHECKED   0.002s
+domain_and_boundary            size=       6 -> PASS_UNCHECKED   0.002s
+domain_and_boundary            size=       6 -> NONZERO_EXIT     0.002s
+
+=== 12. Combined stress tests ===
+combined_big_operands          size=   10003 -> PASS_UNCHECKED   0.002s
+combined_many_terms_and_parens size=     401 -> PASS_UNCHECKED   0.002s
+combined_nested_functions_and_chain size=     403 -> PASS_UNCHECKED   0.002s
+combined_long_unary_and_parens size=     301 -> PASS_UNCHECKED   0.002s
+combined_1000_operator_chain   size=    2001 -> NONZERO_EXIT     0.002s
+combined_5000_operator_chain   size=   10001 -> NONZERO_EXIT     0.003s
+
+=== 13. Invalid-input resilience ===
+invalid_input                  size=       0 -> NO_RESULT        0.002s
+invalid_input                  size=       1 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       2 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       2 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       2 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       1 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       1 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       4 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       4 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       5 -> NONZERO_EXIT     0.002s
+invalid_input                  size=      18 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       4 -> NONZERO_EXIT     0.002s
+invalid_input                  size=       5 -> NONZERO_EXIT     0.002s
+invalid_input                  size=      11 -> NONZERO_EXIT     0.002s
+
+=== SUMMARY ===
+max_operand_digits                 best_size=100000   ceiling reached; true maximum not established
+max_addition_chain_terms           best_size=258      next tested failure at 259
+max_expression_chars_chain         best_size=258      next tested failure at 259
+max_two_operand_digits_each        best_size=50000    ceiling reached; true maximum not established
+max_parenthesis_depth              best_size=18586    next tested failure at 18587
+max_sqrt_nesting_depth             best_size=128      next tested failure at 129
+max_unary_minus_count              best_size=128      next tested failure at 129
+max_decimal_fraction_digits        best_size=50000    ceiling reached; true maximum not established
+
+Detailed reports:
+  tests/extremity_reports/extremity_report.csv
+  tests/extremity_reports/extremity_report.json
+Interpretation: PASS_UNCHECKED means accepted/output produced, not mathematically verified.
+A ceiling result means the benchmark did not prove the actual maximum.

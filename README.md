@@ -18,6 +18,7 @@ The engine accepts arbitrary-length mathematical expressions typed as text (e.g.
 * **First-Class Types:** `BigInteger`, `BigDecimal` (significand + scale), and `Complex` ($a + bi$) supported in a single expression via automatic type promotion.
 * **REPL & Variable Chaining:** Named variables (`a`, `b`, constants `pi`, `e`) and automatic result chaining through `ans`.
 * **Performance Bound:** $100\text{-digit} \div 200\text{-digit}$ division completes in $< 1.0\text{ s}$.
+* **Input & Grammar Rulebook:** For an exhaustive guide to valid vs. invalid inputs, operators, and all syntax combinations, see [rulebook.md](file:///Users/makarandkulkarni/Myspace/Mini-project/Precision-Calculator/rulebook.md).
 
 ---
 
