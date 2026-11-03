@@ -1,0 +1,687 @@
+rm -rf obj calculator \
+	       tests/unit/test_wb_bigint tests/unit/test_wb_bigint_io tests/unit/test_wb_fast_math tests/unit/test_wb_decimal tests/unit/test_wb_complex tests/unit/test_wb_functions tests/unit/test_wb_lexer tests/unit/test_wb_parser tests/unit/test_wb_ast tests/unit/test_wb_timer tests/unit/test_wb_symtab tests/unit/test_wb_eval tests/integration/test_it_topdown tests/integration/test_it_bottomup tests/integration/test_it_bigbang tests/integration/test_it_flow tests/system/test_sys_perf tests/system/test_sys_concurrency tests/system/test_sys_stress_fuzz tests/system/test_sys_compat \
+	       tests/blackbox/csv_runner tests/blackbox/test_graybox \
+	       *.gcda *.gcno *.gcov obj/*.gcda obj/*.gcno \
+	       tests/*.dSYM tests/unit/*.dSYM tests/integration/*.dSYM tests/system/*.dSYM tests/blackbox/*.dSYM
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c main.c -o obj/main.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet1/ast.c -o obj/Worklet1/ast.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet1/bigint_io.c -o obj/Worklet1/bigint_io.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet1/lexer.c -o obj/Worklet1/lexer.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet1/parser.c -o obj/Worklet1/parser.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet1/repl.c -o obj/Worklet1/repl.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet1/timer.c -o obj/Worklet1/timer.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet2/bigint.c -o obj/Worklet2/bigint.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet3/complex.c -o obj/Worklet3/complex.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet3/decimal.c -o obj/Worklet3/decimal.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet3/eval.c -o obj/Worklet3/eval.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet3/fast_math.c -o obj/Worklet3/fast_math.o
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 -MMD -MP -c Worklet3/functions.c -o obj/Worklet3/functions.o
+cc -Wall -Wextra -pedantic -std=c11 -O2  obj/main.o obj/Worklet1/ast.o obj/Worklet1/bigint_io.o obj/Worklet1/lexer.o obj/Worklet1/parser.o obj/Worklet1/repl.o obj/Worklet1/timer.o obj/Worklet2/bigint.o obj/Worklet3/complex.o obj/Worklet3/decimal.o obj/Worklet3/eval.o obj/Worklet3/fast_math.o obj/Worklet3/functions.o -lm -pthread -o calculator
+======================================================================
+           PRECISION-CALCULATOR: FULL TEST EXECUTION SUITE            
+======================================================================
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_bigint.c Worklet2/bigint.c Worklet1/bigint_io.c -lm -pthread -o tests/unit/test_wb_bigint
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_bigint_io.c Worklet2/bigint.c Worklet1/bigint_io.c -lm -pthread -o tests/unit/test_wb_bigint_io
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_fast_math.c Worklet2/bigint.c Worklet1/bigint_io.c Worklet3/fast_math.c -lm -pthread -o tests/unit/test_wb_fast_math
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_decimal.c Worklet2/bigint.c Worklet1/bigint_io.c Worklet3/fast_math.c Worklet3/decimal.c -lm -pthread -o tests/unit/test_wb_decimal
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_complex.c Worklet2/bigint.c Worklet1/bigint_io.c Worklet3/fast_math.c Worklet3/decimal.c Worklet3/complex.c -lm -pthread -o tests/unit/test_wb_complex
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_functions.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/unit/test_wb_functions
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_lexer.c Worklet1/lexer.c -lm -pthread -o tests/unit/test_wb_lexer
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_parser.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/unit/test_wb_parser
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_ast.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/unit/test_wb_ast
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_timer.c Worklet1/timer.c -lm -pthread -o tests/unit/test_wb_timer
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_symtab.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/unit/test_wb_symtab
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/unit/test_wb_eval.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/unit/test_wb_eval
+
+=== Running White-Box Unit Test Suite ===
+=== Test Suite: White-Box Unit: BigInteger (Worklet 2) ===
+  [[1;32mPASS[0m] UT-BIGINT-01 (UNIT): Initialization, default canonical zero state, and free [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-02 (UNIT): Canonical zero invariant after normalization [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-03 (UNIT): Stripping multiple leading zero limbs [0.003 ms]
+  [[1;32mPASS[0m] UT-BIGINT-04 (UNIT): Deep-copy semantics: value_copy and independence [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-05 (UNIT): Magnitude comparison: less, equal, greater [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-06 (UNIT): Signed comparison: negative vs positive vs zero [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-07 (UNIT): Addition: Carry ripple across multiple limbs [0.016 ms]
+  [[1;32mPASS[0m] UT-BIGINT-08 (UNIT): Subtraction: Borrow ripple across multiple limbs [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-09 (UNIT): Branch coverage: All 4 signed add/sub combinations [0.002 ms]
+  [[1;32mPASS[0m] UT-BIGINT-10 (UNIT): Schoolbook multiplication O(n^2) [0.001 ms]
+  [[1;32mPASS[0m] UT-BIGINT-11 (UNIT): Limb invariant verification: all digits < 10^9 [0.001 ms]
+
+--- Suite Summary: White-Box Unit: BigInteger (Worklet 2) ---
+  Total Tests: 11
+  Passed:      [1;32m11[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.137 ms
+=== Test Suite: White-Box Unit: BigInt I/O Serialization ===
+  [[1;32mPASS[0m] UT-IO-01 (UNIT): Zero string variations normalize to canonical zero '0' [0.001 ms]
+  [[1;32mPASS[0m] UT-IO-02 (UNIT): 9-digit chunk boundaries: 8, 9, 10, 18, 27 digits [0.005 ms]
+  [[1;32mPASS[0m] UT-IO-03 (UNIT): Signed string roundtrip: positive and negative [0.001 ms]
+  [[1;32mPASS[0m] UT-IO-04 (UNIT): Stripping leading zeros on non-zero numbers [0.001 ms]
+
+--- Suite Summary: White-Box Unit: BigInt I/O Serialization ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.082 ms
+=== Test Suite: White-Box Unit: Fast Math (Karatsuba & Knuth D) ===
+  [[1;32mPASS[0m] UT-FM-01 (UNIT): Karatsuba == Schoolbook: Size 1, 2, 31, 32, 33, 64, 100, 257 limbs [0.654 ms]
+  [[1;32mPASS[0m] UT-FM-02 (UNIT): Karatsuba == Schoolbook: Unequal operand sizes [0.015 ms]
+  [[1;32mPASS[0m] UT-FM-03 (UNIT): Knuth D division invariant: q * d + r == n and 0 <= r < d [0.003 ms]
+  [[1;32mPASS[0m] UT-FM-04 (UNIT): Knuth D: Divisors needing add-back branch execution [0.001 ms]
+  [[1;32mPASS[0m] UT-FM-05 (UNIT): Knuth D: Powers of 10^9 and all-(10^9-1) limb values [0.001 ms]
+  [[1;32mPASS[0m] UT-FM-06 (UNIT): Euclidean GCD and identity gcd(a, b) * lcm == a * b [0.002 ms]
+  [[1;32mPASS[0m] UT-FM-07 (UNIT): Repeated squaring binary power: bigint_pow [0.002 ms]
+
+--- Suite Summary: White-Box Unit: Fast Math (Karatsuba & Knuth D) ---
+  Total Tests: 7
+  Passed:      [1;32m7[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.754 ms
+=== Test Suite: White-Box Unit: BigDecimal Scaled Arithmetic ===
+  [[1;32mPASS[0m] UT-DEC-01 (UNIT): Canonical zero normalization: scale reset to 0 [0.001 ms]
+  [[1;32mPASS[0m] UT-DEC-02 (UNIT): Scale alignment addition: delta_s = 7 - 4 = 3 [0.002 ms]
+  [[1;32mPASS[0m] UT-DEC-03 (UNIT): Scale addition in multiplication: s = 1 + 1 = 2 [0.001 ms]
+  [[1;32mPASS[0m] UT-DEC-04 (UNIT): Division with target precision: 1 / 3 to 20 digits [0.002 ms]
+  [[1;32mPASS[0m] UT-DEC-05 (UNIT): Rounding: ROUND_HALF_UP tie breaking [0.003 ms]
+  [[1;32mPASS[0m] UT-DEC-06 (UNIT): Decimal comparison with different scales [0.001 ms]
+
+--- Suite Summary: White-Box Unit: BigDecimal Scaled Arithmetic ---
+  Total Tests: 6
+  Passed:      [1;32m6[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.083 ms
+=== Test Suite: White-Box Unit: Complex Numbers (Worklet 3) ===
+  [[1;32mPASS[0m] UT-CPX-01 (UNIT): Fundamental identity: i * i == -1 [0.003 ms]
+  [[1;32mPASS[0m] UT-CPX-02 (UNIT): Component-wise addition and subtraction [0.005 ms]
+  [[1;32mPASS[0m] UT-CPX-03 (UNIT): Conjugate multiplication: (2 + 3i) * (2 - 3i) == 13 [0.003 ms]
+  [[1;32mPASS[0m] UT-CPX-04 (UNIT): Conjugate division: (1 + i) / (1 - i) == 1i [0.006 ms]
+  [[1;32mPASS[0m] UT-CPX-05 (UNIT): Division by complex zero guard returns 0 [0.002 ms]
+
+--- Suite Summary: White-Box Unit: Complex Numbers (Worklet 3) ---
+  Total Tests: 5
+  Passed:      [1;32m5[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.090 ms
+=== Test Suite: White-Box Unit: Transcendental Functions (Worklet 3) ===
+  [[1;32mPASS[0m] UT-FNC-01 (UNIT): Newton-Raphson sqrt: exact 144, sqrt(2), and domain error [0.048 ms]
+  [[1;32mPASS[0m] UT-FNC-02 (UNIT): Identity sqrt(x)^2 == x within epsilon [0.019 ms]
+  [[1;32mPASS[0m] UT-FNC-03 (UNIT): Exponential exp(0) == 1 and exp(1) == Euler's constant e [0.010 ms]
+  [[1;32mPASS[0m] UT-FNC-04 (UNIT): Natural logarithm ln(1) == 0 and domain error (x <= 0) [0.009 ms]
+  [[1;32mPASS[0m] UT-FNC-05 (UNIT): Identity exp(ln(x)) == x within epsilon [0.345 ms]
+  [[1;32mPASS[0m] UT-FNC-06 (UNIT): Trigonometric sin and cos: sin(0) == 0, cos(0) == 1, sin(pi/2) == 1 [0.001 ms]
+  [[1;32mPASS[0m] UT-FNC-07 (UNIT): Identity sin^2(x) + cos^2(x) == 1 within epsilon [0.068 ms]
+  [[1;32mPASS[0m] UT-FNC-08 (UNIT): Constants generator: pi and e to 20 decimal places [0.005 ms]
+
+--- Suite Summary: White-Box Unit: Transcendental Functions (Worklet 3) ---
+  Total Tests: 8
+  Passed:      [1;32m8[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.625 ms
+=== Test Suite: White-Box Unit: Lexer & Tokenizer (Worklet 1) ===
+  [[1;32mPASS[0m] UT-LEX-01 (UNIT): Parentheses balancing pre-validator [0.002 ms]
+  [[1;32mPASS[0m] UT-LEX-02 (UNIT): Disallowed character detection in pre-validator [0.002 ms]
+  [[1;32mPASS[0m] UT-LEX-03 (UNIT): Tokenization sequence: numbers, operators, identifiers, parens [0.004 ms]
+  [[1;32mPASS[0m] UT-LEX-04 (UNIT): Mirror syllabus Account Number table: Number-Token component testing [0.004 ms]
+
+--- Suite Summary: White-Box Unit: Lexer & Tokenizer (Worklet 1) ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.127 ms
+=== Test Suite: White-Box Unit: Parser & AST Construction (Worklet 1) ===
+  [[1;32mPASS[0m] UT-PAR-01 (UNIT): Precedence: Multiplication binds tighter than Addition [0.006 ms]
+  [[1;32mPASS[0m] UT-PAR-02 (UNIT): Right-associativity of power: 2 ^ 3 ^ 2 -> 2 ^ (3 ^ 2) [0.003 ms]
+  [[1;32mPASS[0m] UT-PAR-03 (UNIT): Left-associativity of subtraction: 10 - 4 - 2 -> (10 - 4) - 2 [0.003 ms]
+  [[1;32mPASS[0m] UT-PAR-04 (UNIT): Postfix factorial: 5! and chained 3!! [0.003 ms]
+  [[1;32mPASS[0m] UT-PAR-05 (UNIT): Function arity validation: valid vs arity errors [0.012 ms]
+
+--- Suite Summary: White-Box Unit: Parser & AST Construction (Worklet 1) ---
+  Total Tests: 5
+  Passed:      [1;32m5[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.124 ms
+=== Test Suite: White-Box Unit: AST Construction & Traversal (Worklet 1) ===
+  [[1;32mPASS[0m] UT-AST-01 (UNIT): node_new_number creates valid VAL_INT node [0.006 ms]
+  [[1;32mPASS[0m] UT-AST-02 (UNIT): node_new_number creates valid VAL_DEC node for decimal and scientific notation [0.027 ms]
+  [[1;32mPASS[0m] UT-AST-03 (UNIT): node_new_number error handling on NULL or malformed input [0.001 ms]
+  [[1;32mPASS[0m] UT-AST-04 (UNIT): node_new_var allocates and deep-copies identifier [0.000 ms]
+  [[1;32mPASS[0m] UT-AST-05 (UNIT): node_new_binary links left and right subtrees [0.001 ms]
+  [[1;32mPASS[0m] UT-AST-06 (UNIT): node_new_unary links operand subtree [0.001 ms]
+  [[1;32mPASS[0m] UT-AST-07 (UNIT): node_new_call links argument array and function id [0.001 ms]
+  [[1;32mPASS[0m] UT-AST-08 (UNIT): free_expr_node safe recursive traversal and NULL safety [0.002 ms]
+
+--- Suite Summary: White-Box Unit: AST Construction & Traversal (Worklet 1) ---
+  Total Tests: 8
+  Passed:      [1;32m8[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.180 ms
+=== Test Suite: White-Box Unit: High-Resolution Timer (Worklet 1) ===
+  [[1;32mPASS[0m] UT-TIM-01 (UNIT): timer_start and timer_stop measure positive elapsed duration [16.710 ms]
+  [[1;32mPASS[0m] UT-TIM-02 (UNIT): Timer guarantees strictly non-decreasing monotonic timestamps [18.813 ms]
+  [[1;32mPASS[0m] UT-TIM-03 (UNIT): timer safe NULL pointer handling [0.000 ms]
+
+--- Suite Summary: White-Box Unit: High-Resolution Timer (Worklet 1) ---
+  Total Tests: 3
+  Passed:      [1;32m3[0m
+  Failed:      [1;32m0[0m
+  Duration:    35.920 ms
+=== Test Suite: White-Box Unit: Symbol Table & Constants (Worklet 3) ===
+  [[1;32mPASS[0m] UT-SYM-01 (UNIT): symtab_init and symtab_free on empty table [0.025 ms]
+  [[1;32mPASS[0m] UT-SYM-02 (UNIT): symtab_set and symtab_get basic insertion and retrieval [0.005 ms]
+  [[1;32mPASS[0m] UT-SYM-03 (UNIT): symtab_set overwrites existing identifier cleanly [0.002 ms]
+  [[1;32mPASS[0m] UT-SYM-04 (UNIT): Deep-copy invariant: caller mutation does not corrupt symbol table [0.002 ms]
+  [[1;32mPASS[0m] UT-SYM-05 (UNIT): symtab_get on non-existent identifier returns 0 [0.000 ms]
+  [[1;32mPASS[0m] UT-SYM-06 (UNIT): symtab_preload_constants registers pi, e, i, ans correctly [0.021 ms]
+  [[1;32mPASS[0m] UT-SYM-07 (UNIT): Dynamic reallocation: inserting 25 symbols triggers capacity expansion [0.046 ms]
+
+--- Suite Summary: White-Box Unit: Symbol Table & Constants (Worklet 3) ---
+  Total Tests: 7
+  Passed:      [1;32m7[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.232 ms
+=== Test Suite: White-Box Unit: AST Evaluator & Type Promotion (Worklet 3) ===
+  [[1;32mPASS[0m] UT-EV-01 (UNIT): Integer arithmetic: 15 + 27 = 42 (VAL_INT) [0.030 ms]
+  [[1;32mPASS[0m] UT-EV-02 (UNIT): Type promotion: INT + DEC -> DEC (10 + 2.5 = 12.5) [0.006 ms]
+  [[1;32mPASS[0m] UT-EV-03 (UNIT): Division promotion: 1 / 4 produces 0.25 (VAL_DEC) [0.007 ms]
+  [[1;32mPASS[0m] UT-EV-04 (UNIT): Division by zero latches ERR_DIV_BY_ZERO [0.003 ms]
+  [[1;32mPASS[0m] UT-EV-05 (UNIT): Angular mode: sin(90) in ANGLE_DEGREE produces 1 [0.065 ms]
+  [[1;32mPASS[0m] UT-EV-06 (UNIT): Recursion depth limit guard prevents stack overflow [0.000 ms]
+  [[1;32mPASS[0m] UT-EV-07 (UNIT): Complex multiplication: i * i evaluates to -1 [0.016 ms]
+
+--- Suite Summary: White-Box Unit: AST Evaluator & Type Promotion (Worklet 3) ---
+  Total Tests: 7
+  Passed:      [1;32m7[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.251 ms
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/integration/test_it_topdown.c tests/stubs/stub_functions.c Worklet3/eval.c Worklet1/parser.c Worklet1/lexer.c Worklet1/ast.c Worklet1/bigint_io.c Worklet2/bigint.c Worklet3/fast_math.c Worklet3/decimal.c Worklet3/complex.c -lm -pthread -o tests/integration/test_it_topdown
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/integration/test_it_bottomup.c tests/drivers/driver_arithmetic.c Worklet2/bigint.c Worklet1/bigint_io.c Worklet3/fast_math.c Worklet3/decimal.c Worklet3/complex.c -lm -pthread -o tests/integration/test_it_bottomup
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/integration/test_it_bigbang.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/integration/test_it_bigbang
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/integration/test_it_flow.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/integration/test_it_flow
+
+=== Running Integration Test Suite ===
+=== Test Suite: Integration: Incremental Top-Down (Stubs) ===
+  [[1;32mPASS[0m] IT-TD-01 (INTEG): Top-down call dispatch to stubbed sqrt(4) [0.016 ms]
+  [[1;32mPASS[0m] IT-TD-02 (INTEG): Top-down call dispatch to stubbed sin(1.57) [0.004 ms]
+  [[1;32mPASS[0m] IT-TD-03 (INTEG): Top-down error propagation when lower stub fails [0.003 ms]
+
+--- Suite Summary: Integration: Incremental Top-Down (Stubs) ---
+  Total Tests: 3
+  Passed:      [1;32m3[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.076 ms
+=== Test Suite: Integration: Incremental Bottom-Up (Drivers) ===
+  [[1;32mPASS[0m] IT-BU-01 (INTEG): Driver executes BigInteger addition across limb boundaries [0.002 ms]
+  [[1;32mPASS[0m] IT-BU-02 (INTEG): Driver executes Knuth D division through driver pipeline [0.004 ms]
+  [[1;32mPASS[0m] IT-BU-03 (INTEG): Driver integrates BigInteger into BigDecimal division [0.003 ms]
+  [[1;32mPASS[0m] IT-BU-04 (INTEG): BigDecimal layer successfully composes Complex arithmetic [0.005 ms]
+
+--- Suite Summary: Integration: Incremental Bottom-Up (Drivers) ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.091 ms
+=== Test Suite: Integration: Non-Incremental Big-Bang Smoke ===
+  [[1;32mPASS[0m] IT-BB-01 (INTEG): Big-Bang: (2 + 3) * (4 + 5) ^ 2 evaluates to 405 [0.040 ms]
+  [[1;32mPASS[0m] IT-BB-02 (INTEG): Big-Bang: sqrt(25) + cos(0) evaluates to 6 [0.024 ms]
+  [[1;32mPASS[0m] IT-BB-03 (INTEG): Big-Bang: (2 + 3*i) * (2 - 3*i) evaluates to 13 [0.019 ms]
+  [[1;32mPASS[0m] IT-BB-04 (INTEG): Big-Bang: 1 / 8 produces 0.1250000000 at precision 10 [0.009 ms]
+
+--- Suite Summary: Integration: Non-Incremental Big-Bang Smoke ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.164 ms
+=== Test Suite: Integration: End-to-End Stateful Flow ===
+  [[1;32mPASS[0m] IT-FLOW-01 (INTEG): Flow Step 1: Initial ans is 0 [0.000 ms]
+  [[1;32mPASS[0m] IT-FLOW-02 (INTEG): Flow Step 2: Compute 100 + 200 -> ans becomes 300 [0.007 ms]
+  [[1;32mPASS[0m] IT-FLOW-03 (INTEG): Flow Step 3: Compute ans * 3 -> ans becomes 900 [0.005 ms]
+  [[1;32mPASS[0m] IT-FLOW-04 (INTEG): Flow Step 4: Compute ans / 4 -> ans becomes 225 [0.004 ms]
+  [[1;32mPASS[0m] IT-FLOW-05 (INTEG): Flow Step 5 & 6: Set precision 5, compute ans / 2 -> produces 112.50000 [0.008 ms]
+  [[1;32mPASS[0m] IT-FLOW-06 (INTEG): Flow Step 7: Error recovery preserves ans unchanged [0.004 ms]
+
+--- Suite Summary: Integration: End-to-End Stateful Flow ---
+  Total Tests: 6
+  Passed:      [1;32m6[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.184 ms
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/system/test_sys_perf.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/system/test_sys_perf
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/system/test_sys_concurrency.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/system/test_sys_concurrency
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/system/test_sys_stress_fuzz.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/system/test_sys_stress_fuzz
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/system/test_sys_compat.c -lm -pthread -o tests/system/test_sys_compat
+
+=== Running System Test Suite ===
+=== Test Suite: System: Performance Benchmarking vs SLAs ===
+  [[1;32mPASS[0m] PERF-01 (PERF): 2 ^ 100000 repeated squaring latency (< 1500 ms) [5.502 ms]
+  [[1;32mPASS[0m] PERF-02 (PERF): 10000! factorial calculation latency (< 3000 ms) [43.482 ms]
+  [[1;32mPASS[0m] PERF-03 (PERF): 5000-digit x 5000-digit Karatsuba multiplication (< 500 ms) [0.470 ms]
+  [[1;32mPASS[0m] PERF-04 (PERF): 5000-digit / 2500-digit Knuth D division (< 1000 ms) [0.402 ms]
+  [[1;32mPASS[0m] PERF-05 (PERF): sqrt(2) to 2000 decimal places (< 800 ms) [0.987 ms]
+  [[1;32mPASS[0m] PERF-06 (PERF): pi calculation to 200 decimal places (< 500 ms) [0.002 ms]
+  [[1;32mPASS[0m] PERF-07 (PERF): exp(1) calculation to 200 decimal places (< 500 ms) [0.006 ms]
+  [[1;32mPASS[0m] PERF-08 (PERF): ln(2) calculation to 200 decimal places (< 600 ms) [0.562 ms]
+
+--- Suite Summary: System: Performance Benchmarking vs SLAs ---
+  Total Tests: 8
+  Passed:      [1;32m8[0m
+  Failed:      [1;32m0[0m
+  Duration:    51.486 ms
+=== Test Suite: System: Multithreaded Concurrency (POSIX pthreads) ===
+  [[1;32mPASS[0m] SYS-CONC-01 (SYSTEM): 8 concurrent threads evaluate distinct numeric workloads safely [0.516 ms]
+
+--- Suite Summary: System: Multithreaded Concurrency (POSIX pthreads) ---
+  Total Tests: 1
+  Passed:      [1;32m1[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.553 ms
+=== Test Suite: System: Stress & Pseudo-Random Fuzzing ===
+  [[1;32mPASS[0m] SYS-STR-01 (STRESS): 127 nested parentheses evaluated successfully [0.034 ms]
+  [[1;32mPASS[0m] SYS-STR-02 (STRESS): 129 nested binary operations exceed MAX_RECURSION_DEPTH and reject cleanly [0.003 ms]
+  [[1;32mPASS[0m] SYS-STR-03 (STRESS): 10,000-digit integer addition executed without buffer overflow [0.100 ms]
+       [Fuzzer Seed: 0xDEADBEEF (Testing Principle 5: Pesticide Paradox)]
+  [[1;32mPASS[0m] SYS-FUZZ-01 (FUZZ): LCG seeded fuzzer (10,000 random mutations, seed=0xDEADBEEF) [4.437 ms]
+
+--- Suite Summary: System: Stress & Pseudo-Random Fuzzing ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    4.629 ms
+=== Test Suite: System: Architectural Compatibility ===
+  [[1;32mPASS[0m] SYS-CMP-01 (COMPAT): Word size invariants: uint64_t == 8 bytes, size_t >= 4 bytes [0.000 ms]
+  [[1;32mPASS[0m] SYS-CMP-02 (COMPAT): Endianness detection and memory alignment [0.000 ms]
+  [[1;32mPASS[0m] SYS-CMP-03 (COMPAT): Zero-dependency constraint: Pure ISO C11 + POSIX libc/libm [15.270 ms]
+
+--- Suite Summary: System: Architectural Compatibility ---
+  Total Tests: 3
+  Passed:      [1;32m3[0m
+  Failed:      [1;32m0[0m
+  Duration:    15.322 ms
+=== System Testing: Load Testing (2,000 operations) ===
+  [PASS] SYS-LOAD-01: 2000 expressions processed cleanly in ~0 ms
+=== System Testing: Usability & REPL UX ===
+  [PASS] SYS-USA-01: Welcome banner displayed correctly
+  [PASS] SYS-USA-02: 'help' command displays command list and syntax
+  [PASS] SYS-USA-03: 'mode deg' feedback confirmed
+  [PASS] SYS-USA-04: 'precision 50' feedback confirmed
+  [PASS] SYS-USA-05: 'quit' and 'q' terminate REPL cleanly
+=== System Testing: Migration & Compiler Optimization Portability ===
+  [PASS] SYS-MIG-01: -O0 binary computes correct Karatsuba product
+  [PASS] SYS-MIG-02: -O3 vectorized binary computes identical result
+  [PASS] SYS-MIG-03: Locale independence verified (decimal dot respected regardless of host locale)
+=== System Testing: Functional Binary Verification ===
+  [PASS] SYS-FUNC-01: Unsupported function 'tan(1)' rejected cleanly
+  [PASS] SYS-FUNC-02: Unsupported function 'asin(0.5)' rejected cleanly
+  [PASS] SYS-FUNC-03: Unsupported function 'log10(100)' rejected cleanly
+  [PASS] SYS-FUNC-04: abs(-42) == 42
+  [PASS] SYS-FUNC-05: gcd(1071, 462) == 21
+=== System Testing: Recovery & Resilience ===
+  [PASS] SYS-REC-01: Immediate EOF / Ctrl+D terminates REPL cleanly
+  [PASS] SYS-REC-02: REPL recovered from syntax error to evaluate subsequent '2 + 3'
+  [PASS] SYS-REC-03: 50,000-character input stream handled without crash
+
+=== Running Acceptance Test Suite ===
+=== Acceptance Testing: User Acceptance Scenarios (UAT) ===
+  [PASS] UAT-01: Scientist persona: 100! calculated accurately (158 digits)
+  [PASS] UAT-02: Student persona: Complex conjugate multiplication (3+4i)*(3-4i) == 25
+=== Acceptance Testing: Business Acceptance Testing (BAT) ===
+  [PASS] BAT-01: Binary is standalone executable with proper file permissions
+  [PASS] BAT-02: CLI -e returns exit code 0 on successful evaluation
+  [PASS] BAT-03: CLI -e returns non-zero exit code (1) on arithmetic error
+  [PASS] BAT-04: Headless pipeline redirection executes and produces '= 100'
+=== Acceptance Testing: Regulations Acceptance Testing (RAT) ===
+  [PASS] RAT-01: Code complies strictly with ISO C11 (-std=c11 -pedantic-errors)
+  [PASS] RAT-02: POSIX.1-2008 monotonic clock routines properly integrated
+  [PASS] RAT-03: Zero deprecated/banned C functions detected
+=== Acceptance Testing: Alpha In-House Release Validation ===
+  [PASS] ALPHA-01: Arithmetic pipeline verified
+  [PASS] ALPHA-02: Constant pi high precision verified
+  [PASS] ALPHA-03: Error messaging standard format confirmed
+=== Acceptance Testing: Beta Testing User Session Replay ===
+  [PASS] BETA-01: Help menu displayed in interactive session
+  [PASS] BETA-02: 1 / 7 evaluated to 10 decimal places
+  [PASS] BETA-03: User typo reported descriptive error
+  [PASS] BETA-04: Variable 'ans' chained properly (5 * 10 = 50)
+  [PASS] BETA-05: sin(30 deg) produced 0.5000000000
+cc -Wall -Wextra -pedantic -std=c11 -O2 tests/blackbox/csv_runner.c -o tests/blackbox/csv_runner
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/blackbox/test_graybox.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/blackbox/test_graybox
+
+=== Running Black-Box & Gray-Box Suites ===
+=== Test Suite: Gray-Box: Architectural & Algorithmic Thresholds ===
+  [[1;32mPASS[0m] GB-01 (GRAYBOX): Karatsuba threshold boundary (15 vs 16 limbs) [0.013 ms]
+  [[1;32mPASS[0m] GB-02 (GRAYBOX): Knuth D Step D4 add-back branch trigger [0.001 ms]
+  [[1;32mPASS[0m] GB-03 (GRAYBOX): Newton-Raphson sqrt convergence and guard digit isolation [0.024 ms]
+  [[1;32mPASS[0m] GB-04 (GRAYBOX): Trigonometric range reduction across 100*pi angle boundary [0.005 ms]
+
+--- Suite Summary: Gray-Box: Architectural & Algorithmic Thresholds ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.102 ms
+=== CSV Test Runner: tests/data/test_cases_equiv_partition.csv ===
+  [[1;32mPASS[0m] EQ-INT-01: '12345678901234567890' -> = 12345678901234567890 [4.412 ms]
+  [[1;32mPASS[0m] EQ-INT-02: '0' -> = 0 [4.205 ms]
+  [[1;32mPASS[0m] EQ-INT-03: '-999999999999' -> = -999999999999 [3.963 ms]
+  [[1;32mPASS[0m] EQ-INT-04: '000789' -> = 789 [3.846 ms]
+  [[1;32mPASS[0m] EQ-DEC-01: '3.1415926535' -> = 3.1415926535 [3.729 ms]
+  [[1;32mPASS[0m] EQ-DEC-02: '.75' -> = 0.75 [3.826 ms]
+  [[1;32mPASS[0m] EQ-DEC-03: '5.' -> Error: Incorrect expression [3.662 ms]
+  [[1;32mPASS[0m] EQ-DEC-04: '1.2.3.4' -> Error: Incorrect expression [3.563 ms]
+  [[1;32mPASS[0m] EQ-SCI-01: '1e5' -> = 100000 [3.501 ms]
+  [[1;32mPASS[0m] EQ-SCI-02: '2.5E-3' -> = 0.0025 [3.431 ms]
+  [[1;32mPASS[0m] EQ-SCI-03: '1e' -> Error: Incorrect expression [3.419 ms]
+  [[1;32mPASS[0m] EQ-SCI-04: 'e5' -> Error: Undefined variable 'e5' [3.474 ms]
+  [[1;32mPASS[0m] EQ-CPX-01: 'i' -> = 1i [3.339 ms]
+  [[1;32mPASS[0m] EQ-CPX-02: '4 + 5 * i' -> = 4 + 5i [3.261 ms]
+  [[1;32mPASS[0m] EQ-CONST-01: 'pi' -> = 3.1415926535897932384626433833 [3.206 ms]
+  [[1;32mPASS[0m] EQ-CONST-02: 'e' -> = 2.7182818284590452353602874714 [3.446 ms]
+  [[1;32mPASS[0m] EQ-VAR-01: 'unknown_identifier + 1' -> Error: Undefined variable 'unknown_identifier' [3.360 ms]
+  [[1;32mPASS[0m] EQ-OP-01: '10 + 20 - 5 * 2 / 2' -> = 25 [3.454 ms]
+  [[1;32mPASS[0m] EQ-OP-02: '10 + * 5' -> Error: Incorrect expression [3.363 ms]
+  [[1;32mPASS[0m] EQ-PAR-01: '((2 + 3) * (4 + 5))' -> = 45 [3.400 ms]
+  [[1;32mPASS[0m] EQ-PAR-02: '(2 + 3' -> Error: Incorrect expression [3.638 ms]
+  [[1;32mPASS[0m] EQ-PAR-03: '2 + 3)' -> Error: Incorrect expression [3.550 ms]
+  [[1;32mPASS[0m] EQ-PAR-04: ')2 + 3(' -> Error: Incorrect expression [3.425 ms]
+
+--- Summary: tests/data/test_cases_equiv_partition.csv ---
+  Total:  23
+  Passed: [1;32m23[0m
+  Failed: [1;32m0[0m
+
+=== CSV Test Runner: tests/data/test_cases_bva.csv ===
+  [[1;32mPASS[0m] BVA-FACT-01: '(-1)!' -> Error: Factorial input negative or too large [3.498 ms]
+  [[1;32mPASS[0m] BVA-FACT-02: '0!' -> = 1 [3.813 ms]
+  [[1;32mPASS[0m] BVA-FACT-03: '1!' -> = 1 [3.642 ms]
+  [[1;32mPASS[0m] BVA-FACT-04: '10!' -> = 3628800 [3.648 ms]
+  [[1;32mPASS[0m] BVA-FACT-05: 'fact(10000)' -> = 28462596809170545189064132121198688901480514017027992307941799942744113400037644437729907867577847758158840621423175288300423399401535187390524211613827161748198241998275924182892597878981242531205946599625986706560161572036032397926328736717055741975962099479720346153698119897092611277500484198845410475544642442136573303076703628825803548967461117097369578603670191071512730587281041158640561281165385325968425825995584688146430425589836649317059251717204276597407446133400054194052462303436869154059404066227828248371512038322178644627183822923899638992827221879702459387693803094627332292570555459690027875282242544348021127559019169425429028916907219097083690539873747452483372899521802363282741217040268086769210451555840567172555372015852132829034279989818449313610640381489304499621599999359670892980190336998484404665419236258424947163178961192041233108268651071354516845540936033009607210346944377982349430780626069422302681885227592057029230843126188497606560742586279448827155956831533440534425446648416894580425709461673613187605234982286326452921529423479870603344290737158688499178932580691483168854251956006172372636323974420786924642956012306288720122652952964091508301336630982733806353972901506581822574295475894399765113865541208125788683704239208764484761569001264889271590706306409661628038784044485191643790807186112370622133415415065991843875961023926713276546986163657706626438638029848051952769536195259240930908614471907390768585755934786981720734372093104825475628567777694081564074962275254993384112809289637516990219870492405617531786346939798024619737079041868329931016554150742308393176878366923694849025999607729684293977427536263119825416681531891763234839190821000147178932184227805135181734921901146246875769835373441456013122615221391178759688367364087207937002992038279198038702372078039140312368997608152840306051116709484722224870389199993442071395836983063962232079115624044250808919914319837120445598344047556759489212101498152454543594285414390843564419984224855478532163624030098442855331829253154206551237079705816393460296247697010388742206441536626733715428700789122749340684336442889847100840641600093623935261248037975293343928764398316390312776450722479267851700826669598389526150759007349215197592659192708873202594066382118801988854748266048342256457705743973122259700671936061763513579529821794290797705327283267501488024443528681645026165662837546519006171873442260438919298506071515390031106684727360135816706437861756757439184376479658136100599638689552334648781746143243573224864326798481981458432703035895508420534788493364582482592033288089025782388233265770205248970937047210214248413342465268206806732314214483854074182139621846870108359582946965235632764870475718351616879235068366271743711915723361143070121120767608697851559721846485985918643641716850899625516820910793570231118518174775010804622585521314764897490660752877082897667514951009682329689732000622392888056658036140311285465929084078033974900664953205873164948093883816198658850827382468034897864757116679890423568018303504133875731972630897909435710687797301633918087868474943633533893373586906405848417828065196275826434429258058422212947649402948622670761832988229004072390403733168207417413251656688443079339447019208905620788387585342512820957359307018197708340163817638278562539516825426644614941044711579533262372815468794080423718587423026200264221822694188626212107297776657401018376182280136857586442185863011539843712299107010094061929413223202773193959467006713695377097897778118288242442920864816134179562017471831609687661043140497958198236445807368209404022211181530051433387076607063149616107771117448059552764348333385744040212757031851527298377435921878558552795591028664457917362007221858143309977294778923720717942857756271300923982397921957581197264742642878266682353915687857271620146192244266266708400765665625807109474398740110772811669918806268726626565583345665007890309050656074633078027158530817691223772813510584527326591626219647620571434880215630815259005343721141000303039242866457207328473481712034168186328968865048287367933398443971236735084527340196309427697652684170174990756947982757825835229994315633322107439131550124459005324702680312912392297979030417587823398622373535054642646913502503951009239286585108682088070662734733200354995720397086488066040929854607006339409885836349865466136727880748764700702458790118046518296111277090609016152022111461543158317669957060974618085359390400067892878548827850938637353703904049412684618991272871562655001270833039950257879931705431882752659225814948950746639976007316927310831735883056612614782997663188070063044632429112260691931278881566221591523270457695867512821990938942686601963904489718918597472925310322480210543841044325828472830584297804162405108110326914001900568784396341502696521048920272140232160234898588827371428695339681755106287470907473718188014223487248498558198439094651708364368994306189650243288353279667190184527620551085707626204244509623323204744707831190434499351442625501701771017379551124746159471731862701565571266295855125077711738338208419705893367323724453280456537178514960308802580284067847809414641838659226652806867978843250660537943046250287105104929347267471267499892634627358167146935060495110340755404658170393481046758485625967767959768299409334026387269378365320912287718077451152622642548771835461108886360843272806227776643097283879056728618036048633464893371439415250259459652501520959536157977135595794965729775650902694428088479761276664847003619648906043761934694270444070215317943583831051404915462608728486678750541674146731648999356381312866931427616863537305634586626957894568275065810235950814888778955073939365341937365700848318504475682215444067599203138077073539978036339267334549549296668759922530893898086430606532961793164029612492673080638031873912596151131890359351266480818568366770286537742390746582390910955517179770580797789289752490230737801753142680363914244720257728891784950078117889336629750436804214668197824272980697579391742229456683185815676816288797870624531246651727622758295493421483658868919299587402095696000243560305289829866386892076992834030549710266514322306125231915131843876903823706205399206933943716880466429711476743564486375026847698148853105354063328845062012173302630676481322931561043551941761050712449024873277273112091945865137493190965162497691657553812198566432207978666300398938660238607357858114394715872800893374165033792965832618436073133327526023605115524227228447251463863269369763762510196714380125691227784428426999440829152215904694437282498658085205186576292992775508833128672638418713277780874446643875352644733562441139447628780974650683952982108174967958836452273344694873793471790710064978236466016680572034297929207446822322848665839522211446859572858403863377278030227591530497865873919513650246274195899088374387331594287372029770620207120213038572175933211162413330422773742416353553587977065309647685886077301432778290328894795818404378858567772932094476778669357537460048142376741194182671636870481056911156215614357516290527351224350080604653668917458196549482608612260750293062761478813268955280736149022525819682815051033318132129659664958159030421238775645990973296728066683849166257949747922905361845563741034791430771561168650484292490281102992529678735298767829269040788778480262479222750735948405817439086251877946890045942060168605142772244486272469911146200149880662723538837809380628544384763053235070132028029488392008132135446450056134987017834271106158177289819290656498688081045562233703067254251277277330283498433595772575956224703707793387146593033088629699440318332665797514676502717346298883777397848218700718026741265997158728035440478432478674907127921672898523588486943546692255101337606377915164597254257116968477339951158998349081888281263984400505546210066988792614558214565319696909827253934515760408613476258778165867294410775358824162315779082538054746933540582469717674324523451498483027170396543887737637358191736582454273347490424262946011299881916563713847111849156915054768140411749801454265712394204425441028075806001388198650613759288539038922644322947990286482840099598675963580999112695367601527173086852756572147583507122298296529564917835071750835741362282545055620270969417476799259229774888627411314587676147531456895328093117052696486410187407673296986649236437382565475022816471926815559883196629848307776666840622314315884384910519058281816740764463033300119710293036455866594651869074475250837841987622990415911793682799760654186088721626654886492344391030923256910633775969739051781122764668486791736049404393703339351900609387268397299246478483727274770977466693599784857120156789000241947269220974984127323147401549980920381459821416481176357147801554231599667838534854486406936410556913531335231184053581348940938191821898694825383960989942822027599339635206217705343572073396250574216769465101608495601439303244304271576099527308684609204422226103154229984444802110098161333824827375218998738205315164927134498105950159974800571591912202154487748750103473246190633941303030892399411985006225902184164409988173214324422108554248620896250260604398180189026317781146617454999771440665232863846363847001655618153861098188111181734191305505024860345856755585637511729774299329074944236579668332700918367338977347901759248885660379952771540569083017311723894140326159612292912225191095948743805673381278538616491842786938417556898047100859868372033615175158097022566275200160956192229925401759878522038545913771783976389811198485803291048751666921195104514896677761598249468727420663437593207852618922687285527671324883267794152912839165407968344190239094803676688707838011367042753971396201424784935196735301444404037823526674437556740883025225745273806209980451233188102729012042997989005423126217968135237758041162511459175993279134176507292826762236897291960528289675223521425234217247841869317397460411877634604625637135309801590617736758715336803958559054827361876112151384673432884325090045645358186681905108731791346215730339540580987172013844377099279532797675531099381365840403556795731894141976511436325526270639743146526348120032720096755667701926242585057770617893798231096986788448546659527327061670308918277206432551919393673591346037757083193180845929565158875244597601729455720505595085929175506510115665075521635142318153548176884196032085050871496270494017684183980582594038182593986461260275954247433376226256287153916069025098985070798660621732200163593938611475394561406635675718526617031471453516753007499213865207768523824884600623735896608054951652406480547295869918694358811197833680141488078321213457152360124065922208508912956907835370576734671667863780908811283450395784812212101117250718383359083886187574661201317298217131072944737656265172310694884425498369514147383892477742320940207831200807235326288053906266018186050424938788677872495503255424284226596271050692646071767467502337805671893450110737377034119346113374033865364675136733661394731550211457104671161445253324850197901083431641989998414045044901130163759520675715567509485243580269104077637210998671624254795385312852889930956570729218673523216666097874989635362610529821472569482799996220825775840988458484250391189447608729685184983976367918242266571167166580157914500811657192200233759765317495922397884982814705506190689275625210462185661305800255607974609726715033327032310025274640428755556546883765838802543227403507431684278620637697054791726484378174446361520570933228587284315690756255569305558818822603590006739339952504379887470935079276181116276309771257983975996526612120317495882059435754883862282508401408885720583992400971219212548074097752974278775912566026443482713647231849125180866278708626116699989634812405803684794587364820124653663228889011636572270887757736152003450102268890189101673572058661410011723664762657835396364297819011647056170279631922332294228739309233330748258937626198997596530084135383241125899639629445129082802023225498936627506499530838925632246794695960669046906686292645006219740121782899872979704859021775060092893328957272392019589994471945147360850770400725717439318148461909406269545285030526341000565022226152309364882887122046454267700577148994335147162504252365173710266068647253458120186683273953682547456536553597546685788700056988360286686450740256993087483441094086086303707908295240576731684941855810482475304758923392801571302824106234999945932390521409856559565661346003396150515164758852742214732517999548977992849522746029855666700811871200856155016457400484170210303038996339253337466556817824410737409336919294104632307731994759826307383499600770372410446285414648704116273895649834555162165685114551383822047005483996671706246467566101291382048909121117229386244253158913066987462045587244806052829378148302622164542280421757760762365459828223070815503469404938317755053305094698999476119419231280721807216964378433313606760676965187138394338772485493689061845700572043696666465080734495814495966306246698679832872586300064215220210171813917325275173672262621454945468506006334692713838311715849753092643252486960220059099802663765386225463265168414963306369548086551101256757717890616694758344043486218485369591602172030456183497524162039926441331651884768606830642004858557924473340290142588876403712518642229016333691585063273727199596362912783344786218887871009533753551054688980236378263714926913289564339440899470121452134572117715657591451734895195016800621353927175419843876163543479806920886666227099512371706241924914282576453125769939735341673046864585181979668232015693792684926999983992413571941496882273704022820805171808003400480615261792013978945186295290558440703738300533552421153903385185829366779190610116306233673144419202893857201855569596330833615450290424822309297087124788002017383072060482680156675397593789931793515799958929562156307338416294599900276730832827716595064217966523190439250543226753731811755315476780739470338931185107297724318378972674957455778183345495942317353558291046967315391275975687281861691161083156337232639968881490543943261197182274996791176628553401860198315809629981791107208804992292016062059067271273599461871634945774995805337947187105456452579396024210259136415528398395201773012712514892051061708228008339985665786646920737114269682301770416324829479409558694699089379165191006305185352102345189798127619143061864362703081977124992751056732909481202057747100687703379708934229207183903744167503493818836342229284946790660285674293251642569044363473087656797056595677285291081242733154406580199802711579126254172797452862574865921933293805915239524735518887119860391319654287576290190503964083560246277534314409155642181729459941596061979622633242715863425977947348682074802021538734729707999753332987785531053820162169791880380753006334350766147737135939362651905222242528141084747045295688647757913502160922040348449149950778743107189655725492651282693489515795075486172341394610365176616750329948642244039659511882264981315925080185126386635308622223491094629059317829408195640484702456538305432056506924422671863255307640761872086780391711356363501269525091291020496042823232628996502758951052844368177415730941874894428065427561430975828127698124936993313028946670560414084308942231140912722238148470364341019630413630736771060038159590829746410114421358321042574358350220737173219745089035573187350445827238770728271406162997919629357224104477155051652535867544109395079218369015261138440382680054150924346511711436477899444553993653667727589565713987505542990824585609510036934663100673714708029927656933435500927189854050109917474979991554392031908961967615444686048175400695689471463928245383807010444181045506171305160584355817521032338465829201071030061124283407458607006060194830551364867021020364708470807422704371893706965688795617928713045224516842027402021966415605280335061293558739079393524404092584248380607177444609964035221891022961909032569042381374492494906892314330884224399631396391545854065286326468807581148748371408284176455226386313520264894016262494802388568231599102952620337126449279901938211134518446387544516391239377974190576649911764237637722282802318465738050121277809680315691477264910257503508758792248110223544524410872448565700755187132146592093548504552829170749596775404450779494836371756062326925757412813110241910373338080434325310884694831555729402265394972913817581338619457057799561808755951413644907613109617155928376585840036489374076822257523935988731081689667688287403837192827690431514106997678303819085690713091931340846019511147482766350724676534922040058626677632935516631939622498979912708004465982264899125226813124300528104995058595676527123591494442612554437618645029202881358582871789577224116380815161831603129728796987480139828621645629196153096358337313619724773332353025466571196902611237380629030242904275794549030022660847446513161741691916851746464945459696005330885252792083472495235473110674109099223541055506299687642153951249355986311346661725116890785633328935569150449485189113488301876365100638502565916433021928565596263914382895068324838727165616560111531517055222955765944972454788815532316417453267167978861141165355597588331979638070962998880767303616940317736448140427867784251232449974693421348217179595190698204602997172001174857303889719205597414742453011135869766256607770970225633261701108463784795555258504578058879440756064974127974530918418405207558526462208821483646754652237609210787539190454684852349759986044943322828073120679922402477507514105890774627334319091255451352225329275913842047384603056163154236552935312278389759446515787337343463172280001031380425481404022090580405056003860937403435068863081434683848900708938565050027569059678069404698435184535134141031615133683043714786642925389717165978629010728400758939700388317742648163725113277369926827709465342583596111881955092462062153978121197244762623771534452048069819082524943963962251113831177428978535825590832490480497516047104257569753442551515779815600370847230603484753977513688390404316017486248871339311818523029425425676202485688393970836748788453789172574145155917919035398535077200900594979352939459631213445503368260690059828717723533375221941915547303742062343262892968397015058892191112049249864792053410872349115430987182160055762209075732304626106597744947658346313025598636315029959672352476943975462530206788193304372284800209305354155640664838569378144603138697563459200233462606995955513484754147891180830329816421587452922952678937925647752029052675349356673744293182673374571642465407748267901046778759085408130531447176455869894169668940436489952465247443988349583871206296485413357553813419500498743813369062703973874586604296871595820715766599826607317005624465541763024501349159567288942619746144496908671655859782729228702723774835097362901019130417812735773037781804081589136005207315806941034305003184349342360269244733060013861119781774472669608928321052543116496033420102032603863672532889648333405862204843616575362001468405476649666473566979572953394809138263703324220930839366954980688240491622063147911494642042500022450413425558561937442905257252436320054487441524307305215070491020434076572476865095751174125413729531644521765577235348601821566833352520532830000108344008762266843817023235605645158256954177359197813649975559601912567744942717986360045847405209290089397315276024304951653864431388147876977541478757432610159879709758855625806766197973098472460769484821127948427976536607055051639104415022554420329721292033009353356687294595912327965886376486894188433640548494009574965791657687213927330153555097865114767947399690623184878377515462613823651665956337209345708208301840482797005728071432925727577436229587047361641609731817241594204270366066404089740245521530725227388637241859646455223673260411164598464020010216920823315155388821071527191267876531795071908204525100447821291318544054814494151867114207103693891129125012750853466337717749376016543454696390042711129829255096830420665725364279472200020835313883708781649957189717629338794854271276882652003766325924561614868744897471519366219275665852462114457407010675380427564184440834805203838265052601698584060084788422421887856927897751810442805474427229455167420335686460609977973124950433321425205053675790499520783597650415379001132579536040655172654879022173595444151139429231648950663177813039057462082449171921311864129633704661406456900178942356738775523130952785912774533241855442484484493664210731348819180640189222317302156645813473186449997905781662091469870718039388885781280740226363602294114354869871402143572055947730892808653678920201935102605361567924483276749476117858316071865710310842200560259545115191391309119544447844361032741876102338843391687589233423790859841968266525610628751237572318491474951945985728897934981791761822652480408237128109790772638864286067917082288575852703470839714561619926247844794692794996845945632382702297364173503430783194115698247820013290851202878474805860188960045901745974055630732714487679085288867978809970695240681006625611440014983413580889737246844064948857074167687916413224205373654067330186392497910915474785959163865597507090581175924899502214799250945635582514315814464060134283490422798357939659258985200763845646681640732681928346007767285876284900068874564639274964415904034033672337814491597032941787294155061054129515400159393851663929325677429557549480046658273579653990940233543644649376827272541873627547532976808190325336141086433084237771738995221536763095302045902438694632702895293994483013577589081214884558493819874505920914067209522469096263076941753340983698859363700314973728977996360018626500174929290087931189997822963712306642297996163582572600112288983647651418045975770042120833949364659647336464289044499325396227091907373705772051322815957863227591912786054297862953188615559804728160710864132803585400160055575686855791785977899197902656592621283007225351401525973569300729015392211116868504740402172174442051738000251361000494534119324331668344243125963098812396962202358858395587831685194833126653577353244379935683215269177042249034574534858913812582681366908929476809052635560638119661306063936938411817713545929884317232912236262458868394202889981693561169865429884776513118227662526739978808816010470651542335015671353744817086234314662531190291040152262927104099285072418843329007277794754111637552176563589316326636049381218401837512818884771168975479483767664084842753623074019542183217985496260666590347925816342392670947839907062923166535037285019751324813803837070894638925470887039085723581006130628646664710006104352115778926613432214655311411882596942926284522109026688414975763341554921135581254616558078273470115814006008345762133130389987843270653719956709570847385786092649188858378739239165554263577301292243641604062551736892335636568854365851646207821875741724364525814143487632761341752707376754922276287782264765154315341585713773522730335403376364204258034257264749686217823666951353410677378421131371131987373222891805275062812277716412494412401207125954319991746574745892582613712825555535080404143944557295994554635608487251339462936358940832098964801619583130429720964794128539388996265368928263807677168759588502216464582430940165009688797366157733560316836710386895228270941509545222744002735499253670214715994056544813842186380128799900820933576320736369405991424263718294000613741900579513096298545330748197802568301089672873802234820488862973130369689882640657904781562389778485365025691064231795736025330908763271784911189748432246868086340383964176127605788646574472284824932687443062551220506955168464669477183681911432873544815836350548146411099960143390595799766290646881295025039150923633011076070632863317393378149693380247580035052789782755750928604039420506342939327064636161031822879248152679306862749237275631852225654266008556849497720285909150930495425967473648331437236349555448901598668408362176913559656039519670425368863482369587129462524759031776813184977588276576740482558136502103649585505703259219957675334264223783723586058509403583977103476670644788640831109650302565215607464019652716999732373465237173456595514559493098166644006211599349133180135150528651842178828026343325934755850761168697709125580056185683710540856081249519403148064618719402577663285267019698387567561524696759028106864896869293315954352097687527137201616160931174250199709289684940034696242325688410665113304377412256176258658941236728171145526423894512631717834790276921171452887352955019336759218908006048633737786728180610254782570436788449503518925787499836694785908612975543084122677060954347612133717433156783790162012337237023338316414706428592185977610158232721997915062871868186750981665537745013020880333904353639770263363809098526494532628146558065546504823486429495390613257400496912888340518222933644476683855037967975809619983575807027759535968788226194659612223044549275600274955168583542582295336042834426318478068825395450746691877897765406038432512843812811316856204608617289408229658626174420766920297427930088129519854678713548623236610413216581279267151545961594352593456757445992307889205519540082316409719591250025455237503106735639748835542480449681383030671851931491335789202123605308199952020584503423499932150962634977812456658304680581824563524814625849331926195406884818446445248429486063016169476663242625231476322371109695369483824482316410396224507675405614287468267835723704895606990652792688455844512046654853378534026646645042339638488257719874953611300494215593735545211926186721478265416885604094928290056616883807637656690510740892510549165222968878676968631652514917701499900066637344546120262780701925698706225540928945194718778004306130021828287425867048748480826948573444778244078734102710824870269523830804910960482013901294024631244800159336670212658317677879752965963472576894326540435889267293950687860830626266263287392087327302547910099932113388977807814336728791448768373686467748528777737403547472871644217767820712964506270880978637928144071192505141148004907055608097229299792441471062852247029870699869227676341773513258602908903875707454368077876422385333700692089616351009233587303986543906071880952557553380364725895007306772122528078179471056481171378557451057691044322925429024149433588396093679321361696954251299731031032804436954501929843820842383121265825740594509426942777307124802176915781835720087170538773256017987133005505911377823841791640280841409623820847637393013930778428554545222367559824666250608754284876104145661362227642405914304455580856318180935230407793891614902116292400515074914068443203230365609954878620999194306564455332547135557365318516011700321550690787716752062881527885897149410320986984083048966524351030502444679931779147659103428949129054120361601695671222140806369405940304552186212879933092856231022418446365289097444640151986623183881962444822590783585914043686193019041458962693878907034982169868696934448086213990534591792826654304798207219634134755646525483143771156678459077797196510772468000293581546267646310224279007313631352522067062951125935874473134186492497282784796644585448962932905262058065248588707020879389134476083344653170939242408249328008915731319541348311820927752486880548733943315867562666122179355051190609992911379445634995627391898459029021713155706096267881673302940198464237390445098028030948975981259252055850973537436556825780313681902007151675693827281818824587541710721180806556448039122504537089422695358382192535075692834095639859265599740391316709290043996275976830375217503360879028295673068862263077729733533853682668734519035709709687322323738300494090123239274318759046526327095178406267264828893646896593219169521106361729757074376148061601331104911692271318609404145014842866423634716982892418180484365230538864559809839273836490685480823014267803143937440431807822678779494006206489151248952516543005634448375046751754207043313372486870633237561645232360481932024377596890914783372179553676992603235715185513391098402739063753280702313301755754269396202629423910945323537910125948964941812563672992967084250667599803456273455598559628512281414582556024841783305645240508450065988755987518601335860624932784487772006842296591945516539562982960591610046578907214842054861830418175604559815168088031783080261445994444677918012432146400983610678683412974872596729258786806223080115822026289014364459002301645823666709265571264559925790622304745235625575111770791512002789380975775468546121017307522799241407026308137792971909461413145802081087738121624539858769697371425881836152605069380926917712087321915005831977113322793572385071940612761291872572099404930250277748156614021327434743881966413330052634229082906400927944924808556131183440161804801357032507836323938921567643159620442612809700944107776130638909071294456394056601559246025454204771186140420155233371270501377121034570009578009389265329385720478576508777149663403003562380595757191609382171312222810465858388943507176431939973012661591423837170284400120399485880996231859472474858776584355077006934099220340378772192728370301380838144394114984971730766162961342059105014814283949700695951676939041557902856356911055547312684571497449635320554677940775184056667637222969090346128706829887104278761090090999160443821794511763620835379716161833124364431267855435550800507986124664397724135502128238026726719914989727248512981287283697489276420792868666970177259794407858155909332508554131299946581118527691652464790819119384233275897699573012098103009171001695718791616942270079528915191912521053891838538959315167400505723817401030621004380243011187977704252328073236575129609372456053680037516596164236147709330391224409752871732067976128120428026739256557305675931512645750047875756531854825821411574030473147492511910835615765732002546109686701890307648531373832912682481741181359032826625082549313211431478953352317043989053928534946642886074268371824902498092479487226633686823799580875637040808655649321905489637785549531167397935270799470452399153297534358690514105864096534514182896474439367182852711843560799285895978176543950113088848419163516673213692860830956744502801800373716458009168082972708715609185038654053436660045504985624687376022557041595800250174095361839287643458003670864954057941720085136357127163768323493134230703821274484501440529541695374381945459456533165140990993722722801019654652726227831512103467686166826131471843610025517863247950150022953695466317739589344131481485834694374523981159954666071205997794363440185078360899108948073419633939259318973940943110042116729120199722626609871927014024105805515315100109804996044147291039451030312664114726736839973315035036742741546992633165270432940675237449075056739508929674779115800864399992564817208847429250821546279856079127768611946086210349405535850134472190244543824521089284409498132717010673966471114931896789977661595488186193176900175027901783824624387873831483279500879026433992577026588005849778984624295660321276945810824348129690840972550671054732471317254997191901039553305847040728081693158626093886019147689944137673621432083607375131574376316754666479186753896571555100850626810005119827486807780592667765654100834778571024250133253391587384761024129794736751001163498977803745930025457609870671092153597115178252014281216647543034075128600240297038428615984289816602143429849088917359682192284469123035904329877231843309914187264674607558318725713138832356015809009594182530207799397648462597901883341793830920965841463574411985878296475850943053008148341821747826603773762252997703468752903517310792083220038080809212164346586817989810504274375385786789186350517717501606531826406928883250135919517178537687865881752366421534010961295763074762648070312757365787762352859057153932484576503944390496668087711899192498933896524852395536795827530614167131757915756386606004839994179548705868209201195154952031294562451315422506574858629161606523796643010172693950282294667489681746821163996794950294284013099235901278250437428192557634533217576162292751110598368271567229778620053722932314082887058749444060116236521627717558503013451471452765841864277071769968435499620257547431811994883385806759692359580622165832464092095350648357935817742903018315351290014321495518177456908388719320697769695657771754499149911431368950836160692539606469893374870942933219185601299108564470256257163505508620689240297589684714283678684735455533583477652536156578189996983068654671736445996343136468195427420490472433064675001442697508322369013083895492637066778406531328664886080129513771720847581157719491012345141774941482773580041432667332379617716965698582785832300505265883502247868050648201444570593197343382923860072601696510903258980909912837652275381493529845099414966933862815568031306981064525192703818515872648691762563239441425216118427769145067718411735714396681005615483952443154944864238384298900399826113322468963346522104692545137969276009719645338955332105584245640187448611050959111766828942711640054010503770420346052521318228045892998637903572350665108782350043349942391285236308896510989246641056331584171142885304143772286629832318970869030400301325951476774237516158840915838059151673504519131178193943428482922272304061422582078027829148070426761629302539228321084917759984200595105312164731818409493139800444072847325902609169730998153853939031280878823902948001579008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 [47.890 ms]
+  [[1;32mPASS[0m] BVA-FACT-06: '10001!' -> Error: Factorial input negative or too large [4.498 ms]
+  [[1;32mPASS[0m] BVA-LIMB-01: '999999999 + 0' -> = 999999999 [3.742 ms]
+  [[1;32mPASS[0m] BVA-LIMB-02: '999999999 + 1' -> = 1000000000 [3.676 ms]
+  [[1;32mPASS[0m] BVA-LIMB-03: '1000000000 - 1' -> = 999999999 [3.931 ms]
+  [[1;32mPASS[0m] BVA-LIMB-04: '999999999 * 999999999' -> = 999999998000000001 [3.561 ms]
+  [[1;32mPASS[0m] BVA-LEN-01: '' -> Error: Incorrect expression [3.685 ms]
+  [[1;32mPASS[0m] BVA-LEN-02: '5' -> = 5 [3.448 ms]
+  [[1;32mPASS[0m] BVA-LEN-03: '+' -> Error: Incorrect expression [3.860 ms]
+  [[1;32mPASS[0m] BVA-LEN-04: '@' -> Error: Incorrect expression [3.726 ms]
+  [[1;32mPASS[0m] BVA-NEST-01: '(1)' -> = 1 [3.616 ms]
+  [[1;32mPASS[0m] BVA-NEST-02: '1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))' -> = 128 [3.617 ms]
+  [[1;32mPASS[0m] BVA-NEST-03: '1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))' -> = 129 [3.640 ms]
+  [[1;32mPASS[0m] BVA-NEST-04: '1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1+(1)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))' -> Error: Recursion depth limit exceeded [3.992 ms]
+  [[1;32mPASS[0m] BVA-POW-01: '0 ^ 0' -> = 1 [3.532 ms]
+  [[1;32mPASS[0m] BVA-POW-02: '0 ^ -1' -> Error: Division by zero [3.733 ms]
+  [[1;32mPASS[0m] BVA-POW-03: '12345 ^ 0' -> = 1 [3.477 ms]
+  [[1;32mPASS[0m] BVA-LN-01: 'ln(0)' -> Error: Domain error: ln argument <= 0 [3.678 ms]
+  [[1;32mPASS[0m] BVA-LN-02: 'ln(-1)' -> Error: Domain error: ln argument <= 0 [3.491 ms]
+  [[1;32mPASS[0m] BVA-LN-03: 'ln(1)' -> = 0 [3.397 ms]
+  [[1;32mPASS[0m] BVA-SQRT-01: 'sqrt(0)' -> = 0 [3.679 ms]
+  [[1;32mPASS[0m] BVA-SQRT-02: 'sqrt(-1)' -> Error: Domain error: negative sqrt argument [3.464 ms]
+
+--- Summary: tests/data/test_cases_bva.csv ---
+  Total:  26
+  Passed: [1;32m26[0m
+  Failed: [1;32m0[0m
+
+=== CSV Test Runner: tests/data/test_cases_decision_table.csv ===
+  [[1;32mPASS[0m] DT-ADD-01: '10 + 20' -> = 30 [3.751 ms]
+  [[1;32mPASS[0m] DT-ADD-02: '10 + 2.5' -> = 12.5 [3.828 ms]
+  [[1;32mPASS[0m] DT-ADD-03: '10 + (2 + 3*i)' -> = 12 + 3i [3.584 ms]
+  [[1;32mPASS[0m] DT-ADD-04: '1.25 + 2.75' -> = 4.00 [3.771 ms]
+  [[1;32mPASS[0m] DT-ADD-05: '1.5 + (2 + 3*i)' -> = 3.5 + 3i [3.412 ms]
+  [[1;32mPASS[0m] DT-ADD-06: '(1 + 2*i) + (3 + 4*i)' -> = 4 + 6i [3.612 ms]
+  [[1;32mPASS[0m] DT-SUB-01: '50 - 20' -> = 30 [3.464 ms]
+  [[1;32mPASS[0m] DT-SUB-02: '10 - 2.5' -> = 7.5 [3.340 ms]
+  [[1;32mPASS[0m] DT-SUB-03: '(5 + 5*i) - (2 + 3*i)' -> = 3 + 2i [3.714 ms]
+  [[1;32mPASS[0m] DT-MUL-01: '6 * 7' -> = 42 [3.693 ms]
+  [[1;32mPASS[0m] DT-MUL-02: '4 * 2.5' -> = 10.0 [3.408 ms]
+  [[1;32mPASS[0m] DT-MUL-03: '(2 + 3*i) * (2 - 3*i)' -> = 13 [3.578 ms]
+  [[1;32mPASS[0m] DT-DIV-01: '10 / 2' -> = 5 [3.700 ms]
+  [[1;32mPASS[0m] DT-DIV-02: '10 / 4' -> = 2.50000000000000000000 [3.423 ms]
+  [[1;32mPASS[0m] DT-DIV-03: '1 / 3' -> = 0.33333333333333333333 [3.453 ms]
+  [[1;32mPASS[0m] DT-DIV-04: '(1 + i) / (1 - i)' -> = 1.00000000000000000000i [3.701 ms]
+  [[1;32mPASS[0m] DT-MOD-01: '17 % 5' -> = 2 [3.452 ms]
+  [[1;32mPASS[0m] DT-MOD-02: '17.5 % 5' -> Error: Unsupported operator on decimal [3.766 ms]
+  [[1;32mPASS[0m] DT-MOD-03: '(2 + 3*i) % 2' -> Error: Unsupported operator on complex [3.396 ms]
+  [[1;32mPASS[0m] DT-POW-01: '2 ^ 10' -> = 1024 [3.692 ms]
+  [[1;32mPASS[0m] DT-POW-02: '2 ^ 0.5' -> = 1.41421356237309504880 [3.559 ms]
+  [[1;32mPASS[0m] DT-POW-03: '(1 + i) ^ 2' -> Error: Unsupported operator on complex [3.493 ms]
+  [[1;32mPASS[0m] DT-FACT-01: '5!' -> = 120 [3.660 ms]
+  [[1;32mPASS[0m] DT-FACT-02: '5.2!' -> Error: Factorial requires non-negative integer [3.567 ms]
+  [[1;32mPASS[0m] DT-FACT-03: '(1 + i)!' -> Error: Factorial requires non-negative integer [3.842 ms]
+  [[1;32mPASS[0m] DT-ABS-01: 'abs(-42)' -> = 42 [3.428 ms]
+  [[1;32mPASS[0m] DT-ABS-02: 'abs(-3.14)' -> = 3.14 [3.528 ms]
+  [[1;32mPASS[0m] DT-ABS-03: 'abs(3 + 4*i)' -> = 5.00000000000000000000 [3.571 ms]
+  [[1;32mPASS[0m] DT-GCD-01: 'gcd(54, 24)' -> = 6 [3.585 ms]
+  [[1;32mPASS[0m] DT-GCD-02: 'gcd(54.2, 24)' -> Error: gcd requires integer arguments [3.433 ms]
+  [[1;32mPASS[0m] DT-TRIG-01: 'sin(0)' -> = 0 [3.589 ms]
+  [[1;32mPASS[0m] DT-TRIG-02: 'sin(pi / 2)' -> = 1.00000000000000000000 [3.636 ms]
+  [[1;32mPASS[0m] DT-TRIG-03: 'sin(i)' -> Error: sin requires numeric argument [3.480 ms]
+
+--- Summary: tests/data/test_cases_decision_table.csv ---
+  Total:  33
+  Passed: [1;32m33[0m
+  Failed: [1;32m0[0m
+
+=== CSV Test Runner: tests/data/test_cases_error_guessing.csv ===
+  [[1;32mPASS[0m] EG-DIV-01: '10 / 0' -> Error: Division by zero [3.448 ms]
+  [[1;32mPASS[0m] EG-DIV-02: '1.5 / 0.0' -> Error: Division by zero [3.782 ms]
+  [[1;32mPASS[0m] EG-DIV-03: '(1 + i) / (0 + 0*i)' -> Error: Division by complex zero [3.652 ms]
+  [[1;32mPASS[0m] EG-DIV-04: '0 / 0' -> Error: Division by zero [3.619 ms]
+  [[1;32mPASS[0m] EG-POW-01: '0 ^ -2' -> Error: Division by zero [3.479 ms]
+  [[1;32mPASS[0m] EG-EMPTY-01: '' -> Error: Incorrect expression [3.685 ms]
+  [[1;32mPASS[0m] EG-EMPTY-02: '   \t  ' -> Error: Incorrect expression [3.884 ms]
+  [[1;32mPASS[0m] EG-NUM-01: '1,000' -> Error: Incorrect expression [4.363 ms]
+  [[1;32mPASS[0m] EG-NUM-02: '5.' -> Error: Incorrect expression [3.656 ms]
+  [[1;32mPASS[0m] EG-NUM-03: '1.2.3' -> Error: Incorrect expression [3.836 ms]
+  [[1;32mPASS[0m] EG-NUM-04: '1e' -> Error: Incorrect expression [3.629 ms]
+  [[1;32mPASS[0m] EG-NUM-05: '1e+' -> Error: Incorrect expression [3.588 ms]
+  [[1;32mPASS[0m] EG-IMPL-01: '2(3)' -> Error: Incorrect expression [3.599 ms]
+  [[1;32mPASS[0m] EG-IMPL-02: '(2)(3)' -> Error: Incorrect expression [3.574 ms]
+  [[1;32mPASS[0m] EG-IMPL-03: '2pi' -> Error: Incorrect expression [3.410 ms]
+  [[1;32mPASS[0m] EG-IMPL-04: '3i' -> Error: Incorrect expression [3.686 ms]
+  [[1;32mPASS[0m] EG-IMPL-05: '(2)sin(pi)' -> Error: Incorrect expression [3.643 ms]
+  [[1;32mPASS[0m] EG-CHAR-01: '[1 + 2]' -> Error: Incorrect expression [3.580 ms]
+  [[1;32mPASS[0m] EG-CHAR-02: '{1 + 2}' -> Error: Incorrect expression [3.738 ms]
+  [[1;32mPASS[0m] EG-CHAR-03: '2 & 3' -> Error: Incorrect expression [3.871 ms]
+  [[1;32mPASS[0m] EG-CHAR-04: '2 | 3' -> Error: Incorrect expression [3.730 ms]
+  [[1;32mPASS[0m] EG-CHAR-05: '~5' -> Error: Incorrect expression [3.580 ms]
+  [[1;32mPASS[0m] EG-CHAR-06: '2 < 3' -> Error: Incorrect expression [3.562 ms]
+  [[1;32mPASS[0m] EG-CHAR-07: '2 > 3' -> Error: Incorrect expression [3.490 ms]
+  [[1;32mPASS[0m] EG-CHAR-08: '2 @ 3' -> Error: Incorrect expression [3.785 ms]
+  [[1;32mPASS[0m] EG-CHAR-09: '$50' -> Error: Incorrect expression [3.509 ms]
+  [[1;32mPASS[0m] EG-CHAR-10: '#123' -> Error: Incorrect expression [3.610 ms]
+  [[1;32mPASS[0m] EG-CHAR-11: '1 \\ 2' -> Error: Incorrect expression [3.478 ms]
+  [[1;32mPASS[0m] EG-CHAR-12: '1; 2' -> Error: Incorrect expression [3.355 ms]
+  [[1;32mPASS[0m] EG-CHAR-13: '1:2' -> Error: Incorrect expression [3.799 ms]
+  [[1;32mPASS[0m] EG-CHAR-14: ''a'' -> Error: Incorrect expression [3.560 ms]
+  [[1;32mPASS[0m] EG-CHAR-15: '\"test\"","Error: Incorrect expression' -> Error: Incorrect expression [3.532 ms]
+  [[1;32mPASS[0m] EG-FUNC-01: 'tan(0)' -> Error: Incorrect expression [3.603 ms]
+  [[1;32mPASS[0m] EG-FUNC-02: 'atan(1)' -> Error: Incorrect expression [3.436 ms]
+  [[1;32mPASS[0m] EG-FUNC-03: 'asin(0.5)' -> Error: Incorrect expression [3.640 ms]
+  [[1;32mPASS[0m] EG-FUNC-04: 'log10(100)' -> Error: Incorrect expression [3.489 ms]
+  [[1;32mPASS[0m] EG-ASSIGN-01: 'x = 10' -> Error: Incorrect expression [3.547 ms]
+  [[1;32mPASS[0m] EG-ASSIGN-02: 'radius = 15' -> Error: Incorrect expression [3.580 ms]
+  [[1;32mPASS[0m] EG-LONE-01: '+' -> Error: Incorrect expression [3.938 ms]
+  [[1;32mPASS[0m] EG-LONE-02: '*' -> Error: Incorrect expression [3.516 ms]
+  [[1;32mPASS[0m] EG-LONE-03: '^' -> Error: Incorrect expression [3.590 ms]
+  [[1;32mPASS[0m] EG-LONE-04: '10 +' -> Error: Incorrect expression [3.503 ms]
+
+--- Summary: tests/data/test_cases_error_guessing.csv ---
+  Total:  42
+  Passed: [1;32m42[0m
+  Failed: [1;32m0[0m
+
+=== CSV Test Runner: tests/data/test_cases_pairwise.csv ===
+  [[1;32mPASS[0m] PAIR-001: '10 + 2' -> = 12 [3.940 ms]
+  [[1;32mPASS[0m] PAIR-002: '-10 + -2' -> = -12 [3.696 ms]
+  [[1;32mPASS[0m] PAIR-003: '0 + 0' -> = 0 [3.947 ms]
+  [[1;32mPASS[0m] PAIR-004: '2.5 + 1.5' -> = 4.0 [3.595 ms]
+  [[1;32mPASS[0m] PAIR-005: '-2.5 + (2 - 1*i)' -> = -0.5 - 1i [3.817 ms]
+  [[1;32mPASS[0m] PAIR-006: '(1 + 2*i) + 2' -> = 3 + 2i [3.403 ms]
+  [[1;32mPASS[0m] PAIR-007: '10 - -2' -> = 12 [3.709 ms]
+  [[1;32mPASS[0m] PAIR-008: '-10 - 0' -> = -10 [3.592 ms]
+  [[1;32mPASS[0m] PAIR-009: '0 - 1.5' -> = -1.5 [3.625 ms]
+  [[1;32mPASS[0m] PAIR-010: '2.5 - (2 - 1*i)' -> = 0.5 + 1i [3.669 ms]
+  [[1;32mPASS[0m] PAIR-011: '-2.5 - 2' -> = -4.5 [3.377 ms]
+  [[1;32mPASS[0m] PAIR-012: '(1 + 2*i) - -2' -> = 3 + 2i [3.682 ms]
+  [[1;32mPASS[0m] PAIR-013: '10 * 0' -> = 0 [3.614 ms]
+  [[1;32mPASS[0m] PAIR-014: '-10 * 1.5' -> = -15.0 [3.850 ms]
+  [[1;32mPASS[0m] PAIR-015: '0 * (2 - 1*i)' -> = 0 [3.601 ms]
+  [[1;32mPASS[0m] PAIR-016: '2.5 * 2' -> = 5.0 [3.532 ms]
+  [[1;32mPASS[0m] PAIR-017: '-2.5 * -2' -> = 5.0 [3.368 ms]
+  [[1;32mPASS[0m] PAIR-018: '(1 + 2*i) * 0' -> = 0 [3.652 ms]
+  [[1;32mPASS[0m] PAIR-019: '10 / 1.5' -> = 6.66666666666666666666 [3.601 ms]
+  [[1;32mPASS[0m] PAIR-020: '-10 / (2 - 1*i)' -> = -4.00000000000000000000 - 2.00000000000000000000i [3.489 ms]
+  [[1;32mPASS[0m] PAIR-021: '0 / 2' -> = 0 [3.575 ms]
+  [[1;32mPASS[0m] PAIR-022: '2.5 / -2' -> = -1.25000000000000000000 [3.523 ms]
+  [[1;32mPASS[0m] PAIR-023: '-2.5 / 0' -> Error: Division by zero [3.564 ms]
+  [[1;32mPASS[0m] PAIR-024: '(1 + 2*i) / 1.5' -> = 0.66666666666666666666 + 1.33333333333333333333i [3.569 ms]
+  [[1;32mPASS[0m] PAIR-025: '10 % (2 - 1*i)' -> Error: Unsupported operator on complex [3.482 ms]
+  [[1;32mPASS[0m] PAIR-026: '-10 % 2' -> = 0 [3.457 ms]
+  [[1;32mPASS[0m] PAIR-027: '0 % -2' -> = 0 [3.558 ms]
+  [[1;32mPASS[0m] PAIR-028: '2.5 % 0' -> Error: Unsupported operator on decimal [3.544 ms]
+  [[1;32mPASS[0m] PAIR-029: '-2.5 % 1.5' -> Error: Unsupported operator on decimal [3.584 ms]
+  [[1;32mPASS[0m] PAIR-030: '(1 + 2*i) % (2 - 1*i)' -> Error: Unsupported operator on complex [3.483 ms]
+  [[1;32mPASS[0m] PAIR-031: '10 ^ 2' -> = 100 [3.565 ms]
+  [[1;32mPASS[0m] PAIR-032: '-10 ^ -2' -> = 0.01000000000000000000 [3.645 ms]
+  [[1;32mPASS[0m] PAIR-033: '0 ^ 0' -> = 1 [3.600 ms]
+  [[1;32mPASS[0m] PAIR-034: '2.5 ^ 1.5' -> = 3.95284707521047416500 [3.598 ms]
+  [[1;32mPASS[0m] PAIR-035: '-2.5 ^ (2 - 1*i)' -> Error: Unsupported operator on complex [3.690 ms]
+  [[1;32mPASS[0m] PAIR-036: '(1 + 2*i) ^ 2' -> Error: Unsupported operator on complex [3.379 ms]
+
+--- Summary: tests/data/test_cases_pairwise.csv ---
+  Total:  36
+  Passed: [1;32m36[0m
+  Failed: [1;32m0[0m
+
+=== CSV Test Runner: tests/data/test_cases_rulebook.csv ===
+  [[1;32mPASS[0m] A01: '2 + 3 * 4' -> = 14 [3.472 ms]
+  [[1;32mPASS[0m] A02: '(2 + 3) * 4' -> = 20 [3.581 ms]
+  [[1;32mPASS[0m] A03: '2 ^ 3 ^ 2' -> = 512 [3.639 ms]
+  [[1;32mPASS[0m] A04: '(2 ^ 3) ^ 2' -> = 64 [3.674 ms]
+  [[1;32mPASS[0m] A05: '10 - 4 - 2' -> = 4 [3.668 ms]
+  [[1;32mPASS[0m] A06: '10 / 4' -> = 2.50000000000000000000 [3.477 ms]
+  [[1;32mPASS[0m] A07: '10 / 2' -> = 5 [3.403 ms]
+  [[1;32mPASS[0m] A08: '10 % 3' -> = 1 [3.512 ms]
+  [[1;32mPASS[0m] A09: '10 % -3' -> = 1 [3.800 ms]
+  [[1;32mPASS[0m] A10: '-10 % 3' -> = -1 [3.539 ms]
+  [[1;32mPASS[0m] A11: '0 / 5' -> = 0 [3.336 ms]
+  [[1;32mPASS[0m] A12: '0 % 5' -> = 0 [3.426 ms]
+  [[1;32mPASS[0m] A13: '10 / 0' -> Error: Division by zero [3.545 ms]
+  [[1;32mPASS[0m] A14: '10 % 0' -> Error: Modulo by zero [3.629 ms]
+  [[1;32mPASS[0m] A15: '0 / 0' -> Error: Division by zero [3.476 ms]
+  [[1;32mPASS[0m] B01: '+5' -> = 5 [3.737 ms]
+  [[1;32mPASS[0m] B02: '-5' -> = -5 [3.404 ms]
+  [[1;32mPASS[0m] B03: '- - 5' -> = 5 [3.590 ms]
+  [[1;32mPASS[0m] B04: '- - - 5' -> = -5 [3.477 ms]
+  [[1;32mPASS[0m] B05: '2 + - 3' -> = -1 [3.539 ms]
+  [[1;32mPASS[0m] B06: '2 * - 3' -> = -6 [3.369 ms]
+  [[1;32mPASS[0m] B07: '2 / - 4' -> = -0.50000000000000000000 [3.416 ms]
+  [[1;32mPASS[0m] B08: '2 ^ - 3' -> = 0.12500000000000000000 [3.765 ms]
+  [[1;32mPASS[0m] B09: '-3 ^ 2' -> = 9 [3.761 ms]
+  [[1;32mPASS[0m] B10: '-(3 ^ 2)' -> = -9 [3.556 ms]
+  [[1;32mPASS[0m] B11: '(-3) ^ 3' -> = -27 [3.478 ms]
+  [[1;32mPASS[0m] B12: '(-3) ^ 2' -> = 9 [3.489 ms]
+  [[1;32mPASS[0m] B13: '2 * * 3' -> Error: Incorrect expression [3.439 ms]
+  [[1;32mPASS[0m] B14: '2 / / 3' -> Error: Incorrect expression [3.630 ms]
+  [[1;32mPASS[0m] B15: '2 ^ ^ 3' -> Error: Incorrect expression [3.628 ms]
+  [[1;32mPASS[0m] B16: '* 5' -> Error: Incorrect expression [3.533 ms]
+  [[1;32mPASS[0m] B17: '5 *' -> Error: Incorrect expression [3.474 ms]
+  [[1;32mPASS[0m] C01: '0!' -> = 1 [3.698 ms]
+  [[1;32mPASS[0m] C02: '5!' -> = 120 [3.556 ms]
+  [[1;32mPASS[0m] C03: '3!!' -> = 720 [3.362 ms]
+  [[1;32mPASS[0m] C04: '-3!' -> = -6 [3.540 ms]
+  [[1;32mPASS[0m] C05: '(-3)!' -> Error: Factorial input negative or too large [3.703 ms]
+  [[1;32mPASS[0m] C06: '5.5!' -> Error: Factorial requires non-negative integer [3.485 ms]
+  [[1;32mPASS[0m] C07: '!5' -> Error: Incorrect expression [3.634 ms]
+  [[1;32mPASS[0m] C08: 'fact(5)' -> = 120 [3.431 ms]
+  [[1;32mPASS[0m] C09: '10001!' -> Error: Factorial input negative or too large [3.515 ms]
+  [[1;32mPASS[0m] D01: '0 ^ 0' -> = 1 [3.515 ms]
+  [[1;32mPASS[0m] D02: '0 ^ 5' -> = 0 [3.598 ms]
+  [[1;32mPASS[0m] D03: '5 ^ 0' -> = 1 [3.431 ms]
+  [[1;32mPASS[0m] D04: '0 ^ -2' -> Error: Division by zero [3.564 ms]
+  [[1;32mPASS[0m] D05: '2 ^ -3.5' -> = 0.08838834764831844055 [3.633 ms]
+  [[1;32mPASS[0m] D06: '(-2) ^ 0.5' -> Error: Negative base for decimal power [3.517 ms]
+  [[1;32mPASS[0m] E01: '2(3)' -> Error: Incorrect expression [3.584 ms]
+  [[1;32mPASS[0m] E02: '(2)(3)' -> Error: Incorrect expression [3.429 ms]
+  [[1;32mPASS[0m] E03: '2x' -> Error: Incorrect expression [3.520 ms]
+  [[1;32mPASS[0m] E04: '2pi' -> Error: Incorrect expression [3.310 ms]
+  [[1;32mPASS[0m] E05: '3i' -> Error: Incorrect expression [3.719 ms]
+  [[1;32mPASS[0m] E06: 'sin 5' -> Error: Incorrect expression [3.495 ms]
+  [[1;32mPASS[0m] E07: '5 sin(pi)' -> Error: Incorrect expression [3.500 ms]
+  [[1;32mPASS[0m] F01: '(1 + 2' -> Error: Incorrect expression [3.514 ms]
+  [[1;32mPASS[0m] F02: '1 + 2)' -> Error: Incorrect expression [3.449 ms]
+  [[1;32mPASS[0m] F03: '()' -> Error: Incorrect expression [3.452 ms]
+  [[1;32mPASS[0m] F04: '1 + (2 * )' -> Error: Incorrect expression [3.535 ms]
+  [[1;32mPASS[0m] G01: 'sin(0)' -> = 0 [3.541 ms]
+  [[1;32mPASS[0m] G02: 'cos(0)' -> = 1 [3.462 ms]
+  [[1;32mPASS[0m] G03: 'sin(pi / 2)' -> = 1.00000000000000000000 [3.546 ms]
+  [[1;32mPASS[0m] G04: 'exp(0)' -> = 1 [3.512 ms]
+  [[1;32mPASS[0m] G05: 'exp(1)' -> = 2.71828182845904523536 [3.416 ms]
+  [[1;32mPASS[0m] G06: 'ln(1)' -> = 0 [3.572 ms]
+  [[1;32mPASS[0m] G07: 'ln(0)' -> Error: Domain error: ln argument <= 0 [3.415 ms]
+  [[1;32mPASS[0m] G08: 'ln(-5)' -> Error: Domain error: ln argument <= 0 [3.555 ms]
+  [[1;32mPASS[0m] G09: 'sqrt(0)' -> = 0 [3.349 ms]
+  [[1;32mPASS[0m] G10: 'sqrt(144)' -> = 12.00000000000000000000 [3.434 ms]
+  [[1;32mPASS[0m] G11: 'sqrt(-4)' -> Error: Domain error: negative sqrt argument [3.559 ms]
+  [[1;32mPASS[0m] G12: 'gcd(48, 18)' -> = 6 [3.614 ms]
+  [[1;32mPASS[0m] G13: 'gcd(-48, 18)' -> = 6 [3.511 ms]
+  [[1;32mPASS[0m] G14: 'gcd(48.5, 18)' -> Error: gcd requires integer arguments [3.516 ms]
+  [[1;32mPASS[0m] G15: 'sin()' -> Error: Incorrect expression [3.517 ms]
+  [[1;32mPASS[0m] G16: 'sin(1, 2)' -> Error: Incorrect expression [3.402 ms]
+  [[1;32mPASS[0m] G17: 'gcd(10)' -> Error: Incorrect expression [3.725 ms]
+  [[1;32mPASS[0m] G18: 'tan(0)' -> Error: Incorrect expression [3.428 ms]
+  [[1;32mPASS[0m] H01: 'i * i' -> = -1 [3.516 ms]
+  [[1;32mPASS[0m] H02: '2 + 3 * i' -> = 2 + 3i [3.398 ms]
+  [[1;32mPASS[0m] H03: '(2 + 3*i) + (4 - 5*i)' -> = 6 - 2i [3.482 ms]
+  [[1;32mPASS[0m] H04: '(2 + 3*i) * (2 - 3*i)' -> = 13 [3.315 ms]
+  [[1;32mPASS[0m] H05: '(1 + i) / (1 - i)' -> = 1.00000000000000000000i [3.584 ms]
+  [[1;32mPASS[0m] H06: 'abs(3 + 4*i)' -> = 5.00000000000000000000 [3.787 ms]
+  [[1;32mPASS[0m] H07: '(2 + 3*i) % 2' -> Error: Unsupported operator on complex [3.573 ms]
+  [[1;32mPASS[0m] H08: 'i ^ 2' -> Error: Unsupported operator on complex [3.592 ms]
+  [[1;32mPASS[0m] H09: 'sin(i)' -> Error: sin requires numeric argument [3.474 ms]
+  [[1;32mPASS[0m] H10: 'sqrt(i)' -> Error: sqrt requires numeric argument [3.400 ms]
+  [[1;32mPASS[0m] I01: '0.1 + 0.2' -> = 0.3 [3.782 ms]
+  [[1;32mPASS[0m] I02: '5.5 % 2' -> Error: Unsupported operator on decimal [3.580 ms]
+  [[1;32mPASS[0m] I03: 'mod(5.5, 2)' -> Error: Unsupported operator on decimal [3.717 ms]
+  [[1;32mPASS[0m] J01: '1,234' -> Error: Incorrect expression [3.653 ms]
+  [[1;32mPASS[0m] J02: '1; 2' -> Error: Incorrect expression [3.608 ms]
+  [[1;32mPASS[0m] J03: '2 @ 3' -> Error: Incorrect expression [3.512 ms]
+  [[1;32mPASS[0m] J04: '' -> Error: Incorrect expression [3.676 ms]
+  [[1;32mPASS[0m] J05: '   ' -> Error: Incorrect expression [3.580 ms]
+
+--- Summary: tests/data/test_cases_rulebook.csv ---
+  Total:  94
+  Passed: [1;32m94[0m
+  Failed: [1;32m0[0m
+
+=== System Testing: Regression Oracle vs Baseline ===
+  [PASS] REG-1: '2 + 3 * 4' == '= 14'
+  [PASS] REG-2: '(2 + 3) * 4' == '= 20'
+  [PASS] REG-3: '2 ^ 3 ^ 2' == '= 512'
+  [PASS] REG-4: '(2 ^ 3) ^ 2' == '= 64'
+  [PASS] REG-5: '10 - 4 - 2' == '= 4'
+  [PASS] REG-6: '10 / 4' == '= 2.50000000000000000000'
+  [PASS] REG-7: '10 / 2' == '= 5'
+  [PASS] REG-8: '10 % 3' == '= 1'
+  [PASS] REG-9: '0!' == '= 1'
+  [PASS] REG-10: '5!' == '= 120'
+  [PASS] REG-11: '3!!' == '= 720'
+  [PASS] REG-12: '2 ^ 10' == '= 1024'
+  [PASS] REG-13: '0 ^ 0' == '= 1'
+  [PASS] REG-14: 'sin(0)' == '= 0'
+  [PASS] REG-15: 'cos(0)' == '= 1'
+  [PASS] REG-16: 'exp(0)' == '= 1'
+  [PASS] REG-17: 'ln(1)' == '= 0'
+  [PASS] REG-18: 'sqrt(144)' == '= 12.00000000000000000000'
+  [PASS] REG-19: 'gcd(48, 18)' == '= 6'
+  [PASS] REG-20: 'i * i' == '= -1'
+  [PASS] REG-21: '2 + 3 * i' == '= 2 + 3i'
+  [PASS] REG-22: '(2 + 3*i) + (4 - 5*i)' == '= 6 - 2i'
+  [PASS] REG-23: '(2 + 3*i) * (2 - 3*i)' == '= 13'
+  [PASS] REG-24: 'abs(3 + 4*i)' == '= 5.00000000000000000000'
+  [PASS] REG-25: '0.1 + 0.2' == '= 0.3'
+--- Regression Summary: Total: 25, Failed: 0 ---
+=== Generating docs/TEST_CASES.md from tests/test_results.csv ===
+Generated /Users/makarandkulkarni/Myspace/Mini-project/Precision-Calculator/docs/TEST_CASES.md successfully.
+
+======================================================================
+                      FULL TEST SUITE COMPLETE                         
+======================================================================

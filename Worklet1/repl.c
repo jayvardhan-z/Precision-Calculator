@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "timer.h"
 #include "bigint_io.h"
 #include "lexer.h"
@@ -58,8 +59,7 @@ static void print_error(const char *msg) {
 // Inspects and handles internal REPL meta-commands (exit, help, mode, precision, vars)
 // Returns 1 if the input line was a meta-command, 0 if it should be evaluated as an expression
 static int handle_repl_command(ReplState *repl, const char *line) {
-    // Empty line: treat as processed command, no evaluation needed
-    if (line[0] == '\0') return 1;
+    if (!line || line[0] == '\0') return 0;
 
     // Command: "exit", "quit", or "q" -> Terminate REPL loop
     if (strcmp(line, "exit") == 0 || strcmp(line, "quit") == 0 || strcmp(line, "q") == 0) {
@@ -225,6 +225,15 @@ int run_repl(void) {
             printf("\nExiting.\n");
             break;
         }
+
+        // Rulebook Section 14: An empty line is ignored silently; prompts user for next line
+        const char *p = line;
+        while (*p && isspace((unsigned char)*p)) p++;
+        if (*p == '\0') {
+            free(line);
+            continue;
+        }
+
         execute_repl_cycle(&repl, line);
         free(line);
     }
@@ -235,7 +244,10 @@ int run_repl(void) {
 
 // Evaluates a single expression string non-interactively and cleans up
 int run_expression(const char *expr) {
-    if (!expr) return 1;
+    if (!expr) {
+        print_error("Incorrect expression");
+        return 1;
+    }
     ReplState repl;
     repl_state_init(&repl);
     int ok = execute_repl_cycle(&repl, expr);

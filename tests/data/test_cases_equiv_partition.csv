@@ -1,0 +1,25 @@
+ID,PARTITION_CLASS,INPUT_EXPR,EXPECTED_OUTPUT,VALID_FLAG
+EQ-INT-01,"Valid positive integer literal","12345678901234567890","= 12345678901234567890",VALID
+EQ-INT-02,"Valid zero literal","0","= 0",VALID
+EQ-INT-03,"Valid negative integer via prefix","-999999999999","= -999999999999",VALID
+EQ-INT-04,"Integer with leading zeroes","000789","= 789",VALID
+EQ-DEC-01,"Valid decimal literal with standard dot","3.1415926535","= 3.1415926535",VALID
+EQ-DEC-02,"Valid decimal literal with leading dot",".75","= 0.75",VALID
+EQ-DEC-03,"Invalid decimal literal with trailing dot","5.","Error: Incorrect expression",INVALID
+EQ-DEC-04,"Invalid multiple decimal dots","1.2.3.4","Error: Incorrect expression",INVALID
+EQ-SCI-01,"Valid scientific notation lower 'e'","1e5","= 100000",VALID
+EQ-SCI-02,"Valid scientific notation upper 'E' with sign","2.5E-3","= 0.0025",VALID
+EQ-SCI-03,"Invalid scientific notation missing exponent","1e","Error: Incorrect expression",INVALID
+EQ-SCI-04,"Invalid scientific notation missing number","e5","Error: Undefined variable 'e5'",INVALID
+EQ-CPX-01,"Valid pure imaginary literal","i","= 1i",VALID
+EQ-CPX-02,"Valid complex combination","4 + 5 * i","= 4 + 5i",VALID
+EQ-CONST-01,"Valid mathematical constant pi","pi","= 3.14159265358979323846",VALID
+EQ-CONST-02,"Valid mathematical constant e","e","= 2.71828182845904523536",VALID
+EQ-VAR-01,"Undefined identifier reference","unknown_identifier + 1","Error: Undefined variable 'unknown_identifier'",INVALID
+EQ-OP-01,"Valid arithmetic binary chain","10 + 20 - 5 * 2 / 2","= 25",VALID
+EQ-OP-02,"Consecutive binary operators","10 + * 5","Error: Incorrect expression",INVALID
+EQ-PAR-01,"Balanced matched parentheses","((2 + 3) * (4 + 5))","= 45",VALID
+EQ-PAR-02,"Unmatched opening parenthesis","(2 + 3","Error: Incorrect expression",INVALID
+EQ-PAR-03,"Unmatched closing parenthesis","2 + 3)","Error: Incorrect expression",INVALID
+EQ-PAR-04,"Inverted parentheses order",")2 + 3(","Error: Incorrect expression",INVALID
+

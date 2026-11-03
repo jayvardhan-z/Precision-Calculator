@@ -1,0 +1,50 @@
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/integration/test_it_topdown.c tests/stubs/stub_functions.c Worklet3/eval.c Worklet1/parser.c Worklet1/lexer.c Worklet1/ast.c Worklet1/bigint_io.c Worklet2/bigint.c Worklet3/fast_math.c Worklet3/decimal.c Worklet3/complex.c -lm -pthread -o tests/integration/test_it_topdown
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/integration/test_it_bottomup.c tests/drivers/driver_arithmetic.c Worklet2/bigint.c Worklet1/bigint_io.c Worklet3/fast_math.c Worklet3/decimal.c Worklet3/complex.c -lm -pthread -o tests/integration/test_it_bottomup
+cc -IWorklet1 -IWorklet2 -IWorklet3 -Itests/framework -D_POSIX_C_SOURCE=200809L -Wall -Wextra -pedantic -std=c11 -O2 tests/integration/test_it_flow.c Worklet1/ast.c Worklet1/bigint_io.c Worklet1/lexer.c Worklet1/parser.c Worklet1/repl.c Worklet1/timer.c Worklet2/bigint.c Worklet3/complex.c Worklet3/decimal.c Worklet3/eval.c Worklet3/fast_math.c Worklet3/functions.c -lm -pthread -o tests/integration/test_it_flow
+
+=== Running Integration Test Suite ===
+=== Test Suite: Integration: Incremental Top-Down (Stubs) ===
+  [[1;32mPASS[0m] IT-TD-01 (INTEG): Top-down call dispatch to stubbed sqrt(4) [0.047 ms]
+  [[1;32mPASS[0m] IT-TD-02 (INTEG): Top-down call dispatch to stubbed sin(1.57) [0.010 ms]
+  [[1;32mPASS[0m] IT-TD-03 (INTEG): Top-down error propagation when lower stub fails [0.009 ms]
+
+--- Suite Summary: Integration: Incremental Top-Down (Stubs) ---
+  Total Tests: 3
+  Passed:      [1;32m3[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.450 ms
+=== Test Suite: Integration: Incremental Bottom-Up (Drivers) ===
+  [[1;32mPASS[0m] IT-BU-01 (INTEG): Driver executes BigInteger addition across limb boundaries [0.005 ms]
+  [[1;32mPASS[0m] IT-BU-02 (INTEG): Driver executes Knuth D division through driver pipeline [0.010 ms]
+  [[1;32mPASS[0m] IT-BU-03 (INTEG): Driver integrates BigInteger into BigDecimal division [0.004 ms]
+  [[1;32mPASS[0m] IT-BU-04 (INTEG): BigDecimal layer successfully composes Complex arithmetic [0.007 ms]
+
+--- Suite Summary: Integration: Incremental Bottom-Up (Drivers) ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.319 ms
+=== Test Suite: Integration: Non-Incremental Big-Bang Smoke ===
+  [[1;32mPASS[0m] IT-BB-01 (INTEG): Big-Bang: (2 + 3) * (4 + 5) ^ 2 evaluates to 405 [0.097 ms]
+  [[1;32mPASS[0m] IT-BB-02 (INTEG): Big-Bang: sqrt(25) + cos(0) evaluates to 6 [0.027 ms]
+  [[1;32mPASS[0m] IT-BB-03 (INTEG): Big-Bang: (2 + 3*i) * (2 - 3*i) evaluates to 13 [0.027 ms]
+  [[1;32mPASS[0m] IT-BB-04 (INTEG): Big-Bang: 1 / 8 produces 0.1250000000 at precision 10 [0.013 ms]
+
+--- Suite Summary: Integration: Non-Incremental Big-Bang Smoke ---
+  Total Tests: 4
+  Passed:      [1;32m4[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.498 ms
+=== Test Suite: Integration: End-to-End Stateful Flow ===
+  [[1;32mPASS[0m] IT-FLOW-01 (INTEG): Flow Step 1: Initial ans is 0 [0.001 ms]
+  [[1;32mPASS[0m] IT-FLOW-02 (INTEG): Flow Step 2: Compute 100 + 200 -> ans becomes 300 [0.014 ms]
+  [[1;32mPASS[0m] IT-FLOW-03 (INTEG): Flow Step 3: Compute ans * 3 -> ans becomes 900 [0.007 ms]
+  [[1;32mPASS[0m] IT-FLOW-04 (INTEG): Flow Step 4: Compute ans / 4 -> ans becomes 225 [0.006 ms]
+  [[1;32mPASS[0m] IT-FLOW-05 (INTEG): Flow Step 5 & 6: Set precision 5, compute ans / 2 -> produces 112.50000 [0.032 ms]
+  [[1;32mPASS[0m] IT-FLOW-06 (INTEG): Flow Step 7: Error recovery preserves ans unchanged [0.005 ms]
+
+--- Suite Summary: Integration: End-to-End Stateful Flow ---
+  Total Tests: 6
+  Passed:      [1;32m6[0m
+  Failed:      [1;32m0[0m
+  Duration:    0.664 ms

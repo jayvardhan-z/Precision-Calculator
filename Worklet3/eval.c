@@ -543,6 +543,13 @@ int eval_binary(OpCode op, const Value *left, const Value *right, EvalContext *c
                 break;
 
             case OP_POW: {
+                // Check if base is zero and exponent is negative: division by zero
+                if (r.as.i.sign < 0 && bigint_is_zero(&l.as.i)) {
+                    set_error(ctx, ERR_DIV_BY_ZERO, pos, "Division by zero");
+                    success = 0;
+                    break;
+                }
+
                 // Convert exponent to string to inspect magnitude and sign
                 char *exp_str = bigint_to_string(&r.as.i);
                 if (!exp_str) {
@@ -626,6 +633,11 @@ int eval_binary(OpCode op, const Value *left, const Value *right, EvalContext *c
                 break;
 
             case OP_POW: {
+                if (decimal_is_zero(&l.as.d) && r.as.d.significand.sign < 0) {
+                    set_error(ctx, ERR_DIV_BY_ZERO, pos, "Division by zero");
+                    success = 0;
+                    break;
+                }
                 // General decimal power via identity: l^r = exp(r * ln(l))
                 if (l.as.d.significand.sign <= 0) {
                     set_error(ctx, ERR_DOMAIN, pos, "Negative base for decimal power");
