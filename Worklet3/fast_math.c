@@ -125,7 +125,7 @@ int bigint_mul_karatsuba(BigInteger *res, const BigInteger *a, const BigInteger 
         return bigint_mul_schoolbook(res, a, b);
     }
 
-    // Determine split point k = ceil(max(size_a, size_b) / 2)
+    // Determine split point k = ceil(max(size_a, size_b) / 2)x
     size_t n = (a->size > b->size ? a->size : b->size);
     size_t k = (n + 1) / 2;
 
