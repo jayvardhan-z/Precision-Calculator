@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 static const char *OPERATORS[] = { "+", "-", "*", "/", "%", "^" };
 static const size_t NUM_OPS = sizeof(OPERATORS) / sizeof(OPERATORS[0]);
@@ -48,6 +49,7 @@ int main(int argc, char *argv[]) {
     }
 
     FILE *f = fopen(out_path, "w");
+    chmod(out_path, 0644);
     if (!f) {
         fprintf(stderr, "Error opening %s for writing\n", out_path);
         return 1;
@@ -79,4 +81,3 @@ int main(int argc, char *argv[]) {
     printf("Successfully generated %zu pairwise combinations in %s\n", id - 1, out_path);
     return 0;
 }
-
